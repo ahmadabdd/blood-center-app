@@ -2,10 +2,13 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { colors } from "../constants/palette";
-import HomeScreen from "../screens/HomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { OnboardingStack } from "./OnboardingStack";
-import { SettingsStack } from "./SettingsStack";
+
+import NotificationsScreen from "../screens/NotificationsScreen";
+import { HomeStack } from "./HomeStack";
+import { RequestsStack } from "./RequestsStack";
+import { ChatStack } from "./ChatStack";
+import { ProfileStack } from "./ProfileStack";
 
 export function BottomTabs({ navigation }) {
   const BottomTabsNav = createBottomTabNavigator();
@@ -32,8 +35,8 @@ export function BottomTabs({ navigation }) {
         }}
       >
         <BottomTabsNav.Screen
-          name="HomeScreen"
-          component={HomeScreen}
+          name="HomeStack"
+          component={HomeStack}
           options={{
             title: 'Home',
             tabBarIcon: ({ focused, color, size }) => (
@@ -46,10 +49,52 @@ export function BottomTabs({ navigation }) {
           }}
         />
         <BottomTabsNav.Screen
-          name="SettingsScreen"
-          component={SettingsStack}
+          name="RequestsStack"
+          component={RequestsStack}
           options={{
-            title: 'Settings',
+            title: 'Requests',
+            tabBarIcon: ({ focused, color, size }) => (
+              <MaterialCommunityIcons
+                name={"cog"}
+                size={28}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <BottomTabsNav.Screen
+          name="NotificationsScreen"
+          component={NotificationsScreen}
+          options={{
+            title: 'Notifications',
+            tabBarIcon: ({ focused, color, size }) => (
+              <MaterialCommunityIcons
+                name={"cog"}
+                size={28}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <BottomTabsNav.Screen
+          name="ChatStack"
+          component={ChatStack}
+          options={{
+            title: 'Chat',
+            tabBarIcon: ({ focused, color, size }) => (
+              <MaterialCommunityIcons
+                name={"cog"}
+                size={28}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <BottomTabsNav.Screen
+          name="ProfileStack"
+          component={ProfileStack}
+          options={{
+            title: 'Profile',
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
                 name={"cog"}

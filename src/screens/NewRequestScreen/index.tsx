@@ -6,7 +6,7 @@ import EmptyState from "../../components/EmptyState";
 import FullWidthButton from "../../components/FullWidthButton";
 import { colors } from "../../constants/palette";
 
-const HomeScreen = (navigation: any) => {
+const NewRequestScreen = (navigation: any) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   //   const homestore = useSelector((state) => state.homeReducer)
@@ -91,7 +91,7 @@ const HomeScreen = (navigation: any) => {
     <EmptyState
       loading={loading}
       icon={"image"}
-      title={"Home sweet home"}
+      title={"Home"}
       description={"here you will build your amazing project"}
       actionButton={{
         title: "Populate Data",
@@ -108,4 +108,4 @@ const HomeScreen = (navigation: any) => {
   );
 };
 
-export default HomeScreen;
+export default NewRequestScreen;
