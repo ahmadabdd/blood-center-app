@@ -5,25 +5,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { colors } from "../constants/palette";
+import SplashScreen from "../screens/SplashScreen";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();
   const navigationRef = useRef(null);
 
   return (
-    <NavigationContainer
-      ref={navigationRef} >
-      <RootStackNav.Navigator >
+    <NavigationContainer ref={navigationRef} >
+      <RootStackNav.Navigator
+        initialRouteName="SplashScreen"
+      >
+        <RootStackNav.Screen name="SplashScreen" 
+        component={SplashScreen} />
 
-        <RootStackNav.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-        />
-        
-        <RootStackNav.Screen
-          name="RegisterScreen"
-          component={RegisterScreen}
-        />
+        <RootStackNav.Screen name="LoginScreen" 
+        component={LoginScreen} />
+
+        <RootStackNav.Screen name="RegisterScreen" 
+        component={RegisterScreen} />
 
       </RootStackNav.Navigator>
     </NavigationContainer>

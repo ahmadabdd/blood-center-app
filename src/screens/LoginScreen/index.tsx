@@ -6,7 +6,7 @@ import { store } from '../../redux/store';
 import { updateUserProfile } from '../../redux/slices/userSlice';
 import { useNavigation } from '@react-navigation/core';
 
-const LoginScreen = () => {
+const LoginScreen: React.FC = () => {
     const navigation = useNavigation()
     return (
         <View
@@ -38,7 +38,7 @@ const LoginScreen = () => {
                 secondaryButton={{
                     title: "Register",
                     callback: () => {
-                        navigation.navigate('RegisterScreen')
+                        navigation.navigate("RegisterScreen")
                     }
                 }}
             />
