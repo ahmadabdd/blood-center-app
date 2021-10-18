@@ -6,15 +6,16 @@ import EmptyState from "../../../components/EmptyState";
 import FullWidthButton from "../../../components/FullWidthButton";
 import { colors } from "../../../constants/palette";
 
-const ChatsScreen = (navigation: any) => {
-  
+
+const ChatScreen = () => {
+
   return (
     <View>
       <Text>
-      Chats Screen
+        Chat Screen
       </Text>
     </View>
   )
 };
 
-export default ChatsScreen;
+export default ChatScreen;

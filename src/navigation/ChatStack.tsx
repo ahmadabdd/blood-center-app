@@ -4,7 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 
 import {colors} from "../constants/palette";
 
-import ChatsScreen from "../screens/ChatScreen/ChatScreen";
+import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import RecentChatsScreen from "../screens/ChatScreen/RecenetChatsScreen";
 
 export function ChatStack() {
@@ -14,11 +14,11 @@ export function ChatStack() {
   return (
     <RootStackNav.Navigator>
 
-      <RootStackNav.Screen name="ChatsScreen" 
-      component={ChatsScreen} />
-
       <RootStackNav.Screen name="RecentChatsScreen" 
       component={RecentChatsScreen} />
+
+      <RootStackNav.Screen name="ChatScreen" 
+      component={ChatScreen} />
 
     </RootStackNav.Navigator>
   );

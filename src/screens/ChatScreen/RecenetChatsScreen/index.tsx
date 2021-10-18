@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, View, Button } from "react-native";
 import { useSelector } from "react-redux";
 import ComponentTemplate from "../../../components/ComponentTemplate";
 import EmptyState from "../../../components/EmptyState";
 import FullWidthButton from "../../../components/FullWidthButton";
 import { colors } from "../../../constants/palette";
+import {useNavigation} from "@react-navigation/core";
 
-const RecentChatsScreen = (navigation: any) => {
-  
+const RecentChatsScreen = () => {
+  const navigation = useNavigation();
+
+  const navigateChat = () => {
+    navigation.navigate("ChatScreen");
+  };
   return (
     <View>
       <Text>
-      Recent Chats Screen
+        Recent Chats Screen
       </Text>
+      <Button
+        title="Go to chat"
+        color="#666666"
+        onPress={ navigateChat }
+      />
     </View>
   )
 };
