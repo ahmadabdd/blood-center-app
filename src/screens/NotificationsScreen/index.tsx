@@ -6,12 +6,12 @@ import EmptyState from "../../components/EmptyState";
 import FullWidthButton from "../../components/FullWidthButton";
 import { colors } from "../../constants/palette";
 
-const NotificationsScreen = (navigation: any) => {
+const NotificationsScreen = () => {
   
   return (
     <View>
       <Text>
-      Notifications Screen
+        Notifications Screen
       </Text>
     </View>
   )

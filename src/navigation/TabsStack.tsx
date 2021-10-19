@@ -10,11 +10,13 @@ import { RequestsStack } from "./RequestsStack";
 import { ChatStack } from "./ChatStack";
 import { ProfileStack } from "./ProfileStack";
 
+
+
 export function BottomTabs({ navigation }) {
   const BottomTabsNav = createBottomTabNavigator();
   const navigationRef = React.useRef(null);
   // const type = useSelector((state) => state?.user?.userType);
-
+  
   return (
       <NavigationContainer
         ref={navigationRef}
@@ -22,8 +24,8 @@ export function BottomTabs({ navigation }) {
       <BottomTabsNav.Navigator
         initialRouteName="HomeScreen"
         tabBarOptions={{
-          activeTintColor: colors.primary_dark,
-          inactiveTintColor: colors.background,
+          activeTintColor: colors.black,
+          inactiveTintColor: colors.text,
           showLabel: true,
           allowFontScaling: false,
           keyboardHidesTabBar: true,
@@ -32,18 +34,24 @@ export function BottomTabs({ navigation }) {
             fontWeight: "bold",
             fontSize: 10,
           },
+
         }}
       >
         <BottomTabsNav.Screen
           name="HomeStack"
           component={HomeStack}
           options={{
-            title: 'Home',
-            tabBarIcon: ({ focused, color, size }) => (
+            title: 'Donate',
+            headerShown: false,
+            headerTintColor: colors.primary_green,
+            tabBarIcon: ({ focused, color , size }) => (
               <MaterialCommunityIcons
-                name={"home"}
+                name={"blood-bag"}
                 size={28}
                 color={color}
+                //heart-plus
+                //water
+                //blood-bag
               />
             ),
           }}
@@ -53,11 +61,14 @@ export function BottomTabs({ navigation }) {
           component={RequestsStack}
           options={{
             title: 'Requests',
+            headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
-                name={"cog"}
+                name={"card-plus"}
                 size={28}
                 color={color}
+                //email-plus
+                //card-plus
               />
             ),
           }}
@@ -67,9 +78,12 @@ export function BottomTabs({ navigation }) {
           component={NotificationsScreen}
           options={{
             title: 'Notifications',
+            headerStyle: {
+              backgroundColor: colors.primary
+            },
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
-                name={"cog"}
+                name={"bell"}
                 size={28}
                 color={color}
               />
@@ -81,9 +95,10 @@ export function BottomTabs({ navigation }) {
           component={ChatStack}
           options={{
             title: 'Chat',
+            headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
-                name={"cog"}
+                name={"chat"}
                 size={28}
                 color={color}
               />
@@ -95,9 +110,10 @@ export function BottomTabs({ navigation }) {
           component={ProfileStack}
           options={{
             title: 'Profile',
+            headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
-                name={"cog"}
+                name={"account"}
                 size={28}
                 color={color}
               />

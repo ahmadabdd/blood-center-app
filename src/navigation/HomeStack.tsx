@@ -11,13 +11,31 @@ export function HomeStack() {
   const navigationRef = useRef(null);
 
   return (
-    <RootStackNav.Navigator>
+    <RootStackNav.Navigator
+    screenOptions={{
+      cardStyle:{
+        backgroundColor: colors.white
+      }
+    }}
+    >
 
       <RootStackNav.Screen name="HomeScreen" 
-      component={HomeScreen} />
+      component={HomeScreen}
+      options={{
+        title: "Donate",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
 
       <RootStackNav.Screen name="RequestViewScreen" 
-      component={RequestViewScreen} />
+      component={RequestViewScreen}
+      options={{
+        title: "Request",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
           
     </RootStackNav.Navigator>
   );

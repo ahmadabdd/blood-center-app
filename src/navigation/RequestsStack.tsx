@@ -13,19 +13,49 @@ export function RequestsStack() {
   const navigationRef = useRef(null);
 
   return (
-    <RootStackNav.Navigator>
+    <RootStackNav.Navigator
+      screenOptions={{
+        cardStyle:{
+          backgroundColor: colors.white
+        }
+      }}
+    >
 
       <RootStackNav.Screen name="FulfilledScreen" 
-      component={FulfilledScreen} />
+      component={FulfilledScreen}
+      options={{
+        title: "Fulfilled requests",
+        headerStyle: {
+          backgroundColor: '#F47174'
+        }
+      }}  />
 
       <RootStackNav.Screen name="RequestDonatorsScreen" 
-      component={RequestDonatorsScreen} />
+      component={RequestDonatorsScreen}
+      options={{
+        title: "Donators",
+        headerStyle: {
+          backgroundColor: '#F47174'
+        }
+      }}  />
 
       <RootStackNav.Screen name="InProgressScreen" 
-      component={InProgressScreen} />
+      component={InProgressScreen}
+      options={{
+        title: "Requests in progress",
+        headerStyle: {
+          backgroundColor: '#F47174'
+        }
+      }}  />
 
       <RootStackNav.Screen name="RequestsScreen" 
-      component={RequestsScreen} />
+      component={RequestsScreen}
+      options={{
+        title: "Requests",
+        headerStyle: {
+          backgroundColor: '#F47174'
+        }
+      }}  />
     
     </RootStackNav.Navigator>
   );

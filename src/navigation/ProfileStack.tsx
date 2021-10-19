@@ -13,19 +13,49 @@ export function ProfileStack() {
   const navigationRef = useRef(null);
 
   return (
-    <RootStackNav.Navigator>
+    <RootStackNav.Navigator
+      screenOptions={{
+        cardStyle:{
+          backgroundColor: colors.white
+        }
+      }}
+    >
 
       <RootStackNav.Screen name="ProfileScreen" 
-      component={ProfileScreen} />
+      component={ProfileScreen}
+      options={{
+        title: "Profile",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
 
       <RootStackNav.Screen name="MyDonationsScreen" 
-      component={MyDonationsScreen} />
+      component={MyDonationsScreen}
+      options={{
+        title: "My donations",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
 
       <RootStackNav.Screen name="HealthRecordScreen" 
-      component={HealthRecordScreen} />
+      component={HealthRecordScreen}
+      options={{
+        title: "Health record",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
 
       <RootStackNav.Screen name="EditProfileScreen" 
-      component={EditProfileScreen} />
+      component={EditProfileScreen}
+      options={{
+        title: "Edit profile",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
     
     </RootStackNav.Navigator>
   );

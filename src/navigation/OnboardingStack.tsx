@@ -15,15 +15,38 @@ export function OnboardingStack() {
     <NavigationContainer ref={navigationRef} >
       <RootStackNav.Navigator
         initialRouteName="SplashScreen"
+        screenOptions={{
+          cardStyle:{
+            backgroundColor: colors.white
+          }
+        }}
       >
         <RootStackNav.Screen name="SplashScreen" 
-        component={SplashScreen} />
+        component={SplashScreen}
+        options={{
+          title: "Blood Center",
+          headerStyle: {
+            backgroundColor: colors.primary
+          }
+        }} />
 
         <RootStackNav.Screen name="LoginScreen" 
-        component={LoginScreen} />
+        component={LoginScreen}
+        options={{
+          title: "Log in",
+          headerStyle: {
+            backgroundColor: colors.primary
+          }
+        }} />
 
         <RootStackNav.Screen name="RegisterScreen" 
-        component={RegisterScreen} />
+        component={RegisterScreen}
+        options={{
+          title: "Sign up",
+          headerStyle: {
+            backgroundColor: colors.primary
+          }
+        }} />
 
       </RootStackNav.Navigator>
     </NavigationContainer>

@@ -12,13 +12,31 @@ export function ChatStack() {
   const navigationRef = useRef(null);
 
   return (
-    <RootStackNav.Navigator>
+    <RootStackNav.Navigator
+      screenOptions={{
+        cardStyle:{
+          backgroundColor: colors.white
+        }
+      }}
+    >
 
       <RootStackNav.Screen name="RecentChatsScreen" 
-      component={RecentChatsScreen} />
+      component={RecentChatsScreen}
+      options={{
+        title: "Recent chats",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }}  />
 
       <RootStackNav.Screen name="ChatScreen" 
-      component={ChatScreen} />
+      component={ChatScreen}
+      options={{
+        title: "Chat",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }}  />
 
     </RootStackNav.Navigator>
   );
