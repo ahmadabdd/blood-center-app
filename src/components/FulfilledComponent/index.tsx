@@ -1,5 +1,5 @@
 import {colors} from "../../constants/palette";
-import { Text, View, Button, StyleSheet, TouchableOpacity } from "react-native";
+import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {
@@ -18,22 +18,26 @@ import {
   Roboto_900Black_Italic,
 } from "@expo-google-fonts/roboto";
 
-const ListComponentMain = () => {
+const FulfilledComponent = () => {
   const [unitsCount, setUnitsCount] = useState(2);
+  const [city, setCity] = useState("Tripoli");
+  const [hospital, setHospital] = useState("Al Hayat Hospital");
+  const [date, setDate] = useState("2021-12-12");
+  const [bloodType, setBloodType] = useState("O+");
+
+  const viewListItem = () => {
+    
+  }
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>AB+</Text>
-        <Text style={styles.date}>2021-10-15</Text>
+        <Text style={styles.header}>{bloodType}</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.bodyRight}>
-          <Text style={styles.upperBody}>Beirut</Text>
-          {unitsCount == 1 ? (
-            <Text style={styles.lowerBody}> {unitsCount} Unit </Text>
-          ) : (
-            <Text style={styles.lowerBody}> {unitsCount} Units </Text>
-          )}
+          <Text style={styles.upperBody}>{city}</Text>
+          <Text style={styles.lowerBody}>{hospital}</Text>
         </View>
         <TouchableOpacity style={styles.button} onPress={viewListItem}>
           <View style={styles.bodyLeft}>
@@ -84,16 +88,17 @@ const styles = StyleSheet.create({
   upperBody: {
     color: colors.text,
     fontFamily: Roboto_700Bold,
+    fontWeight: "bold",
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
-    fontFamily: Roboto_400Regular,
+    fontFamily: Roboto_300Light,
     fontSize: 22,
-    paddingLeft: 24,
-    paddingBottom: 8,
+    paddingLeft: 27,
+    paddingBottom: 10,
   },
   icon: {
     paddingTop: 29,
@@ -101,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListComponentMain;
+export default FulfilledComponent;
