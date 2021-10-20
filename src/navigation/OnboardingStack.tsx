@@ -6,6 +6,7 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { colors } from "../constants/palette";
 import SplashScreen from "../screens/SplashScreen";
+import RequestViewComponent from "../components/RequestViewComponent";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();
@@ -22,7 +23,7 @@ export function OnboardingStack() {
         }}
       >
         <RootStackNav.Screen name="SplashScreen" 
-        component={SplashScreen}
+        component={RequestViewComponent}
         options={{
           title: "Blood Center",
           headerStyle: {
