@@ -22,9 +22,6 @@ const FulfilledScreen = () => {
   }
   return (
     <View>
-      <Text>
-        Fullfilled Screen
-      </Text>
       <Button
         title="Fulfilled"
         color="#666666"

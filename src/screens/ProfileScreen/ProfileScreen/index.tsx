@@ -21,9 +21,6 @@ const ProfileScreen = () => {
   };
   return (
     <View>
-      <Text>
-        Profile Screen
-      </Text>
       <Button
         title="Health record"
         color="#666666"

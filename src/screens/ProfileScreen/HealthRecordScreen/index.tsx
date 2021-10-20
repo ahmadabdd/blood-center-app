@@ -10,9 +10,7 @@ const HealthRecordScreen = (navigation: any) => {
   
   return (
     <View>
-      <Text>
-      Health Record Screen
-      </Text>
+      
     </View>
   )
 };

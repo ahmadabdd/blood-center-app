@@ -10,9 +10,7 @@ const RequestDonatorsScreen = (navigation: any) => {
   
   return (
     <View>
-      <Text>
-      Request Donators Screen
-      </Text>
+      
     </View>
   )
 };

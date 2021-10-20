@@ -21,7 +21,6 @@ const InProgressScreen = () => {
   };
   return (
     <View>
-      <Text>InProgres Screenn</Text>
       <Button title="Fulfilled" color="#666666" onPress={navigateFulfilled} />
       <Button
         title="In progress"

@@ -10,9 +10,7 @@ const EditProfileScreen = (navigation: any) => {
   
   return (
     <View>
-      <Text>
-      Edit Profile Screen
-      </Text>
+     
     </View>
   )
 };

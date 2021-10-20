@@ -10,9 +10,7 @@ const NotificationsScreen = () => {
   
   return (
     <View>
-      <Text>
-        Notifications Screen
-      </Text>
+      
     </View>
   )
 };

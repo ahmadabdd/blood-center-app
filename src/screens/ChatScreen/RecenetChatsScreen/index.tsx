@@ -15,9 +15,7 @@ const RecentChatsScreen = () => {
   };
   return (
     <View>
-      <Text>
-        Recent Chats Screen
-      </Text>
+      
       <Button
         title="Go to chat"
         color="#666666"

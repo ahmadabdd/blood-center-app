@@ -10,9 +10,7 @@ const RequestViewScreen = (navigation: any) => {
   
   return (
     <View>
-      <Text>
-      Reques View Screen
-      </Text>
+    
     </View>
   )
 };

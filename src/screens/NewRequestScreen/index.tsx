@@ -6,7 +6,7 @@ import EmptyState from "../../components/EmptyState";
 import FullWidthButton from "../../components/FullWidthButton";
 import { colors } from "../../constants/palette";
 
-const NewRequestScreen = (navigation: any) => {
+const NewRequestScreen = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   //   const homestore = useSelector((state) => state.homeReducer)

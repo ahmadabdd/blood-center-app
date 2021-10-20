@@ -10,9 +10,7 @@ const MyDonationsScreen = (navigation: any) => {
   
   return (
     <View>
-      <Text>
-      My Donations Screen
-      </Text>
+      
     </View>
   )
 };

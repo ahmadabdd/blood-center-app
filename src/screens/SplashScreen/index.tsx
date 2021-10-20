@@ -1,90 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, Button, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {FlatList, Text, View, Button, StyleSheet} from "react-native";
+import {useSelector} from "react-redux";
 import ComponentTemplate from "../../components/ComponentTemplate";
+import ListComponentMain from "../../components/ListComponentMain";
 import EmptyState from "../../components/EmptyState";
 import FullWidthButton from "../../components/FullWidthButton";
-import { colors } from "../../constants/palette";
-import { useNavigation } from '@react-navigation/core';
+import {colors} from "../../constants/palette";
+import {useNavigation} from "@react-navigation/core";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  useFonts,
+  Roboto_100Thin,
+  Roboto_100Thin_Italic,
+  Roboto_300Light,
+  Roboto_300Light_Italic,
+  Roboto_400Regular,
+  Roboto_400Regular_Italic,
+  Roboto_500Medium,
+  Roboto_500Medium_Italic,
+  Roboto_700Bold,
+  Roboto_700Bold_Italic,
+  Roboto_900Black,
+  Roboto_900Black_Italic,
+} from '@expo-google-fonts/roboto';
 
-const  SplashScreen: () => JSX.Element = () => {
-  const navigation = useNavigation()
+
+
+const SplashScreen: () => JSX.Element = () => {
+  const navigation = useNavigation();
   const navigateLogin = () => {
-    navigation.navigate('LoginScreen')
-  }
+    navigation.navigate("LoginScreen");
+  };
   const navigateRegister = () => {
-    navigation.navigate('RegisterScreen')
-  }
+    navigation.navigate("RegisterScreen");
+  };
   return (
     <View>
-      <Text>
-        Splash Screen
-      </Text>
-      <Button 
-        title="Login"
-        color="#666666"
-        onPress={ navigateLogin }
-        />
-      <Button 
-      title="Register"
-      color="#666666"
-      onPress={ navigateRegister }
-      />
+      <Button title="Login" color="#666666" onPress={navigateLogin} />
+      <Button title="Register" color="#666666" onPress={navigateRegister} />
       <View>
-        <Text style={styles.divider}>
-          this is a custome component
-        </Text>
-
-
-        <View style={styles.cardContainer}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.header}>
-              AB+
-            </Text>
-            <Text style={styles.date}>
-              2021-10-15
-            </Text>
-          </View>
-          <View style={styles.bodyContainer}>
-            <Text style={styles.body}>
-              This is body
-            </Text>
-          </View>
-        </View>
-
 
       </View>
     </View>
-  )
+  );
 };
 
-const styles = StyleSheet.create({
-  divider: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-  cardContainer: {
-    backgroundColor: colors.primary
-  },
-  headerContainer: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  header: {
-
-  },
-  date: {
-
-  },
-  bodyContainer: {
-    backgroundColor: colors.background
-  },
-  body: {
-
-  }
-});
 
 export default SplashScreen;
