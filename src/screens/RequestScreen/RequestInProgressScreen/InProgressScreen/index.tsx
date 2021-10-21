@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FlatList, Text, View, Button} from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../../components/ComponentTemplate";
-import EmptyState from "../../../../components/EmptyState";
-import FullWidthButton from "../../../../components/FullWidthButton";
 import {colors} from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import InProgressRequestComponent from "../../../../components/InProgressRequestComponent";

@@ -44,8 +44,8 @@ export function BottomTabs({ navigation }) {
           options={{
             title: 'Donate',
             headerShown: false,
-            headerTintColor: colors.primary_green,
-            tabBarIcon: ({ focused, color , size }) => (
+            // headerTintColor: colors.primary_green,
+            tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
                 name={"blood-bag"}
                 size={28}
