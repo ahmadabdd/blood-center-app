@@ -11,6 +11,7 @@ import ListComponentMain from "../components/ListComponentMain";
 import FulfilledComponent from "../components/FulfilledComponent";
 import RequestsDonatorsComponent from "../components/RequestsDonatorsComponent";
 import NewRequestComponent from "../components/NewRequestComponent";
+import InProgressRequestComponent from "../components/InProgressRequestComponent";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();
@@ -27,7 +28,7 @@ export function OnboardingStack() {
         }}
       >
         <RootStackNav.Screen name="SplashScreen" 
-        component={NewRequestComponent}
+        component={InProgressRequestComponent}
         options={{
           title: "Blood Center",
           headerStyle: {
