@@ -14,12 +14,23 @@ const HomeScreen = () => {
   const navigateRequestView = () => {
     navigation.navigate("RequestViewScreen");
   };
+
+  const navigateNewRequest = () => {
+    navigation.navigate("NewRequestScreen");
+  };
+  
   return (
     <View>
       <Button
         title="Request View Screen"
         color="#666666"
         onPress={navigateRequestView}
+      />
+      
+      <Button
+        title="New Request Screen"
+        color="#666666"
+        onPress={navigateNewRequest}
       />
       <ListComponentMain />
     </View>

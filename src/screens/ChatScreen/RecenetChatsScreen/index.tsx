@@ -13,6 +13,10 @@ const RecentChatsScreen = () => {
   const navigateChat = () => {
     navigation.navigate("ChatScreen");
   };
+  
+  const navigateNewRequest = () => {
+      navigation.navigate("NewRequestScreen");
+    };
   return (
     <View>
       
@@ -21,7 +25,14 @@ const RecentChatsScreen = () => {
         color="#666666"
         onPress={ navigateChat }
       />
+      <Button
+          title="New Request Screen"
+          color="#666666"
+          onPress={navigateNewRequest}
+        />
     </View>
+    
+    
   )
 };
 

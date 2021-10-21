@@ -7,6 +7,7 @@ import HealthRecordScreen from "../screens/ProfileScreen/HealthRecordScreen";
 import EditProfileScreen from "../screens/ProfileScreen/EditProfileScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import MyDonationsScreen from "../screens/ProfileScreen/MyDonationsScreen";
+import NewRequestScreen from "../screens/NewRequestScreen";
 
 export function ProfileStack() {
   const RootStackNav = createStackNavigator();
@@ -15,48 +16,65 @@ export function ProfileStack() {
   return (
     <RootStackNav.Navigator
       screenOptions={{
-        cardStyle:{
-          backgroundColor: colors.white
-        }
+        cardStyle: {
+          backgroundColor: colors.white,
+        },
       }}
     >
+      <RootStackNav.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          title: "Profile",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="ProfileScreen" 
-      component={ProfileScreen}
-      options={{
-        title: "Profile",
-        headerStyle: {
-          backgroundColor: colors.primary
-        }
-      }} />
+      <RootStackNav.Screen
+        name="MyDonationsScreen"
+        component={MyDonationsScreen}
+        options={{
+          title: "My donations",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="MyDonationsScreen" 
-      component={MyDonationsScreen}
-      options={{
-        title: "My donations",
-        headerStyle: {
-          backgroundColor: colors.primary
-        }
-      }} />
+      <RootStackNav.Screen
+        name="HealthRecordScreen"
+        component={HealthRecordScreen}
+        options={{
+          title: "Health record",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="HealthRecordScreen" 
-      component={HealthRecordScreen}
-      options={{
-        title: "Health record",
-        headerStyle: {
-          backgroundColor: colors.primary
-        }
-      }} />
+      <RootStackNav.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+        options={{
+          title: "Edit profile",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="EditProfileScreen" 
-      component={EditProfileScreen}
-      options={{
-        title: "Edit profile",
-        headerStyle: {
-          backgroundColor: colors.primary
-        }
-      }} />
-    
+      <RootStackNav.Screen
+        name="NewRequestScreen"
+        component={NewRequestScreen}
+        options={{
+          title: "New request",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
     </RootStackNav.Navigator>
   );
 }

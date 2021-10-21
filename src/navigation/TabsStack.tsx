@@ -9,6 +9,7 @@ import { HomeStack } from "./HomeStack";
 import { RequestsStack } from "./RequestsStack";
 import { ChatStack } from "./ChatStack";
 import { ProfileStack } from "./ProfileStack";
+import { NotificationsStack } from "./NotificationsStack";
 
 
 
@@ -74,10 +75,11 @@ export function BottomTabs({ navigation }) {
           }}
         />
         <BottomTabsNav.Screen
-          name="NotificationsScreen"
-          component={NotificationsScreen}
+          name="NotificationsStack"
+          component={NotificationsStack}
           options={{
             title: 'Notifications',
+            headerShown: false,
             headerStyle: {
               backgroundColor: colors.primary
             },

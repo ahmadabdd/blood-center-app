@@ -44,13 +44,11 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   headerContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   header: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingLeft: 27,
     paddingTop: 7,
     paddingBottom: 5,
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingTop: 12,
     paddingBottom: 10,
@@ -73,7 +70,6 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    // fontFamily: Roboto_700Bold,
     fontWeight: "bold",
     fontSize: 27,
     paddingLeft: 27,
@@ -81,7 +77,6 @@ const styles = StyleSheet.create({
   },
   lowerBody: {
     color: colors.text,
-    // fontFamily: Roboto_300Light,
     fontSize: 22,
     paddingLeft: 27,
     paddingBottom: 10,

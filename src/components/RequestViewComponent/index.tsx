@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   headerContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -65,7 +64,6 @@ const styles = StyleSheet.create({
   headerContainerRight: {},
   header: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingLeft: 27,
     paddingTop: 15,
     paddingBottom: 10,
@@ -73,7 +71,6 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingTop: 12,
     paddingBottom: 3,
@@ -81,7 +78,6 @@ const styles = StyleSheet.create({
   },
   time: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingBottom: 10,
     fontSize: 17,
@@ -95,28 +91,24 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    // fontFamily: Roboto_700Bold,
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 20,
   },
   name: {
     color: colors.text,
-    // fontFamily: Roboto_700Bold,
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 10,
   },
   units: {
     color: colors.text,
-    // fontFamily: Roboto_400Regular,
     fontSize: 22,
     paddingLeft: 24,
     paddingBottom: 8,
   },
   expiry: {
     color: colors.text,
-    // fontFamily: Roboto_400Regular,
     fontSize: 22,
     paddingLeft: 24,
     paddingBottom: 20,

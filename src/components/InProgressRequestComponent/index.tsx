@@ -1,8 +1,8 @@
 import {colors} from "../../constants/palette";
-import {Text, View, Button, StyleSheet} from "react-native";
+import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Divider, Avatar} from "react-native-elements";
+import {Divider, Avatar} from "react-native-elements";
 
 const InProgressRequestComponent = () => {
   const [unitsCount, setUnitsCount] = useState(2);
@@ -33,38 +33,44 @@ const InProgressRequestComponent = () => {
           </View>
         </View>
         <Divider
-            style={{width: "80%", marginLeft: 27, marginTop: 12, marginBottom: 15}}
-            color={colors.text_dark}
-            insetType="left"
-            subHeaderStyle={{}}
-            width={1}
-            orientation="horizontal"
-          />
-        <View style={styles.lowerBody}>
-          <View style={styles.avatar}>
-            <Avatar
-              activeOpacity={0.2}
-              avatarStyle={{}}
-              containerStyle={{backgroundColor: "#BDBDBD"}}
-              icon={{}}
-              iconStyle={{}}
-              imageProps={{}}
-              onLongPress={() => alert("onLongPress")}
-              onPress={() => alert("onPress")}
-              overlayContainerStyle={{}}
-              placeholderStyle={{}}
-              rounded
-              size="medium"
-              // source={{ uri: "" }}
-              title="P"
-              titleStyle={{}}
-            />
-          </View>
-          <Text style={styles.donation}> Donation requests </Text>
-          <View style={styles.icon}>
+          style={{
+            width: "80%",
+            marginLeft: 27,
+            marginTop: 12,
+            marginBottom: 15,
+          }}
+          color={colors.text_dark}
+          insetType="left"
+          subHeaderStyle={{}}
+          width={1}
+          orientation="horizontal"
+        />
+        <TouchableOpacity onPress={() => alert("go to requests")}>
+          <View style={styles.lowerBody}>
+            <View style={styles.avatar}>
+              <Avatar
+                activeOpacity={0.2}
+                avatarStyle={{}}
+                containerStyle={{backgroundColor: "#BDBDBD"}}
+                icon={{}}
+                iconStyle={{}}
+                imageProps={{}}
+                onLongPress={() => alert("onLongPress")}
+                overlayContainerStyle={{}}
+                placeholderStyle={{}}
+                rounded
+                size="medium"
+                // source={{ uri: "" }}
+                title="P"
+                titleStyle={{}}
+              />
+            </View>
+            <Text style={styles.donation}> Donation requests </Text>
+            <View style={styles.icon}>
               <MaterialCommunityIcons name={"arrow-right"} size={25} />
             </View>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -107,10 +113,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   upperBody: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   lowerBody: {
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   city: {
     color: colors.text,

@@ -20,7 +20,7 @@ const ListComponentMain = () => {
             <Text style={styles.lowerBody}> {unitsCount} Units </Text>
           )}
         </View>
-        <TouchableOpacity style={styles.button} onPress={viewListItem}>
+        <TouchableOpacity style={styles.button} >
           <View style={styles.bodyLeft}>
             <View style={styles.icon}>
               <MaterialCommunityIcons name={"arrow-right"} size={25} />
@@ -39,13 +39,11 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   headerContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   header: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingLeft: 27,
     paddingTop: 7,
     paddingBottom: 5,
@@ -53,7 +51,6 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.white,
-    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingTop: 12,
     paddingBottom: 10,
@@ -68,14 +65,12 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    // fontFamily: Roboto_700Bold,
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
-    // fontFamily: Roboto_400Regular,
     fontSize: 22,
     paddingLeft: 24,
     paddingBottom: 8,

@@ -3,12 +3,11 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {colors} from "../constants/palette";
-
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
-import RecentChatsScreen from "../screens/ChatScreen/RecenetChatsScreen";
+import NotificationsScreen from "../screens/NotificationsScreen";
+import RequestViewScreen from "../screens/HomeScreen/RequestViewScreen";
 import NewRequestScreen from "../screens/NewRequestScreen";
 
-export function ChatStack() {
+export function NotificationsStack() {
   const RootStackNav = createStackNavigator();
   const navigationRef = useRef(null);
 
@@ -21,10 +20,10 @@ export function ChatStack() {
       }}
     >
       <RootStackNav.Screen
-        name="RecentChatsScreen"
-        component={RecentChatsScreen}
+        name="NotificationsScreen"
+        component={NotificationsScreen}
         options={{
-          title: "Recent chats",
+          title: "Notifications",
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -32,10 +31,10 @@ export function ChatStack() {
       />
 
       <RootStackNav.Screen
-        name="ChatScreen"
-        component={ChatScreen}
+        name="RequestViewScreen"
+        component={RequestViewScreen}
         options={{
-          title: "Chat",
+          title: "Request",
           headerStyle: {
             backgroundColor: colors.primary,
           },

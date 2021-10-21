@@ -7,6 +7,7 @@ import FulfilledScreen from "../screens/RequestScreen/RequestFulfilledScreen/Ful
 import RequestDonatorsScreen from "../screens/RequestScreen/RequestFulfilledScreen/RequestDonatorsScreen";
 import InProgressScreen from "../screens/RequestScreen/RequestInProgressScreen/InProgressScreen";
 import RequestsScreen from "../screens/RequestScreen/RequestInProgressScreen/RequestsScreen";
+import NewRequestScreen from "../screens/NewRequestScreen";
 
 export function RequestsStack() {
   const RootStackNav = createStackNavigator();
@@ -15,48 +16,65 @@ export function RequestsStack() {
   return (
     <RootStackNav.Navigator
       screenOptions={{
-        cardStyle:{
-          backgroundColor: colors.white
-        }
+        cardStyle: {
+          backgroundColor: colors.white,
+        },
       }}
     >
+      <RootStackNav.Screen
+        name="FulfilledScreen"
+        component={FulfilledScreen}
+        options={{
+          title: "Fulfilled requests",
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="FulfilledScreen" 
-      component={FulfilledScreen}
-      options={{
-        title: "Fulfilled requests",
-        headerStyle: {
-          backgroundColor: '#F47174'
-        }
-      }}  />
+      <RootStackNav.Screen
+        name="RequestDonatorsScreen"
+        component={RequestDonatorsScreen}
+        options={{
+          title: "Donators",
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="RequestDonatorsScreen" 
-      component={RequestDonatorsScreen}
-      options={{
-        title: "Donators",
-        headerStyle: {
-          backgroundColor: '#F47174'
-        }
-      }}  />
+      <RootStackNav.Screen
+        name="InProgressScreen"
+        component={InProgressScreen}
+        options={{
+          title: "Requests in progress",
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="InProgressScreen" 
-      component={InProgressScreen}
-      options={{
-        title: "Requests in progress",
-        headerStyle: {
-          backgroundColor: '#F47174'
-        }
-      }}  />
+      <RootStackNav.Screen
+        name="RequestsScreen"
+        component={RequestsScreen}
+        options={{
+          title: "Requests",
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
 
-      <RootStackNav.Screen name="RequestsScreen" 
-      component={RequestsScreen}
-      options={{
-        title: "Requests",
-        headerStyle: {
-          backgroundColor: '#F47174'
-        }
-      }}  />
-    
+      <RootStackNav.Screen
+        name="NewRequestScreen"
+        component={NewRequestScreen}
+        options={{
+          title: "New request",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
     </RootStackNav.Navigator>
   );
 }

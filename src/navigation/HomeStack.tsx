@@ -5,6 +5,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {colors} from "../constants/palette";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import RequestViewScreen from "../screens/HomeScreen/RequestViewScreen";
+import NewRequestScreen from "../screens/NewRequestScreen";
 
 export function HomeStack() {
   const RootStackNav = createStackNavigator();
@@ -32,6 +33,15 @@ export function HomeStack() {
       component={RequestViewScreen}
       options={{
         title: "Request",
+        headerStyle: {
+          backgroundColor: colors.primary
+        }
+      }} />
+      
+      <RootStackNav.Screen name="NewRequestScreen" 
+      component={NewRequestScreen}
+      options={{
+        title: "New request",
         headerStyle: {
           backgroundColor: colors.primary
         }

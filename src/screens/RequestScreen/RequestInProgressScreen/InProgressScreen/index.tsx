@@ -6,6 +6,7 @@ import EmptyState from "../../../../components/EmptyState";
 import FullWidthButton from "../../../../components/FullWidthButton";
 import {colors} from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
+import InProgressRequestComponent from "../../../../components/InProgressRequestComponent";
 
 const InProgressScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +20,9 @@ const InProgressScreen = () => {
   const navigateRequests = () => {
     navigation.navigate("RequestsScreen");
   };
+  const navigateNewRequest = () => {
+    navigation.navigate("NewRequestScreen");
+  };
   return (
     <View>
       <Button title="Fulfilled" color="#666666" onPress={navigateFulfilled} />
@@ -28,6 +32,13 @@ const InProgressScreen = () => {
         onPress={navigateInProgress}
       />
       <Button title="Requests" color="#666666" onPress={navigateRequests} />
+
+      <Button
+        title="New Request Screen"
+        color="#666666"
+        onPress={navigateNewRequest}
+      />
+      <InProgressRequestComponent />
     </View>
   );
 };
