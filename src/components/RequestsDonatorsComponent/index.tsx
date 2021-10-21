@@ -119,7 +119,6 @@ const RequestsDonatorsComponent = () => {
   );
       
   return (
-    <SafeAreaView style={styles.container}>
       <View style={styles.cardContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.headerContainerLeft}>
@@ -139,7 +138,6 @@ const RequestsDonatorsComponent = () => {
           />
         </View>
       </View>
-    </SafeAreaView>
   );
 };
 
@@ -169,10 +167,6 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     backgroundColor: colors.background,
-    // flexDirection: "row",
-    // borderBottomRightRadius: 8,
-    // borderBottomLeftRadius: 8,
-    // justifyContent: "space-between",
   },
   name: {
     color: colors.text,
@@ -195,9 +189,6 @@ const styles = StyleSheet.create({
   left: {
     flex: 1,
     flexDirection: "row",
-  },
-  container: {
-    flex: 1,
   },
 });
 

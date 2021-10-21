@@ -33,6 +33,7 @@ const HomeScreen = () => {
         onPress={navigateNewRequest}
       />
       <ListComponentMain />
+      <ListComponentMain />
     </View>
   );
 };
