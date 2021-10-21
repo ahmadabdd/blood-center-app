@@ -2,21 +2,7 @@ import {colors} from "../../constants/palette";
 import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {
-  useFonts,
-  Roboto_100Thin,
-  Roboto_100Thin_Italic,
-  Roboto_300Light,
-  Roboto_300Light_Italic,
-  Roboto_400Regular,
-  Roboto_400Regular_Italic,
-  Roboto_500Medium,
-  Roboto_500Medium_Italic,
-  Roboto_700Bold,
-  Roboto_700Bold_Italic,
-  Roboto_900Black,
-  Roboto_900Black_Italic,
-} from "@expo-google-fonts/roboto";
+
 
 const FulfilledComponent = () => {
   const [unitsCount, setUnitsCount] = useState(2);
@@ -64,7 +50,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: colors.white,
-    fontFamily: Roboto_500Medium,
+    // fontFamily: Roboto_500Medium,
     paddingLeft: 27,
     paddingTop: 7,
     paddingBottom: 5,
@@ -72,7 +58,7 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.white,
-    fontFamily: Roboto_500Medium,
+    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingTop: 12,
     paddingBottom: 10,
@@ -87,7 +73,7 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    fontFamily: Roboto_700Bold,
+    // fontFamily: Roboto_700Bold,
     fontWeight: "bold",
     fontSize: 27,
     paddingLeft: 27,
@@ -95,7 +81,7 @@ const styles = StyleSheet.create({
   },
   lowerBody: {
     color: colors.text,
-    fontFamily: Roboto_300Light,
+    // fontFamily: Roboto_300Light,
     fontSize: 22,
     paddingLeft: 27,
     paddingBottom: 10,

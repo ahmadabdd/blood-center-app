@@ -3,21 +3,6 @@ import {Text, View, Button, StyleSheet} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider} from "react-native-elements";
-import {
-  useFonts,
-  Roboto_100Thin,
-  Roboto_100Thin_Italic,
-  Roboto_300Light,
-  Roboto_300Light_Italic,
-  Roboto_400Regular,
-  Roboto_400Regular_Italic,
-  Roboto_500Medium,
-  Roboto_500Medium_Italic,
-  Roboto_700Bold,
-  Roboto_700Bold_Italic,
-  Roboto_900Black,
-  Roboto_900Black_Italic,
-} from "@expo-google-fonts/roboto";
 
 const RequestViewComponent = () => {
   const [unitsCount, setUnitsCount] = useState(2);
@@ -80,7 +65,7 @@ const styles = StyleSheet.create({
   headerContainerRight: {},
   header: {
     color: colors.white,
-    fontFamily: Roboto_500Medium,
+    // fontFamily: Roboto_500Medium,
     paddingLeft: 27,
     paddingTop: 15,
     paddingBottom: 10,
@@ -88,7 +73,7 @@ const styles = StyleSheet.create({
   },
   date: {
     color: colors.white,
-    fontFamily: Roboto_500Medium,
+    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingTop: 12,
     paddingBottom: 3,
@@ -96,7 +81,7 @@ const styles = StyleSheet.create({
   },
   time: {
     color: colors.white,
-    fontFamily: Roboto_500Medium,
+    // fontFamily: Roboto_500Medium,
     paddingRight: 27,
     paddingBottom: 10,
     fontSize: 17,
@@ -110,28 +95,28 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    fontFamily: Roboto_700Bold,
+    // fontFamily: Roboto_700Bold,
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 20,
   },
   name: {
     color: colors.text,
-    fontFamily: Roboto_700Bold,
+    // fontFamily: Roboto_700Bold,
     fontSize: 27,
     paddingLeft: 27,
     paddingTop: 10,
   },
   units: {
     color: colors.text,
-    fontFamily: Roboto_400Regular,
+    // fontFamily: Roboto_400Regular,
     fontSize: 22,
     paddingLeft: 24,
     paddingBottom: 8,
   },
   expiry: {
     color: colors.text,
-    fontFamily: Roboto_400Regular,
+    // fontFamily: Roboto_400Regular,
     fontSize: 22,
     paddingLeft: 24,
     paddingBottom: 20,
