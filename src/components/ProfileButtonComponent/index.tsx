@@ -3,29 +3,23 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const NotificationComponent = () => {
+const ProfileButtonComponent = (props) => {
   const [header, setHeader] = useState("This is a header");
-  const [body, setBody] = useState("This is a body");
-  const [time, setTime] = useState("time");
 
   return (
-    <TouchableOpacity>
-    <View style={styles.container}>
+    <TouchableOpacity onPress={props.onPress}>
+      <View style={styles.container}>
         <View style={styles.left}>
           <View>
-            <Text style={styles.header}>{header}</Text>
-          </View>
-          <View>
-            <Text style={styles.body}>{body}</Text>
+            <Text style={styles.header}>{props.header}</Text>
           </View>
         </View>
         <View style={styles.right}>
-          <Text style={styles.time}>{time}</Text>
           <View style={styles.icon}>
             <MaterialCommunityIcons name={"arrow-right"} size={20} />
           </View>
         </View>
-    </View>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -33,29 +27,23 @@ const NotificationComponent = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    marginTop: 7,
-    // marginLeft: 5,
-    // marginRight: 5,
-    padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    marginTop: 2,
+    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "2%",
+    borderRadius: 10,
   },
   header: {
     fontSize: 18,
-    fontWeight: 'bold'
-  },
-  body: {
-    fontSize: 16,
-    paddingTop: 5
+    padding: "2%",
+    paddingLeft: "10%"
   },
   left: {},
   right: {},
-  time: {
-    paddingRight: 20,
-  },
   icon: {
-    paddingTop: 10
+    paddingTop: 10,
   },
 });
 
-export default NotificationComponent;
+export default ProfileButtonComponent;
