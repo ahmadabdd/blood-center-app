@@ -7,6 +7,7 @@ import FullWidthButton from "../../components/FullWidthButton";
 import {colors} from "../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import NotificationComponent from "../../components/NotificationComponent";
+import NewRequestBottunComponent from "../../components/NewRequestBottunComponent";
 
 const NotificationsScreen = () => {
   const navigation = useNavigation();
@@ -20,19 +21,14 @@ const NotificationsScreen = () => {
 
   return (
     <View>
+      <NewRequestBottunComponent onPress={navigateNewRequest} />
       <NotificationComponent />
       <NotificationComponent />
       <Button
         title="Request View Screen"
         color="#666666"
         onPress={navigateRequestView}
-      />
-
-      <Button
-        title="New Request Screen"
-        color="#666666"
-        onPress={navigateNewRequest}
-      />
+      /> 
     </View>
   );
 };

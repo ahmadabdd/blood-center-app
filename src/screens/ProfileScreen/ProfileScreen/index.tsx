@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import {useSelector} from "react-redux";
 import ComponentTemplate from "../../../components/ComponentTemplate";
@@ -20,6 +21,8 @@ import ProfileButtonComponent from "../../../components/ProfileButtonComponent";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import * as ImagePicker from "expo-image-picker";
 import {Constants} from "expo-constants";
+import { store } from "../../../redux/store";
+import { deleteUser } from "../../../redux/slices/userSlice";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -42,13 +45,11 @@ const ProfileScreen = () => {
   const [status, setStatus] = useState("Available");
   const [header, setHeader] = useState("Availability");
   const [value, setValue] = React.useState(true);
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
   const changeStatus = () => {
     setValue(!value);
     value ? setStatus("Unavailable") : setStatus("Available");
   };
-
-  ;
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -65,63 +66,88 @@ const ProfileScreen = () => {
     }
   };
 
+  const Logout = () => {
+    store.dispatch(deleteUser());
+  };
+
   return (
     <View>
-      <View style={styles.headContainer}>
-        <View style={styles.avatar}>
-          <Avatar
-            activeOpacity={0.2}
-            avatarStyle={{}}
-            containerStyle={{backgroundColor: colors.text}}
-            iconStyle={{}}
-            imageProps={{}}
-            onLongPress={pickImage}
-            onPress={() => alert("Long press to edit!")}
-            overlayContainerStyle={{}}
-            placeholderStyle={{}}
-            rounded
-            size="large"
-            source={{uri: image}}
-            titleStyle={{}}
-          />
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>
-            {firstName} {lastName}
-          </Text>
-          <Text style={styles.status}>{status}</Text>
-        </View>
-      </View>
-      <View style={styles.body}>
-        <View style={styles.container}>
-          <View style={styles.left}>
-            <View>
-              <Text style={styles.header}>{header}</Text>
-            </View>
-          </View>
-          <View style={styles.right}>
-            <Switch
-              color="#2089dc"
-              value={value}
-              onValueChange={() => changeStatus()}
+      <ScrollView>
+        <View style={styles.headContainer}>
+          <View style={styles.avatar}>
+            <Avatar
+              activeOpacity={0.2}
+              avatarStyle={{}}
+              containerStyle={{backgroundColor: colors.text}}
+              iconStyle={{}}
+              imageProps={{}}
+              onLongPress={pickImage}
+              onPress={() => alert("Long press to edit!")}
+              overlayContainerStyle={{}}
+              placeholderStyle={{}}
+              rounded
+              size="large"
+              source={{uri: image}}
+              titleStyle={{}}
             />
           </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.name}>
+              {firstName} {lastName}
+            </Text>
+            <Text style={styles.status}>{status}</Text>
+          </View>
         </View>
+        <View style={styles.body}>
+          <View style={styles.container}>
+            <View style={styles.left}>
+              <View>
+                <Text style={styles.header}>{header}</Text>
+              </View>
+            </View>
+            <View style={styles.right}>
+              <Switch
+                color="#2089dc"
+                value={value}
+                onValueChange={() => changeStatus()}
+              />
+            </View>
+          </View>
 
-        <ProfileButtonComponent
-          header="Health record"
-          onPress={NavigateHealthRecord}
-        />
-        <ProfileButtonComponent
-          header="My donations"
-          onPress={navigateMyDonations}
-        />
-        <ProfileButtonComponent
-          header="Edit profile"
-          onPress={navigateEditProfile}
-        />
-      </View>
-      <NewRequestBottunComponent onPress={navigateNewRequest} />
+          <ProfileButtonComponent
+            header="Health record"
+            onPress={NavigateHealthRecord}
+          />
+          <ProfileButtonComponent
+            header="My donations"
+            onPress={navigateMyDonations}
+          />
+          <ProfileButtonComponent
+            header="Edit profile"
+            onPress={navigateEditProfile}
+          />
+        </View>
+        <TouchableOpacity
+          onPress={Logout} 
+        >
+          <View style={styles.logoutContainer}>
+            <View style={styles.left}>
+              <View>
+                <Text style={styles.logout}>Log out</Text>
+              </View>
+            </View>
+            <View style={styles.right}>
+              <View style={styles.icon}>
+                <MaterialCommunityIcons
+                  name={"logout"}
+                  size={25}
+                  color={colors.white}
+                />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -142,7 +168,7 @@ const styles = StyleSheet.create({
     marginRight: "25%",
   },
   body: {
-    marginTop: "26%",
+    marginTop: "15%",
   },
   name: {
     fontSize: 25,
@@ -159,15 +185,30 @@ const styles = StyleSheet.create({
     margin: "2%",
     borderRadius: 10,
   },
+  logoutContainer: {
+    backgroundColor: colors.red,
+    marginTop: 2,
+    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "2%",
+    borderRadius: 10,
+  },
   header: {
     fontSize: 18,
     padding: "2%",
     paddingLeft: "10%",
   },
+  logout: {
+    fontSize: 18,
+    padding: "2%",
+    paddingLeft: "10%",
+    color: colors.white,
+  },
   left: {},
   right: {},
   icon: {
-    paddingTop: 10,
+    paddingTop: "25%",
   },
 });
 export default ProfileScreen;

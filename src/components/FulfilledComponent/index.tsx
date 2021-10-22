@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
-const FulfilledComponent = () => {
+const FulfilledComponent = (props) => {
   const [unitsCount, setUnitsCount] = useState(2);
   const [city, setCity] = useState("Tripoli");
   const [hospital, setHospital] = useState("Al Hayat Hospital");
@@ -17,15 +17,15 @@ const FulfilledComponent = () => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>{bloodType}</Text>
-        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.header}>{props.bloodType}</Text>
+        <Text style={styles.date}>{props.date}</Text>
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.bodyRight}>
-          <Text style={styles.upperBody}>{city}</Text>
-          <Text style={styles.lowerBody}>{hospital}</Text>
+          <Text style={styles.upperBody}>{props.city}</Text>
+          <Text style={styles.lowerBody}>{props.hospital}</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={viewListItem}>
+        <TouchableOpacity style={styles.button} onPress={props.onPress}>
           <View style={styles.bodyLeft}>
             <View style={styles.icon}>
               <MaterialCommunityIcons name={"arrow-right"} size={25} />

@@ -3,7 +3,6 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {colors} from "../constants/palette";
-
 import ChatScreen from "../screens/ChatScreen/ChatScreen";
 import RecentChatsScreen from "../screens/ChatScreen/RecenetChatsScreen";
 import NewRequestScreen from "../screens/NewRequestScreen";

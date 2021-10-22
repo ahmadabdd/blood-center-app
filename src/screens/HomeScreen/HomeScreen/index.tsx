@@ -7,6 +7,7 @@ import FullWidthButton from "../../../components/FullWidthButton";
 import {colors} from "../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import ListComponentMain from "../../../components/ListComponentMain";
+import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -21,16 +22,11 @@ const HomeScreen = () => {
   
   return (
     <View>
+      <NewRequestBottunComponent onPress={navigateNewRequest} />
       <Button
         title="Request View Screen"
         color="#666666"
         onPress={navigateRequestView}
-      />
-      
-      <Button
-        title="New Request Screen"
-        color="#666666"
-        onPress={navigateNewRequest}
       />
       <ListComponentMain />
       <ListComponentMain />

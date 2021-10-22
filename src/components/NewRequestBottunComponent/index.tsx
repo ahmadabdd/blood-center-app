@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     marginTop: '141%',
     marginLeft: 250,
     position: 'absolute', 
+    zIndex: 2
   },
   button: {
     backgroundColor: colors.green, 

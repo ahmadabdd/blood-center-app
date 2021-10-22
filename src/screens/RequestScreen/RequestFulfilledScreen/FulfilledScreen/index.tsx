@@ -7,6 +7,7 @@ import FullWidthButton from "../../../../components/FullWidthButton";
 import { colors } from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import FulfilledComponent from "../../../../components/FulfilledComponent";
+import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
 
 
 const FulfilledScreen = () => {
@@ -24,8 +25,14 @@ const FulfilledScreen = () => {
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
   };
+  const [unitsCount, setUnitsCount] = useState(2);
+  const [city, setCity] = useState("Tripoli");
+  const [hospital, setHospital] = useState("Al Hayat Hospital");
+  const [date, setDate] = useState("2021-12-12");
+  const [bloodType, setBloodType] = useState("O+");
   return (
     <View>
+      <NewRequestBottunComponent onPress={navigateNewRequest} />
       <Button
         title="Fulfilled"
         color="#666666"
@@ -36,18 +43,14 @@ const FulfilledScreen = () => {
         color="#666666"
         onPress={ navigateInProgress }
       />
-      <Button
-        title="Request donations"
-        color="#666666"
-        onPress={ navigateRequestsDonators }
+      <FulfilledComponent 
+        unitsCount={unitsCount}
+        city={city}
+        hospital={hospital}
+        date={date}
+        bloodType={bloodType}
+        onPress={navigateRequestsDonators}
       />
-      
-  <Button
-        title="New Request Screen"
-        color="#666666"
-        onPress={navigateNewRequest}
-      />
-      <FulfilledComponent />
     </View>
   )
 };

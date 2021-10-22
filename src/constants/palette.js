@@ -2,7 +2,7 @@ export const colors = {
     primary: '#F47174',
     primary_dark: '#523A28',
     primary_green: '#0B8E8B',
-    red: '#F11B53',
+    red: '#DE0000',
     green: '#23CB66',
     gold: '#D2BA23',
     black: '#000000',

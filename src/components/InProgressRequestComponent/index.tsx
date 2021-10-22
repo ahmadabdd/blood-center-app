@@ -3,9 +3,14 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider, Avatar} from "react-native-elements";
+import {useNavigation} from "@react-navigation/core";
 
-const InProgressRequestComponent = () => {
+
+const InProgressRequestComponent = (props) => {
+  const navigation = useNavigation();
+
   const [unitsCount, setUnitsCount] = useState(2);
+  const [requestCount, setRequestCount] = useState(1);
   const [city, setCity] = useState("Beirut");
   const [hospital, setHospital] = useState("AUBMC");
   const [bloodType, setBloodType] = useState("AB+");
@@ -14,22 +19,26 @@ const InProgressRequestComponent = () => {
   const [expiryDate, setExpiryDate] = useState("2021-10-25");
   const [firstName, setFirstName] = useState("Ahmad");
   const [lastName, setLastName] = useState("Abd");
+  const [navigateTo, setNavigateTo] = useState("Abd");
+  const navigate = () => {
+    navigation.navigate(navigateTo);
+  };
 
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>{bloodType}</Text>
-        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.header}>{props.bloodType}</Text>
+        <Text style={styles.date}>{props.date}</Text>
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.upperBody}>
           <View>
             <Text style={styles.city}>
-              {city}, {hospital}
+              {props.city} {props.hospital}
             </Text>
           </View>
           <View>
-            <Text style={styles.units}> units: {unitsCount} </Text>
+            <Text style={styles.units}> units: {props.unitsCount} </Text>
           </View>
         </View>
         <Divider
@@ -45,25 +54,10 @@ const InProgressRequestComponent = () => {
           width={1}
           orientation="horizontal"
         />
-        <TouchableOpacity onPress={() => alert("go to requests")}>
+        <TouchableOpacity onPress={props.onPress}>
           <View style={styles.lowerBody}>
             <View style={styles.avatar}>
-              <Avatar
-                activeOpacity={0.2}
-                avatarStyle={{}}
-                containerStyle={{backgroundColor: "#BDBDBD"}}
-                icon={{}}
-                iconStyle={{}}
-                imageProps={{}}
-                onLongPress={() => alert("onLongPress")}
-                overlayContainerStyle={{}}
-                placeholderStyle={{}}
-                rounded
-                size="medium"
-                // source={{ uri: "" }}
-                title="P"
-                titleStyle={{}}
-              />
+              <Text style={styles.unitsCount}>{ props.requestCount }</Text>
             </View>
             <Text style={styles.donation}> Donation requests </Text>
             <View style={styles.icon}>
@@ -139,11 +133,16 @@ const styles = StyleSheet.create({
   avatar: {
     paddingLeft: 27,
     paddingBottom: 18,
+    marginLeft: 15,
+    marginRight: 7
   },
   icon: {
     paddingTop: 13,
     paddingLeft: 16,
   },
+  unitsCount: {
+    fontSize: 30
+  }
 });
 
 export default InProgressRequestComponent;

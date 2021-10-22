@@ -7,8 +7,8 @@ import {Divider, Avatar} from "react-native-elements";
 
 const RequestComponent = () => {
   const [bloodType, setBloodType] = useState("A-");
-  const [firstname, setFirstName] = useState("Aya");
-  const [lastName, setLastName] = useState("Jamal");
+  const [firstname, setFirstName] = useState("Abdullah");
+  const [lastName, setLastName] = useState("Alshami");
   const [date, setDate] = useState("2021-56-87");
 
 
