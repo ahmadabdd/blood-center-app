@@ -205,8 +205,6 @@ const styles = StyleSheet.create({
     paddingLeft: "10%",
     color: colors.white,
   },
-  left: {},
-  right: {},
   icon: {
     paddingTop: "25%",
   },

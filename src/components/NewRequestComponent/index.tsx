@@ -1,41 +1,92 @@
 import {colors} from "../../constants/palette";
-import {Text, View, Button, StyleSheet, SafeAreaView} from "react-native";
-import React, {useEffect, useState} from "react";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import React, {useEffect, useState, useRef} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider} from "react-native-elements";
+import {Picker} from "@react-native-picker/picker";
 
 const NewRequestComponent = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState();
+  const pickerRef = useRef();
+
+  function open() {
+    pickerRef.current.focus();
+  }
+
+  function close() {
+    pickerRef.current.blur();
+  }
+
+  const Submit = () => {
+    Alert.alert('Submitted!')
+  };
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>New request</Text>
+    <View>
+      <View style={styles.cardContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>New request</Text>
+        </View>
+        <View style={styles.bodyContainer}>
+          <View>
+            <Text style={styles.question}>What blood type do you need?</Text>
+          </View>
+          <View style={styles.picker}>
+            <Picker
+              ref={pickerRef}
+              selectedValue={selectedLanguage}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedLanguage(itemValue)
+              }
+            >
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </View>
+          <View>
+            <Text style={styles.question}>Where are you?</Text>
+          </View>
+          <View style={styles.picker}>
+            <Picker
+              ref={pickerRef}
+              selectedValue={selectedLanguage}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedLanguage(itemValue)
+              }
+            >
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </View>
+          <View>
+            <Text style={styles.question}>Which hospital?</Text>
+          </View>
+          <View style={styles.picker}>
+            <Picker
+              ref={pickerRef}
+              selectedValue={selectedLanguage}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedLanguage(itemValue)
+              }
+            >
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </View>
+        </View>
       </View>
-      <View style={styles.bodyContainer}>
-        <View>
-          <Text style={styles.question}>What blood type do you need?</Text>
+      <TouchableOpacity onPress={Submit}>
+        <View style={styles.logoutContainer}>
+          <Text style={styles.logout}>Submit</Text>
         </View>
-        <View>
-          <Text style={styles.question}>-PICKER HERE-</Text>
-        </View>
-        <View>
-          <Text style={styles.question}>Where are you?</Text>
-        </View>
-        <View>
-          <Text style={styles.question}>-PICKER HERE-</Text>
-        </View>
-        <View>
-          <Text style={styles.question}>Which hospital?</Text>
-        </View>
-        <View>
-          <Text style={styles.question}>-PICKER HERE-</Text>
-        </View>
-        <View style={styles.button}>
-          <Button 
-          title="Submit" 
-          color={colors.green} 
-          onPress={() => alert('pressed')}/>
-        </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -72,7 +123,23 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     fontSize: 20,
   },
-  button: {},
+  picker: {
+    marginRight: 20,
+    marginLeft: 20,
+  },
+  logoutContainer: {
+    backgroundColor: colors.green,
+    marginTop: '65.5%', 
+    padding: 20,
+    alignItems: 'center',
+  },
+  logout: {
+    fontSize: 24,
+    color: colors.white,
+  },
+  icon: {
+    paddingTop: "25%",
+  },
 });
 
 export default NewRequestComponent;
