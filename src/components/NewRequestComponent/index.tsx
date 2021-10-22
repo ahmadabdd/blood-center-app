@@ -17,22 +17,29 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 const NewRequestComponent = () => {
 
   useEffect(() => {
-    fetch("https://aboutreact.herokuapp.com/demosearchables.php")
+    fetch("http://3.133.20.22/api/get_blood_types", {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDkyNzI2NCwiZXhwIjoxNjM0OTYzMjY0LCJuYmYiOjE2MzQ5MjcyNjQsImp0aSI6InhLV3ZWZjd5ZHV0dENmYjIiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.vowHK8d2dZlAhhV6brUNMSV8NP5hpxdXzQqIN2A03N0'
+      }),
+    })
       .then((response) => response.json())
       .then((responseJson) => {
-        //Successful response from the API Call
-        setServerData(responseJson.results);
+        setServerData(responseJson);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-
+  
   const [serverData, setServerData] = useState([]);
   const [city, setCity] = useState('');
   const [hospital, setHospital] = useState('');
   const [bloodType, setBloodType] = useState('');
   const pickerRef = useRef();
+ 
 
   const Submit = () => {
     Alert.alert("Submitted!");
