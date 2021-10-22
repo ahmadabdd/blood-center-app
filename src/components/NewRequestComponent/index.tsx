@@ -12,75 +12,149 @@ import React, {useEffect, useState, useRef} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider} from "react-native-elements";
 import {Picker} from "@react-native-picker/picker";
+import SearchableDropdown from "react-native-searchable-dropdown";
 
 const NewRequestComponent = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState();
+
+  useEffect(() => {
+    fetch("https://aboutreact.herokuapp.com/demosearchables.php")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Successful response from the API Call
+        setServerData(responseJson.results);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const [serverData, setServerData] = useState([]);
+  const [city, setCity] = useState('');
+  const [hospital, setHospital] = useState('');
+  const [bloodType, setBloodType] = useState('');
   const pickerRef = useRef();
 
-  function open() {
-    pickerRef.current.focus();
-  }
-
-  function close() {
-    pickerRef.current.blur();
-  }
-
   const Submit = () => {
-    Alert.alert('Submitted!')
+    Alert.alert("Submitted!");
   };
+
   return (
-    <View>
-      <View style={styles.cardContainer}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>New request</Text>
+    <View style={styles.container}>
+      <View>
+        <View>
+          <Text style={styles.question}>What blood type do you need?</Text>
         </View>
-        <View style={styles.bodyContainer}>
-          <View>
-            <Text style={styles.question}>What blood type do you need?</Text>
-          </View>
-          <View style={styles.picker}>
-            <Picker
-              ref={pickerRef}
-              selectedValue={selectedLanguage}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
-          </View>
-          <View>
-            <Text style={styles.question}>Where are you?</Text>
-          </View>
-          <View style={styles.picker}>
-            <Picker
-              ref={pickerRef}
-              selectedValue={selectedLanguage}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
-          </View>
-          <View>
-            <Text style={styles.question}>Which hospital?</Text>
-          </View>
-          <View style={styles.picker}>
-            <Picker
-              ref={pickerRef}
-              selectedValue={selectedLanguage}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLanguage(itemValue)
-              }
-            >
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
-          </View>
+        <View>
+        <SearchableDropdown
+        // onTextChange={(item) => console.log(JSON.stringify(item))}
+        onItemSelect={(item) => setBloodType(item.name)}
+        containerStyle={{
+          marginLeft: 25,
+          marginRight: 25,
+          backgroundColor: colors.white
+        }}
+        textInputStyle={{
+          padding: 12,
+          borderWidth: 1,
+          borderColor: colors.white,
+          backgroundColor: colors.background,
+        }}
+        itemStyle={{
+          padding: 10,
+          marginTop: 2,
+          backgroundColor: colors.background,
+          borderColor: "#bbb",
+          borderWidth: 1,
+        }}
+        itemTextStyle={{
+          color: colors.black,
+        }}
+        itemsContainerStyle={{
+          maxHeight: "60%",
+        }}
+        items={serverData}
+        defaultIndex={2}
+        placeholder={bloodType ? bloodType : "Select blood type"}
+        resetValue={false}
+        underlineColorAndroid="transparent"
+      />
         </View>
+      </View>
+      <View>
+      <View>
+        <Text style={styles.question}>Where are you?</Text>
+      </View>
+      <SearchableDropdown
+        ref={pickerRef}
+        // onTextChange={(item) => console.log(JSON.stringify(item))}
+        onItemSelect={(item) => setCity(item.name)}
+        containerStyle={{
+          marginLeft: 25,
+          marginRight: 25,
+          backgroundColor: colors.white
+        }}
+        textInputStyle={{
+          padding: 12,
+          borderWidth: 1,
+          borderColor: colors.white,
+          backgroundColor: colors.background,
+        }}
+        itemStyle={{
+          padding: 10,
+          marginTop: 2,
+          backgroundColor: colors.background,
+          borderColor: "#bbb",
+          borderWidth: 1,
+        }}
+        itemTextStyle={{
+          color: colors.black,
+        }}
+        itemsContainerStyle={{
+          maxHeight: "60%",
+        }}
+        items={serverData}
+        defaultIndex={2}
+        placeholder={city ? city : "Select City"}
+        resetValue={false}
+        underlineColorAndroid="transparent"
+      />
+      </View>
+      <View>
+        <Text style={styles.question}>Which hospital?</Text>
+        <SearchableDropdown
+        ref={pickerRef}
+        // onTextChange={(item) => console.log(JSON.stringify(item))}
+        onItemSelect={(item) => setHospital(item.name)}
+        containerStyle={{
+          marginLeft: 25,
+          marginRight: 25,
+          backgroundColor: colors.white
+        }}
+        textInputStyle={{
+          padding: 12,
+          borderWidth: 1,
+          borderColor: colors.white,
+          backgroundColor: colors.background,
+        }}
+        itemStyle={{
+          padding: 10,
+          marginTop: 2,
+          backgroundColor: colors.background,
+          borderColor: "#bbb",
+          borderWidth: 1,
+        }}
+        itemTextStyle={{
+          color: colors.black,
+        }}
+        itemsContainerStyle={{
+          maxHeight: "60%",
+        }}
+        items={serverData}
+        defaultIndex={2}
+        placeholder={hospital ? hospital : "Select hospital"}
+        resetValue={false}
+        underlineColorAndroid="transparent"
+      />
       </View>
       <TouchableOpacity onPress={Submit}>
         <View style={styles.logoutContainer}>
@@ -92,29 +166,8 @@ const NewRequestComponent = () => {
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-    margin: 15,
-  },
-  headerContainer: {
-    justifyContent: "center",
-  },
-  header: {
-    color: colors.white,
-    paddingLeft: 27,
-    paddingBottom: 5,
-    paddingTop: 5,
-    fontSize: 24,
-  },
-  bodyContainer: {
-    backgroundColor: colors.background,
-    borderBottomRightRadius: 8,
-    borderBottomLeftRadius: 8,
-    justifyContent: "space-between",
-  },
   container: {
-    flex: 1,
+    marginTop: 20,
   },
   question: {
     color: colors.primary_green,
@@ -123,15 +176,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     fontSize: 20,
   },
-  picker: {
-    marginRight: 20,
-    marginLeft: 20,
-  },
   logoutContainer: {
     backgroundColor: colors.green,
-    marginTop: '65.5%', 
+    marginTop: "53%",
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   logout: {
     fontSize: 24,
