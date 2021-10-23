@@ -100,12 +100,12 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.body}>
           <View style={styles.container}>
-            <View style={styles.left}>
+            <View>
               <View>
                 <Text style={styles.header}>{header}</Text>
               </View>
             </View>
-            <View style={styles.right}>
+            <View>
               <Switch
                 color="#2089dc"
                 value={value}
