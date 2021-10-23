@@ -3,11 +3,11 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {colors} from "../constants/palette";
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
-import RecentChatsScreen from "../screens/ChatScreen/RecenetChatsScreen";
+// import ChatScreen from "../screens/ChatScreen/ChatsScreen";
+import MapScreen from "../screens/ChatScreen/MapScreen";
 import NewRequestScreen from "../screens/NewRequestScreen";
 
-export function ChatStack() {
+export function MapStack() {
   const RootStackNav = createStackNavigator();
   const navigationRef = useRef(null);
 
@@ -20,17 +20,17 @@ export function ChatStack() {
       }}
     >
       <RootStackNav.Screen
-        name="RecentChatsScreen"
-        component={RecentChatsScreen}
+        name="MapScreen"
+        component={MapScreen}
         options={{
-          title: "Recent chats",
+          title: "Map",
           headerStyle: {
             backgroundColor: colors.primary,
           },
         }}
       />
 
-      <RootStackNav.Screen
+      {/* <RootStackNav.Screen
         name="ChatScreen"
         component={ChatScreen}
         options={{
@@ -39,7 +39,7 @@ export function ChatStack() {
             backgroundColor: colors.primary,
           },
         }}
-      />
+      /> */}
 
       <RootStackNav.Screen
         name="NewRequestScreen"

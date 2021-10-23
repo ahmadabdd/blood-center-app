@@ -7,7 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import { HomeStack } from "./HomeStack";
 import { RequestsStack } from "./RequestsStack";
-import { ChatStack } from "./ChatStack";
+import { MapStack } from "./MapStack";
 import { ProfileStack } from "./ProfileStack";
 import { NotificationsStack } from "./NotificationsStack";
 
@@ -93,14 +93,14 @@ export function BottomTabs({ navigation }) {
           }}
         />
         <BottomTabsNav.Screen
-          name="ChatStack"
-          component={ChatStack}
+          name="MapStack"
+          component={MapStack}
           options={{
-            title: 'Chat',
+            title: 'Map',
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) => (
               <MaterialCommunityIcons
-                name={"chat"}
+                name={"map"}
                 size={28}
                 color={color}
               />
