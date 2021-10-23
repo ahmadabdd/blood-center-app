@@ -15,7 +15,7 @@ const HealthRecordScreen = (navigation: any) => {
   const [value, setValue] = useState("Yes");
   const [header, setHeader] = useState("Availability");
   const [image, setImage] = useState(null);
-  const [dateOfBirth, setDdateOfBirth] = useState('2021-02-15');
+  const [dateOfBirth, setDateOfBirth] = useState('2021-02-15');
   const [lastDonationDate, setLastDonationDate] = useState('2021-02-15');
   const [getBloodTypes, setGetBloodTypes] = useState([]);
   const [bloodType, setBloodType] = useState("AB+");
