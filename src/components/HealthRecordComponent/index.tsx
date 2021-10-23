@@ -9,7 +9,7 @@ const HealthRecordComponent = (props) => {
   return (
     <View>
       <View style={styles.container}>
-          <View style={styles.left}>
+          <View style={styles.left} >
             <View>
               <Text style={styles.header}>{props.header}</Text>
             </View>
@@ -26,19 +26,21 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     margin: '2%',
-    padding: 20,
+    padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 10,
     marginTop: 2
   },
   header: {
-    fontSize: 18,
+    fontSize: 16,
     padding: "2%",
-    paddingLeft: "10%",
+    paddingLeft: "8%",
   },
   right: {
     paddingRight: "10%",
+    marginLeft: "5%",
+    alignItems: 'center'
   },
   left: {},
   icon: {

@@ -45,7 +45,6 @@ const EditProfileScreen = (navigation: any) => {
   const [bloodType, setBloodType] = useState("");
   const [getCities, setGetCities] = useState("");
   const [city, setCity] = useState("");
-  const [hospital, setHospital] = useState("");
   const [text, onChangeText] = useState("");
   const [isSmoker, setIsSmoker] = useState(0);
   const [haveTattoo, setHavetattoo] = useState(0);
@@ -143,8 +142,8 @@ const EditProfileScreen = (navigation: any) => {
                 borderColor: colors.white,
               },
             }}
-            onDateChange={(date) => {
-              setDdateOfBirth(date);
+            onDateChange={(dateOfBirth) => {
+              setDdateOfBirth(dateOfBirth);
             }}
           />
         </View>
@@ -245,7 +244,7 @@ const EditProfileScreen = (navigation: any) => {
         <View style={styles.container}>
           <View>
             <View>
-              <Text style={styles.header}>Smoker {isSmoker}</Text>
+              <Text style={styles.header}>Smoker</Text>
             </View>
           </View>
           <View>
@@ -259,7 +258,7 @@ const EditProfileScreen = (navigation: any) => {
         <View style={styles.container}>
           <View>
             <View>
-              <Text style={styles.header}>Have a tattoo {haveTattoo}</Text>
+              <Text style={styles.header}>Have a tattoo</Text>
             </View>
           </View>
           <View>
