@@ -13,6 +13,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {Divider} from "react-native-elements";
 import {Picker} from "@react-native-picker/picker";
 import SearchableDropdown from "react-native-searchable-dropdown";
+import EmptyState from "../EmptyState";
 
 const NewRequestComponent = () => {
 
@@ -22,7 +23,7 @@ const NewRequestComponent = () => {
       headers: new Headers({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDkyNzI2NCwiZXhwIjoxNjM0OTYzMjY0LCJuYmYiOjE2MzQ5MjcyNjQsImp0aSI6InhLV3ZWZjd5ZHV0dENmYjIiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.vowHK8d2dZlAhhV6brUNMSV8NP5hpxdXzQqIN2A03N0'
+        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDk5MDU3MSwiZXhwIjoxNjM1MDI2NTcxLCJuYmYiOjE2MzQ5OTA1NzEsImp0aSI6Inkya2NkbG1ld0tkRnB1azUiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.r58aI_qwgwGIpqjR7cAxBKHZvzAdYxEjg1Q7AbdCdAo'
       }),
     })
       .then((response) => response.json())
@@ -34,18 +35,30 @@ const NewRequestComponent = () => {
       });
   }, []);
   
-  const [serverData, setServerData] = useState([]);
+  const [serverData, setServerData] = useState(null);
   const [city, setCity] = useState('');
   const [hospital, setHospital] = useState('');
   const [bloodType, setBloodType] = useState('');
   const pickerRef = useRef();
+  const items = [
+    //name key is must.It is to show the text in front
+    { id: 1, name: 'A+' },
+    { id: 2, name: 'A-' },
+    { id: 3, name: 'B+' },
+    { id: 4, name: 'B-' },
+    { id: 5, name: 'AB+' },
+    { id: 6, name: 'Ab-' },
+    { id: 7, name: 'O+' },
+    { id: 8, name: 'B-' },
+  ];
  
+  console.log(serverData)
 
   const Submit = () => {
     Alert.alert("Submitted!");
   };
 
-  return (
+  return serverData ? (
     <View style={styles.container}>
       <View>
         <View>
@@ -130,8 +143,8 @@ const NewRequestComponent = () => {
         <Text style={styles.question}>Which hospital?</Text>
         <SearchableDropdown
         ref={pickerRef}
-        // onTextChange={(item) => console.log(JSON.stringify(item))}
-        onItemSelect={(item) => setHospital(item.name)}
+        onTextChange={(item) => console.log(JSON.stringify(item))}
+        onItemSelect={(item) => setHospital(item)}
         containerStyle={{
           marginLeft: 25,
           marginRight: 25,
@@ -156,10 +169,10 @@ const NewRequestComponent = () => {
         itemsContainerStyle={{
           maxHeight: "60%",
         }}
-        items={serverData}
-        defaultIndex={2}
+        items={items}
+        // defaultIndex={2}
         placeholder={hospital ? hospital : "Select hospital"}
-        resetValue={false}
+        resetValue={items}
         underlineColorAndroid="transparent"
       />
       </View>
@@ -168,8 +181,9 @@ const NewRequestComponent = () => {
           <Text style={styles.logout}>Submit</Text>
         </View>
       </TouchableOpacity>
-    </View>
-  );
+    </View> ) : (
+      <EmptyState loading={true}/>
+    )
 };
 
 const styles = StyleSheet.create({

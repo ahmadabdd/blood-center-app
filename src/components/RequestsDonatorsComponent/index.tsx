@@ -2,17 +2,13 @@ import {colors} from "../../constants/palette";
 import {
   Text,
   View,
-  Button,
   StyleSheet,
   FlatList,
-  SafeAreaView,
-  StatusBar,
   TouchableOpacity,
   Alert
 } from "react-native";
 import React, {useEffect, useState} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {Divider, Avatar} from "react-native-elements";
+import {Avatar} from "react-native-elements";
 
 const DATA = [
   {
@@ -61,9 +57,9 @@ const ViewProfile = (id) => {
   Alert.alert(id)
 }
 
-const Item = ({id, firstName, lastName, date, image}) => (
+const Item = (props) => (
   <View>
-    <TouchableOpacity onPress={() => alert(id)}>
+    <TouchableOpacity onPress={() => alert(props.id)}>
       <View style={styles.listContainer}>
         <View style={styles.left}>
           <Avatar
@@ -79,16 +75,16 @@ const Item = ({id, firstName, lastName, date, image}) => (
             placeholderStyle={{}}
             rounded
             size="large"
-            source={image}
+            source={props.image}
             title="P"
             titleStyle={{}}
           />
           <Text style={styles.name}>
-            {firstName} {lastName}
+            {props.firstName} {props.lastName}
           </Text>
         </View>
-        <View style={styles.right}>
-          <Text style={styles.date}>{date}</Text>
+        <View>
+          <Text style={styles.date}>{props.date}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -121,10 +117,10 @@ const RequestsDonatorsComponent = () => {
   return (
       <View style={styles.cardContainer}>
         <View style={styles.headerContainer}>
-          <View style={styles.headerContainerLeft}>
+          <View>
             <Text style={styles.header}>{bloodType}</Text>
           </View>
-          <View style={styles.headerContainerRight}>
+          <View>
             <Text style={styles.hospital}>{hospital}</Text>
           </View>
         </View>
@@ -134,7 +130,6 @@ const RequestsDonatorsComponent = () => {
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={renderSeparator}
-
           />
         </View>
       </View>

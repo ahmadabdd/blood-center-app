@@ -3,49 +3,46 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-
 const FulfilledComponent = (props) => {
-  const [unitsCount, setUnitsCount] = useState(2);
-  const [city, setCity] = useState("Tripoli");
-  const [hospital, setHospital] = useState("Al Hayat Hospital");
-  const [date, setDate] = useState("2021-12-12");
-  const [bloodType, setBloodType] = useState("O+");
-
-  const viewListItem = () => {
-    
-  }
   return (
     <View style={styles.cardContainer}>
+      <View>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>{props.bloodType}</Text>
         <Text style={styles.date}>{props.date}</Text>
+      </View> 
       </View>
-      <View style={styles.bodyContainer}>
-        <View style={styles.bodyRight}>
-          <Text style={styles.upperBody}>{props.city}</Text>
-          <Text style={styles.lowerBody}>{props.hospital}</Text>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={props.onPress}>
-          <View style={styles.bodyLeft}>
+      <TouchableOpacity onPress={props.onPress}>
+        <View style={styles.bodyContainer}>
+          <View>
+            <Text style={styles.upperBody}>{props.city}</Text>
+            <Text style={styles.lowerBody}>{props.hospital}</Text>
+          </View>
+          <View>
             <View style={styles.icon}>
               <MaterialCommunityIcons name={"arrow-right"} size={25} />
             </View>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-    margin: 15,
+    
+    
+    marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    backgroundColor: colors.primary,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
   },
   header: {
     color: colors.white,
@@ -64,8 +61,8 @@ const styles = StyleSheet.create({
   bodyContainer: {
     backgroundColor: colors.background,
     flexDirection: "row",
-    borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
     justifyContent: "space-between",
   },
   upperBody: {

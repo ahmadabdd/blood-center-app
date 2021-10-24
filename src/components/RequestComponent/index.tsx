@@ -5,37 +5,39 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {Colors} from "react-native/Libraries/NewAppScreen";
 import {Divider, Avatar} from "react-native-elements";
 
-const RequestComponent = () => {
-  const [bloodType, setBloodType] = useState("A-");
-  const [firstname, setFirstName] = useState("Abdullah");
-  const [lastName, setLastName] = useState("Alshami");
-  const [date, setDate] = useState("2021-56-87");
-
-
-  const viewListItem = () => {alert('go to user profile')};
-  const accept = () => {alert('declined')};
-  const decline = () => {alert('accepted')};
-
+const RequestComponent = (props) => {
+  const viewListItem = () => {
+    alert("go to user profile");
+  };
+  const accept = () => {
+    alert("declined");
+  };
+  const decline = () => {
+    alert("accepted");
+  };
 
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>{bloodType}</Text>
-        <Text style={styles.date}>{date}</Text>
-      </View>
-
-      <TouchableOpacity onPress={viewListItem}>
-        <View style={styles.bodyContainer}>
-          <View>
-            <Text style={styles.name}>
-              {firstname} {lastName}
-            </Text>
-          </View>
-          <View style={styles.icon}>
-            <MaterialCommunityIcons name={"arrow-right"} size={25} />
-          </View>
+      <View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>{props.bloodType}</Text>
+          <Text style={styles.date}>{props.date}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
+      <View>
+        <TouchableOpacity onPress={viewListItem}>
+          <View style={styles.bodyContainer}>
+            <View>
+              <Text style={styles.name}>
+                {props.firstName} {props.lastName}
+              </Text>
+            </View>
+            <View style={styles.icon}>
+              <MaterialCommunityIcons name={"arrow-right"} size={25} />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
       <View>
         <Divider
           style={styles.divider}
@@ -48,18 +50,10 @@ const RequestComponent = () => {
       </View>
       <View style={styles.buttons}>
         <View style={styles.decline}>
-          <Button 
-          title="Decline" 
-          color={colors.red}
-          onPress={accept}
-          />
+          <Button title="Decline" color={colors.red} onPress={accept} />
         </View>
         <View style={styles.accept}>
-          <Button 
-          title="Accept" 
-          color={colors.green} 
-          onPress={decline}
-          />
+          <Button title="Accept" color={colors.green} onPress={decline} />
         </View>
       </View>
     </View>
@@ -68,13 +62,15 @@ const RequestComponent = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: colors.primary,
     borderRadius: 8,
     margin: 15,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    backgroundColor: colors.primary,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
   },
   header: {
     color: colors.white,
@@ -126,7 +122,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     width: "100%",
-    color: colors.black
+    color: colors.black,
   },
 });
 
