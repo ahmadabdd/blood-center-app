@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   FlatList,
   Text,
@@ -16,6 +16,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import DatePicker from "react-native-datepicker";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import {TouchableOpacity} from "react-native-gesture-handler";
+import {Picker} from "@react-native-picker/picker";
+import { fonts } from "react-native-elements/dist/config";
 
 const EditProfileScreen = (navigation: any) => {
   useEffect(() => {
@@ -30,7 +32,7 @@ const EditProfileScreen = (navigation: any) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        setGetBloodTypes(responseJson);
+        // setGetBloodTypes(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -41,9 +43,7 @@ const EditProfileScreen = (navigation: any) => {
   const [lastName, setLastName] = useState("Abd");
   const [dateOfBirth, setDdateOfBirth] = useState(new Date());
   const [lastDonationDate, setLastDonationDate] = useState(new Date());
-  const [getBloodTypes, setGetBloodTypes] = useState([]);
   const [bloodType, setBloodType] = useState("");
-  const [getCities, setGetCities] = useState("");
   const [city, setCity] = useState("");
   const [text, onChangeText] = useState("");
   const [isSmoker, setIsSmoker] = useState(0);
@@ -78,6 +78,13 @@ const EditProfileScreen = (navigation: any) => {
     alert("Submitted!");
   };
 
+  const pickerRef = useRef();
+  function open() {
+    pickerRef.current.focus();
+  }
+  function close() {
+    pickerRef.current.blur();
+  }
   return (
     <ScrollView>
       <View style={styles.main}>
@@ -95,7 +102,13 @@ const EditProfileScreen = (navigation: any) => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={image ? {uri: image} : {uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg"}}
+              source={
+                image
+                  ? {uri: image}
+                  : {
+                      uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
+                    }
+              }
               titleStyle={{}}
             />
           </View>
@@ -177,69 +190,52 @@ const EditProfileScreen = (navigation: any) => {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.text}>Select blood type</Text>
-          <SearchableDropdown
-            onItemSelect={(item) => setBloodType(item.name)}
-            containerStyle={{
-              backgroundColor: colors.white,
-              height: 42,
-            }}
-            textInputStyle={{
-              padding: 12,
-              borderWidth: 1,
-              borderColor: colors.white,
-              backgroundColor: colors.background,
-            }}
-            itemStyle={{
-              // padding: 10,
-              backgroundColor: colors.background,
-              borderColor: "#bbb",
-              borderWidth: 1,
-            }}
-            itemTextStyle={{
-              color: colors.black,
-            }}
-            itemsContainerStyle={{
-              maxHeight: "60%",
-            }}
-            items={getBloodTypes}
-            defaultIndex={2}
-            placeholder={bloodType ? bloodType : "Select blood type"}
-            resetValue={false}
-            underlineColorAndroid="transparent"
-          />
+          <View style={styles.input}>
+            <Picker
+              ref={pickerRef}
+              selectedValue={bloodType}
+              onValueChange={(bloodType, itemIndex) => setBloodType(bloodType)}
+            >
+              <Picker.Item label="A+" value="1" />
+              <Picker.Item label="A-" value="2" />
+              <Picker.Item label="B+" value="3" />
+              <Picker.Item label="B-" value="4" />
+              <Picker.Item label="AB+" value="5" />
+              <Picker.Item label="AB-" value="6" />
+              <Picker.Item label="O+" value="7" />
+              <Picker.Item label="O-" value="8" />
+            </Picker>
+          </View>
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.text}>Select city</Text>
-          <SearchableDropdown
-            onItemSelect={(item) => setCity(item.name)}
-            containerStyle={{
-              backgroundColor: colors.white,
-              height: 42,
-            }}
-            textInputStyle={{
-              padding: 12,
-              borderWidth: 1,
-              borderColor: colors.white,
-              backgroundColor: colors.background,
-            }}
-            itemStyle={{
-              // padding: 10,
-              backgroundColor: colors.background,
-              borderColor: "#bbb",
-              borderWidth: 1,
-            }}
-            itemTextStyle={{
-              color: colors.black,
-            }}
-            itemsContainerStyle={{
-              maxHeight: "60%",
-            }}
-            items={getCities}
-            defaultIndex={2}
-            placeholder={city ? city : "Select city"}
-            resetValue={false}
-            underlineColorAndroid="transparent"
-          />
+          <View style={styles.input}>
+            <Picker
+              ref={pickerRef}
+              selectedValue={city}
+              onValueChange={(city, itemIndex) => setCity(city)}
+              mode="dialog"
+            >
+              {/* 1- Beirut
+        2- Tripoli
+        3- Saida
+        4- Byblos
+        5- Zahle
+        6- Tyre
+        7- Mount Lebanon
+        8- Baalbak
+        9- Baabda */}
+              <Picker.Item label="Beirut" value="1" />
+              <Picker.Item label="Tripoli" value="2" />
+              <Picker.Item label="Saida" value="3" />
+              <Picker.Item label="Byblos" value="4" />
+              <Picker.Item label="Zahle" value="5" />
+              <Picker.Item label="Tyre" value="6" />
+              <Picker.Item label="Mount Lebanon" value="7" />
+              <Picker.Item label="Baalbak" value="8" />
+              <Picker.Item label="Baabda" value="9" />
+            </Picker>
+          </View>
         </View>
         <View style={styles.container}>
           <View>
@@ -271,7 +267,7 @@ const EditProfileScreen = (navigation: any) => {
         </View>
         <TouchableOpacity onPress={Submit}>
           <View style={styles.logoutContainer}>
-            <Text style={styles.logout}>Submit</Text>
+            <Text style={styles.logout}>Save</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -328,6 +324,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     margin: "2%",
+    borderColor: colors.black,
   },
   logoutContainer: {
     backgroundColor: colors.green,

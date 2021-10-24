@@ -8,6 +8,7 @@ import RequestDonatorsScreen from "../screens/RequestScreen/RequestFulfilledScre
 import InProgressScreen from "../screens/RequestScreen/RequestInProgressScreen/InProgressScreen";
 import RequestsScreen from "../screens/RequestScreen/RequestInProgressScreen/RequestsScreen";
 import NewRequestScreen from "../screens/NewRequestScreen";
+import HealthRecordScreen from "../screens/ProfileScreen/HealthRecordScreen";
 
 export function RequestsStack() {
   const RootStackNav = createStackNavigator();
@@ -70,6 +71,17 @@ export function RequestsStack() {
         component={NewRequestScreen}
         options={{
           title: "New request",
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+        }}
+      />
+      
+      <RootStackNav.Screen
+        name="HealthRecordScreen"
+        component={HealthRecordScreen}
+        options={{
+          title: "Health record",
           headerStyle: {
             backgroundColor: colors.primary,
           },

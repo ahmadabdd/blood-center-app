@@ -63,7 +63,9 @@ const RequestComponent = (props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 8,
-    margin: 15,
+    marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15, 
   },
   headerContainer: {
     flexDirection: "row",
