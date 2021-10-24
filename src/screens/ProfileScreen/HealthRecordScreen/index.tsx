@@ -8,21 +8,47 @@ import {colors} from "../../../constants/palette";
 import {Avatar} from "react-native-elements";
 import HealthRecordComponent from "../../../components/HealthRecordComponent";
 
-const HealthRecordScreen = (navigation: any) => {
-  const [firstName, setFirstName] = useState("Ahmad");
-  const [lastName, setLastName] = useState("Abd");
-  const [status, setStatus] = useState("Available");
-  const [value, setValue] = useState("Yes");
-  const [header, setHeader] = useState("Availability");
+const HealthRecordScreen = (props) => {
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [status, setStatus] = useState(null);
   const [image, setImage] = useState(null);
-  const [dateOfBirth, setDateOfBirth] = useState('2021-02-15');
-  const [lastDonationDate, setLastDonationDate] = useState('2021-02-15');
-  const [getBloodTypes, setGetBloodTypes] = useState([]);
-  const [bloodType, setBloodType] = useState("AB+");
-  const [getCities, setGetCities] = useState("");
-  const [city, setCity] = useState("Beirut");
-  const [isSmoker, setIsSmoker] = useState(0);
-  const [haveTattoo, setHavetattoo] = useState(0);
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [lastDonationDate, setLastDonationDate] = useState(null);
+  const [bloodType, setBloodType] = useState(null);
+  const [city, setCity] = useState(null);
+  const [isSmoker, setIsSmoker] = useState(null);
+  const [haveTattoo, setHavetattoo] = useState(null);
+
+  useEffect(() => {
+    //Change query. city.name as city and blood_type.name as bloodType
+    const DATA = [
+      {
+        first_name: "Ahmad",
+        last_name: "Abd",
+        email: "ahmad@gmail.com",
+        profile_picture_url: "http://3.133.20.22//storage/zUqM11S7eIRt.jpg",
+        name: "Mount Lebanon",
+        type: "A+",
+        date_of_birth: "1998-07-11",
+        last_donation: "2021-08-18",
+        is_available: 1,
+        is_smoker: 0,
+        have_tattoo: 0,
+      },
+    ];
+
+    setFirstName(DATA[0].first_name);
+    setLastName(DATA[0].last_name);
+    setImage(DATA[0].profile_picture_url);
+    setCity(DATA[0].name);
+    setBloodType(DATA[0].type);
+    setDateOfBirth(DATA[0].date_of_birth);
+    setLastDonationDate(DATA[0].last_donation);
+    setStatus(DATA[0].is_available);
+    setIsSmoker(DATA[0].is_smoker);
+    setHavetattoo(DATA[0].have_tattoo);
+  });
 
   return (
     <ScrollView>
@@ -35,13 +61,17 @@ const HealthRecordScreen = (navigation: any) => {
               containerStyle={{backgroundColor: colors.text}}
               iconStyle={{}}
               imageProps={{}}
-              // onLongPress={pickImage}
-              // onPress={() => alert("Long press to edit!")}
               overlayContainerStyle={{}}
               placeholderStyle={{}}
               rounded
               size="large"
-              source={{uri: image}}
+              source={
+                image
+                  ? { uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg", }
+                  : {
+                      uri: image
+                    }
+              }
               titleStyle={{}}
             />
           </View>
@@ -49,15 +79,26 @@ const HealthRecordScreen = (navigation: any) => {
             <Text style={styles.name}>
               {firstName} {lastName}
             </Text>
-            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.status}>
+              {status ? "Available" : "Unavailable"}
+            </Text>
           </View>
         </View>
         <HealthRecordComponent header={"Blood type"} value={bloodType} />
         <HealthRecordComponent header={"City"} value={city} />
         <HealthRecordComponent header={"Date of birth"} value={dateOfBirth} />
-        <HealthRecordComponent header={"Last donation date"} value={lastDonationDate} />
-        <HealthRecordComponent header={"Smoker"} value={isSmoker ? 'Yes' : 'No'} />
-        <HealthRecordComponent header={"Have tattoo"} value={haveTattoo ? 'Yes' : 'No'} />
+        <HealthRecordComponent
+          header={"Last donation date"}
+          value={lastDonationDate ? lastDonationDate : "-"}
+        />
+        <HealthRecordComponent
+          header={"Smoker"}
+          value={isSmoker ? "Yes" : "No"}
+        />
+        <HealthRecordComponent
+          header={"Have tattoo"}
+          value={haveTattoo ? "Yes" : "No"}
+        />
       </View>
     </ScrollView>
   );

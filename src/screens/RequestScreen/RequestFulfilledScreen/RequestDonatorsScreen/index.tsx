@@ -15,6 +15,8 @@ const DATA = [
     date: "2021-5-19",
     firstName: "Ahmad",
     lastName: "Abd",
+    image:
+      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
   },
   {
     id: "2",
@@ -22,6 +24,8 @@ const DATA = [
     date: "2021-5-19",
     firstName: "Ahmad",
     lastName: "Abd",
+    image:
+      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
   },
   {
     id: "3",
@@ -29,12 +33,15 @@ const DATA = [
     date: "2021-5-19",
     firstName: "Ahmad",
     lastName: "Abd",
+    image:
+      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
   },
 ];
 
 const RequestDonatorsScreen = (props) => {
   const [hospital, setHospital] = useState("AUBMC");
   const [bloodType, setBloodType] = useState("AB+");
+  
   const Item = (props) => (
     <View>
       <TouchableOpacity onPress={() => alert(props.id)}>
@@ -53,8 +60,7 @@ const RequestDonatorsScreen = (props) => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={props.image}
-              title="P"
+              source={{uri: props.image}}
               titleStyle={{}}
             />
             <Text style={styles.name}>
@@ -75,6 +81,7 @@ const RequestDonatorsScreen = (props) => {
       lastName={item.lastName}
       date={item.date}
       id={item.id}
+      image={item.image}
     />
   );
 

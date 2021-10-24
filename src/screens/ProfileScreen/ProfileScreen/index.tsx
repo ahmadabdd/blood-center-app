@@ -21,12 +21,24 @@ import ProfileButtonComponent from "../../../components/ProfileButtonComponent";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import * as ImagePicker from "expo-image-picker";
 import {Constants} from "expo-constants";
-import { store } from "../../../redux/store";
-import { deleteUser } from "../../../redux/slices/userSlice";
+import {store} from "../../../redux/store";
+import {deleteUser} from "../../../redux/slices/userSlice";
+
+const DATA = [
+  {
+    id: "1",
+    firstName: "Ahmad",
+    lastName: "Abd",
+    status: "2021-5-19",
+    header: "2021-5-19",
+    value: "2021-5-19",
+    image:
+      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
+  },
+];
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-
   const NavigateHealthRecord = () => {
     navigation.navigate("HealthRecordScreen");
   };
@@ -40,11 +52,28 @@ const ProfileScreen = () => {
     navigation.navigate("NewRequestScreen");
   };
 
+  useEffect(() => {
+    //Change query. add is_available
+    const DATA = [
+      {
+        first_name: "Ahmad",
+        last_name: "Abd",
+        email: "ahmad@gmail.com",
+        profile_picture_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfLGPNomfEy0pcUi86d1YbN7zVupY89ZZPtlC6uM4F3buwHw3KnQSQQBkS7ijYt1GEjDI&usqp=CAU",
+        is_available: 1,
+      },
+    ];
+
+    setFirstName(DATA[0].first_name);
+    setLastName(DATA[0].last_name);
+    setImage(DATA[0].profile_picture_url);
+    setValue(DATA[0].is_available ? false : true);
+  }, []);
+  
   const [firstName, setFirstName] = useState("Ahmad");
   const [lastName, setLastName] = useState("Abd");
-  const [status, setStatus] = useState("Available");
-  const [header, setHeader] = useState("Availability");
-  const [value, setValue] = React.useState(true);
+  const [status, setStatus] = useState("Unvailable");
+  const [value, setValue] = useState(false);
   const [image, setImage] = useState(null);
   const changeStatus = () => {
     setValue(!value);
@@ -87,7 +116,13 @@ const ProfileScreen = () => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={{uri: image}}
+              source={
+                image
+                  ? {uri: image}
+                  : {
+                      uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
+                    }
+              }
               titleStyle={{}}
             />
           </View>
@@ -102,7 +137,7 @@ const ProfileScreen = () => {
           <View style={styles.container}>
             <View>
               <View>
-                <Text style={styles.header}>{header}</Text>
+                <Text style={styles.header}>Availability</Text>
               </View>
             </View>
             <View>
@@ -127,9 +162,7 @@ const ProfileScreen = () => {
             onPress={navigateEditProfile}
           />
         </View>
-        <TouchableOpacity
-          onPress={Logout} 
-        >
+        <TouchableOpacity onPress={Logout}>
           <View style={styles.logoutContainer}>
             <View style={styles.left}>
               <View>

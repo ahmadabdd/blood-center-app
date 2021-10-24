@@ -76,7 +76,6 @@ const Item = (props) => (
             rounded
             size="large"
             source={props.image}
-            title="P"
             titleStyle={{}}
           />
           <Text style={styles.name}>
@@ -94,7 +93,6 @@ const Item = (props) => (
 const RequestsDonatorsComponent = () => {
   const [hospital, setHospital] = useState("AUBMC");
   const [bloodType, setBloodType] = useState("AB+");
-  // const [image, setImage] = useState("https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg");
 
   const renderItem = ({item}) => (
     <Item
@@ -125,12 +123,12 @@ const RequestsDonatorsComponent = () => {
           </View>
         </View>
         <View style={styles.bodyContainer}>
-          <FlatList
+          {/* <FlatList
             data={DATA}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={renderSeparator}
-          />
+          /> */}
         </View>
       </View>
   );

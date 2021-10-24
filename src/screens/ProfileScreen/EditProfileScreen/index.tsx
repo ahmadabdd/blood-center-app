@@ -95,7 +95,7 @@ const EditProfileScreen = (navigation: any) => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={{uri: image}}
+              source={image ? {uri: image} : {uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg"}}
               titleStyle={{}}
             />
           </View>

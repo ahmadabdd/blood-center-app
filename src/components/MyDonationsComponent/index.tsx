@@ -14,13 +14,13 @@ const MyDonationsComponent = (props) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}></Text>
-        <Text style={styles.date}>{date}</Text>
+        <Text></Text>
+        <Text style={styles.date}>{props.date}</Text>
       </View>
       <View style={styles.bodyContainer}>
         <View>
-          <Text style={styles.upperBody}>{city}, {hospital}</Text>
-          <Text style={styles.lowerBody}>{firstName} {lastName}</Text>
+          <Text style={styles.upperBody}>{props.city}, {props.hospital}</Text>
+          <Text style={styles.lowerBody}>{props.firstName} {props.lastName}</Text>
         </View>
       </View>
     </View>

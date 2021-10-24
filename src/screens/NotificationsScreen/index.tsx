@@ -9,6 +9,27 @@ import {useNavigation} from "@react-navigation/core";
 import NotificationComponent from "../../components/NotificationComponent";
 import NewRequestBottunComponent from "../../components/NewRequestBottunComponent";
 
+const DATA = [
+  {
+    id: "1",
+    header: "Ahmad",
+    body: "Abd",
+    time: "1 hr",
+  },
+  {
+    id: "2",
+    header: "Test",
+    body: "Test",
+    time: "2 hr",
+  },
+  {
+    id: "3",
+    header: "Test",
+    body: "Test",
+    time: "2 hr",
+  },
+];
+
 const NotificationsScreen = () => {
   const navigation = useNavigation();
 
@@ -22,13 +43,21 @@ const NotificationsScreen = () => {
   return (
     <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
-      <NotificationComponent />
-      <NotificationComponent />
-      <Button
-        title="Request View Screen"
-        color="#666666"
-        onPress={navigateRequestView}
-      /> 
+      <View>
+        <FlatList
+          data={DATA}
+          renderItem={({item, index}) => {
+            return (
+              <NotificationComponent
+                header={item.header}
+                body={item.body}
+                time={item.time}
+                onPress={navigateRequestView}
+              />
+            );
+          }}
+        />
+      </View>
     </View>
   );
 };

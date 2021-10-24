@@ -3,24 +3,20 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const NotificationComponent = () => {
-  const [header, setHeader] = useState("This is a header");
-  const [body, setBody] = useState("This is a body");
-  const [time, setTime] = useState("time");
-
+const NotificationComponent = (props) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPress}>
     <View style={styles.container}>
         <View style={styles.left}>
           <View>
-            <Text style={styles.header}>{header}</Text>
+            <Text style={styles.header}>{props.header}</Text>
           </View>
           <View>
-            <Text style={styles.body}>{body}</Text>
+            <Text style={styles.body}>{props.body}</Text>
           </View>
         </View>
         <View style={styles.right}>
-          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.time}>{props.time}</Text>
           <View style={styles.icon}>
             <MaterialCommunityIcons name={"arrow-right"} size={20} />
           </View>
