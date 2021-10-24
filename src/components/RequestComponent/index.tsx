@@ -6,14 +6,47 @@ import {Colors} from "react-native/Libraries/NewAppScreen";
 import {Divider, Avatar} from "react-native-elements";
 
 const RequestComponent = (props) => {
-  const viewListItem = () => {
-    alert("go to user profile");
+  const token =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+
+  const viewListItem = (user_id) => {
+    alert("go to user profile" + user_id);
   };
-  const accept = () => {
-    alert("declined");
+  const accept = (user_id) => {
+    fetch("http://3.133.20.22/api/accept_donation_request", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: JSON.stringify({"blood_request_id": 2})
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  const decline = () => {
-    alert("accepted");
+  const decline = (user_id) => {
+    fetch("http://3.133.20.22/api/decline_donation_request", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: JSON.stringify({"blood_request_id": 2})
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -25,7 +58,7 @@ const RequestComponent = (props) => {
         </View>
       </View>
       <View>
-        <TouchableOpacity onPress={viewListItem}>
+        <TouchableOpacity onPress={() => viewListItem(props.user_id)}>
           <View style={styles.bodyContainer}>
             <View>
               <Text style={styles.name}>
@@ -50,10 +83,10 @@ const RequestComponent = (props) => {
       </View>
       <View style={styles.buttons}>
         <View style={styles.decline}>
-          <Button title="Decline" color={colors.red} onPress={accept} />
+          <Button title="Decline" color={colors.red} onPress={() => decline(props.user_id)} />
         </View>
-        <View style={styles.accept}>
-          <Button title="Accept" color={colors.green} onPress={decline} />
+        <View style={styles.accept}>                        
+          <Button title="Accept" color={colors.green} onPress={() => accept(props.user_id)} />
         </View>
       </View>
     </View>

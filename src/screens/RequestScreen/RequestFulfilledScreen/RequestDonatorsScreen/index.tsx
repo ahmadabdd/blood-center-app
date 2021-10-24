@@ -8,40 +8,37 @@ import RequestsDonatorsComponent from "../../../../components/RequestsDonatorsCo
 import {colors} from "../../../../constants/palette";
 import {Avatar} from "react-native-elements";
 
-const DATA = [
-  {
-    id: "1",
-    bloodType: "B+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "2",
-    bloodType: "A+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "3",
-    bloodType: "A+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-];
-
 const RequestDonatorsScreen = (props) => {
+  const [requests, setRequests] = useState();
+
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+
+  useEffect(() => {
+    fetch("http://3.133.20.22/api/get_request_donations", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: JSON.stringify({
+        request_id: '2'
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setRequests(responseJson);
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const [hospital, setHospital] = useState("AUBMC");
   const [bloodType, setBloodType] = useState("AB+");
-  
+
   const Item = (props) => (
     <View>
       <TouchableOpacity onPress={() => alert(props.id)}>
@@ -77,11 +74,12 @@ const RequestDonatorsScreen = (props) => {
 
   const renderItem = ({item}) => (
     <Item
-      firstName={item.firstName}
-      lastName={item.lastName}
+      firstName={item.first_name}
+      lastName={item.last_name}
       date={item.date}
       id={item.id}
-      image={item.image}
+      image={item.user_profile_picture}
+      user_id={item.user_id}
     />
   );
 
@@ -105,7 +103,7 @@ const RequestDonatorsScreen = (props) => {
       </View>
       <View style={styles.bodyContainer}>
         <FlatList
-          data={DATA}
+          data={requests}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           ItemSeparatorComponent={renderSeparator}

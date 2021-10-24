@@ -7,55 +7,30 @@ import InProgressRequestComponent from "../../../../components/InProgressRequest
 import NewRequestComponent from "../../../../components/NewRequestComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
 
-const DATA = [
-  {
-    id: "1",
-    bloodType: "B+",
-    date: "2021-5-19",
-    city: "Beirut",
-    unitsCount: "2",
-    requestCount: "1",
-    hospital: "test"
-  },
-  {
-    id: "2",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-    requestCount: "1",
-    hospital: "test"
-  },
-  {
-    id: "3",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-    requestCount: "1",
-    hospital: "test"
-  },
-  {
-    id: "4",
-    bloodType: "AB+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-    requestCount: "1",
-    hospital: "test"
-  },
-  {
-    id: "5",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-    requestCount: "1",
-    hospital: "test"
-  },
-];
-
 const InProgressScreen = () => {
+  const [requests, setRequests] = useState();
+
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+
+  useEffect(() => {
+    fetch("http://3.133.20.22/api/get_user_requests", {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setRequests(responseJson);
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   const navigation = useNavigation();
 
   const navigateFulfilled = () => {
@@ -78,11 +53,12 @@ const InProgressScreen = () => {
       <Button title="Fulfilled" color="#666666" onPress={navigateFulfilled} />
       <View style={styles.listContainer}>
         <FlatList
-          data={DATA}
+          data={requests}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({item, index}) => {
             return (
               <InProgressRequestComponent
-                unitsCount={item.unitsCount}
+                unitsCount={item.left_number_of_units}
                 requestCount={item.requestCount}
                 bloodType={item.bloodType}
                 city={item.city}

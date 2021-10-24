@@ -17,63 +17,45 @@ import ListComponentMain from "../../../components/ListComponentMain";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import {Picker} from "@react-native-picker/picker";
 import {renderNode} from "react-native-elements/dist/helpers";
-
-const DATA = [
-  {
-    id: "1",
-    bloodType: "B+",
-    date: "2021-5-19",
-    city: "Beirut",
-    unitsCount: "2",
-  },
-  {
-    id: "2",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-  },
-  {
-    id: "3",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-  },
-  {
-    id: "4",
-    bloodType: "AB+",
-    date: "2021-5-19",
-    city: "Tripoli",
-    unitsCount: "1",
-  },
-  {
-    id: "5",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "test",
-    unitsCount: "1",
-  },
-  {
-    id: "6",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "testlast",
-    unitsCount: "1",
-  },
-  {
-    id: "7",
-    bloodType: "A+",
-    date: "2021-5-19",
-    city: "testlast",
-    unitsCount: "1",
-  },
-];
+import {compose} from "redux";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [city, setCity] = useState();
   const [bloodType, setBloodType] = useState();
+  const [requests, setRequests] = useState();
+
+  const searchRequests = (city = undefined, bloodType = undefined) => {
+    setCity(city)
+    setBloodType(bloodType)
+    console.log(city)
+    console.log(bloodType)
+  }
+
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+
+  useEffect(() => {
+    fetch("http://3.133.20.22/api/get_all_requests", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: (
+        city ? JSON.stringify({city: city}) : ''
+      )
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setRequests(responseJson);
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const navigateRequestView = () => {
     navigation.navigate("RequestViewScreen");
@@ -89,7 +71,7 @@ const HomeScreen = () => {
     pickerRef.current.blur();
   }
 
-  return (
+  return requests ? (
     <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <View style={styles.container}>
@@ -102,7 +84,8 @@ const HomeScreen = () => {
             <Picker
               ref={pickerRef}
               selectedValue={bloodType}
-              onValueChange={(bloodType, itemIndex) => setBloodType(bloodType)}
+              // onValueChange={(bloodType, itemIndex) => setBloodType(bloodType)}
+              onValueChange={(bloodType, itemIndex) => searchRequests(bloodType)}
               style={styles.picker}
             >
               <Picker.Item label="A+" value="1" />
@@ -120,7 +103,8 @@ const HomeScreen = () => {
             <Picker
               ref={pickerRef}
               selectedValue={city}
-              onValueChange={(city, itemIndex) => setCity(city)}
+              // onValueChange={(city, itemIndex) => setCity(city)}
+              onValueChange={(city, itemIndex) => searchRequests(city)}
               style={styles.picker}
               mode="dialog"
             >
@@ -146,24 +130,29 @@ const HomeScreen = () => {
           </View>
         </View>
       </View>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Available Requests</Text>
+      </View>
       <View style={styles.listContainer}>
         <FlatList
-          data={DATA}
+          data={requests}
           renderItem={({item, index}) => {
             return (
               <ListComponentMain
                 onPress={navigateRequestView}
-                bloodType={item.bloodType}
-                date={item.date}
+                bloodType={item.type}
+                date={item.created_at.substr(0, 10)}
                 city={item.city}
-                unitsCount={item.unitsCount}
+                unitsCount={item.left_number_of_units}
               />
             );
           }}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => String(item.id)}
         />
       </View>
     </View>
+  ) : (
+    <EmptyState />
   );
 };
 
@@ -178,7 +167,7 @@ const styles = StyleSheet.create({
     marginRight: "15%",
   },
   listContainer: {
-    paddingBottom: "40%",
+    paddingBottom: "64%",
   },
   city: {
     backgroundColor: colors.background,
@@ -210,6 +199,13 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 20,
   },
+  header: {
+    marginLeft: 20,
+    marginTop: 10
+  },
+  headerText: {
+    fontSize: 24
+  }
 });
 
 export default HomeScreen;

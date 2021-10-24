@@ -1,62 +1,150 @@
+import {useNavigation} from "@react-navigation/core";
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View} from "react-native";
+import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import {useSelector} from "react-redux";
 import ComponentTemplate from "../../../../components/ComponentTemplate";
 import EmptyState from "../../../../components/EmptyState";
 import FullWidthButton from "../../../../components/FullWidthButton";
-import RequestComponent from "../../../../components/RequestComponent";
 import {colors} from "../../../../constants/palette";
+import {Divider, Avatar} from "react-native-elements";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {FlatList} from "react-native-gesture-handler";
 
-const DATA = [
-  {
-    id: "1",
-    bloodType: "B+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-  },
-  {
-    id: "2",
-    bloodType: "A+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-  },
-  {
-    id: "3",
-    bloodType: "A+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-  },
-  {
-    id: "4",
-    bloodType: "AB+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-  },
-  {
-    id: "5",
-    bloodType: "A+",
-    date: "2021-5-19",
-    firstName: "Ahmad",
-    lastName: "Abd",
-  },
-];
+const RequestsScreen = () => {
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+  const [requests, setRequests] = useState();
 
-const RequestsScreen = (navigation: any) => {
+  useEffect(() => {
+    fetch("http://3.133.20.22/api/get_request_donations", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: JSON.stringify({request_id: 2}),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setRequests(responseJson);
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const RequestComponent = (props) => {
+    const accept = (user_id) => {
+      fetch("http://3.133.20.22/api/accept_donation_request", {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer " + token,
+        }),
+        body: JSON.stringify({blood_request_id: 2}),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const decline = (id) => {
+      fetch("http://3.133.20.22/api/decline_donation_request", {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer " + token,
+        }),
+        body: JSON.stringify({blood_request_id: 2}),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          const newRequests = requests.filter((requests) => requests.id !== id);
+          setRequests(newRequests);
+          console.log(newRequests);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const viewListItem = (user_id) => {
+      alert("go to user profile" + user_id);
+    };
+    return (
+      <View style={styles.cardContainer}>
+        <View>
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}>{props.bloodType}</Text>
+            <Text style={styles.date}>{props.date}</Text>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity onPress={() => viewListItem(props.user_id)}>
+            <View style={styles.bodyContainer}>
+              <View>
+                <Text style={styles.name}>
+                  {props.firstName} {props.lastName}
+                </Text>
+              </View>
+              <View style={styles.icon}>
+                <MaterialCommunityIcons name={"arrow-right"} size={25} />
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Divider
+            style={styles.divider}
+            color={colors.text_dark}
+            insetType="left"
+            subHeaderStyle={{}}
+            width={1}
+            orientation="horizontal"
+          />
+        </View>
+        <View style={styles.buttons}>
+          <View style={styles.decline}>
+            <Button
+              title="Decline"
+              color={colors.red}
+              onPress={() => decline(props.id)}
+            />
+          </View>
+          <View style={styles.accept}>
+            <Button
+              title="Accept"
+              color={colors.green}
+              onPress={() => accept(props.id)}
+            />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View>
       <FlatList
-        data={DATA}
-        renderItem={({item, index}) => {
+        data={requests}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({item}) => {
           return (
             <RequestComponent
-              bloodType={item.bloodType}
+              bloodType={item.type}
               date={item.date}
-              firstName={item.firstName}
-              lastName={item.lastName}
+              firstName={item.first_name}
+              lastName={item.last_name}
+              user_id={item.user_id}
             />
           );
         }}
@@ -64,5 +152,73 @@ const RequestsScreen = (navigation: any) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    borderRadius: 8,
+    marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: colors.primary,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+  },
+  header: {
+    color: colors.white,
+    paddingLeft: 27,
+    paddingTop: 7,
+    paddingBottom: 5,
+    fontSize: 25,
+  },
+  date: {
+    color: colors.white,
+    paddingRight: 27,
+    paddingTop: 12,
+    paddingBottom: 10,
+    fontSize: 17,
+  },
+  bodyContainer: {
+    backgroundColor: colors.background,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  icon: {
+    paddingTop: 20,
+    paddingRight: 25,
+  },
+  name: {
+    color: colors.text,
+    fontSize: 27,
+    paddingLeft: 27,
+    paddingTop: 12,
+    paddingBottom: 10,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: colors.background,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  decline: {
+    fontSize: 20,
+    paddingLeft: "20%",
+    borderRadius: 8,
+  },
+  accept: {
+    fontSize: 20,
+    paddingRight: "20%",
+  },
+  divider: {
+    width: "100%",
+    color: colors.black,
+  },
+});
 
 export default RequestsScreen;
