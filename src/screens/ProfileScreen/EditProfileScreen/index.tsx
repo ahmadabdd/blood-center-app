@@ -1,56 +1,30 @@
 import React, {useEffect, useRef, useState} from "react";
-import {
-  FlatList,
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import {Text, View, StyleSheet, TextInput, ScrollView} from "react-native";
 import {useSelector} from "react-redux";
 import {colors} from "../../../constants/palette";
-import {Divider, Avatar, Switch, Button} from "react-native-elements";
+import { Avatar, Switch } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import DatePicker from "react-native-datepicker";
-import SearchableDropdown from "react-native-searchable-dropdown";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {Picker} from "@react-native-picker/picker";
-import { fonts } from "react-native-elements/dist/config";
 
-const EditProfileScreen = (navigation: any) => {
-  useEffect(() => {
-    fetch("http://3.133.20.22/api/get_blood_types", {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization:
-          "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDkyNzI2NCwiZXhwIjoxNjM0OTYzMjY0LCJuYmYiOjE2MzQ5MjcyNjQsImp0aSI6InhLV3ZWZjd5ZHV0dENmYjIiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.vowHK8d2dZlAhhV6brUNMSV8NP5hpxdXzQqIN2A03N0",
-      }),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // setGetBloodTypes(responseJson);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+const EditProfileScreen = ({ navigation }) => {
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
 
-  const [firstName, setFirstName] = useState("Ahmad");
-  const [lastName, setLastName] = useState("Abd");
-  const [dateOfBirth, setDdateOfBirth] = useState(new Date());
-  const [lastDonationDate, setLastDonationDate] = useState(new Date());
-  const [bloodType, setBloodType] = useState("");
-  const [city, setCity] = useState("");
-  const [text, onChangeText] = useState("");
+  const [id, setId] = useState(1);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [dateOfBirth, setDdateOfBirth] = useState(null);
+  const [lastDonationDate, setLastDonationDate] = useState(null);
+  const [bloodType, setBloodType] = useState();
+  const [city, setCity] = useState();
   const [isSmoker, setIsSmoker] = useState(0);
   const [haveTattoo, setHavetattoo] = useState(0);
   const [smokerValue, setSmokerValue] = useState(false);
   const [haveTatooValue, setHaveTatooValue] = useState(false);
   const [image, setImage] = useState(null);
+
   const Smoker = () => {
     setSmokerValue(!smokerValue);
     smokerValue ? setIsSmoker(0) : setIsSmoker(1);
@@ -75,7 +49,46 @@ const EditProfileScreen = (navigation: any) => {
   };
 
   const Submit = () => {
-    alert("Submitted!");
+    if (!firstName) {
+      alert("Oops. you missed filing your first name");
+    } else if (!lastName) {
+      alert("Oops. you missed filing your last name");
+    } else if (!dateOfBirth) {
+      alert("Oops. you missed filing your date of birth");
+    } else if (!lastDonationDate) {
+      alert("Oops. you missed filing your last donation date");
+    } else if (!bloodType) {
+      alert("Oops. you missed filing your blood type");
+    } else if (!city) {
+      alert("Oops. you missed filing your city");
+    } else {
+      fetch("http://127.0.0.1:8000/api/edit_user_info", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: (JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        date_of_birth: dateOfBirth,
+        city_id: city,
+        blood_type_id: bloodType,
+        last_donation: lastDonationDate,
+        is_smoker: isSmoker,
+        have_tattoo: haveTattoo
+      }))
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
   };
 
   const pickerRef = useRef();
@@ -121,7 +134,7 @@ const EditProfileScreen = (navigation: any) => {
           <Text style={styles.text}>First name</Text>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeText}
+            onChangeText={setFirstName}
             placeholder={"First name"}
           />
         </View>
@@ -129,7 +142,7 @@ const EditProfileScreen = (navigation: any) => {
           <Text style={styles.text}>Last name</Text>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeText}
+            onChangeText={setLastName}
             placeholder={"Last name"}
           />
         </View>
@@ -194,7 +207,7 @@ const EditProfileScreen = (navigation: any) => {
             <Picker
               ref={pickerRef}
               selectedValue={bloodType}
-              onValueChange={(bloodType, itemIndex) => setBloodType(bloodType)}
+              onValueChange={(bloodType) => setBloodType(bloodType)}
             >
               <Picker.Item label="A+" value="1" />
               <Picker.Item label="A-" value="2" />
@@ -213,18 +226,9 @@ const EditProfileScreen = (navigation: any) => {
             <Picker
               ref={pickerRef}
               selectedValue={city}
-              onValueChange={(city, itemIndex) => setCity(city)}
+              onValueChange={(city) => setCity(city)}
               mode="dialog"
             >
-              {/* 1- Beirut
-        2- Tripoli
-        3- Saida
-        4- Byblos
-        5- Zahle
-        6- Tyre
-        7- Mount Lebanon
-        8- Baalbak
-        9- Baabda */}
               <Picker.Item label="Beirut" value="1" />
               <Picker.Item label="Tripoli" value="2" />
               <Picker.Item label="Saida" value="3" />

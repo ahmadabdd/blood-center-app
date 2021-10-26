@@ -31,45 +31,69 @@ const DATA = [
 ];
 
 const ProfileScreen = ({ navigation }) => {
-  const NavigateHealthRecord = () => {
-    navigation.navigate("HealthRecordScreen");
+  const token =
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
+  const NavigateHealthRecord = (id) => {
+    navigation.navigate("HealthRecordScreen", { user_id: id});
   };
+
   const navigateMyDonations = () => {
     navigation.navigate("MyDonationsScreen");
   };
+
   const navigateEditProfile = () => {
     navigation.navigate("EditProfileScreen");
   };
-  const navigateNewRequest = () => {
-    navigation.navigate("NewRequestScreen");
-  };
+  
 
   useEffect(() => {
     //Change query. add is_available
     const DATA = [
-      {
+      { 
+        id: 1,
         first_name: "Ahmad",
         last_name: "Abd",
         email: "ahmad@gmail.com",
-        profile_picture_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfLGPNomfEy0pcUi86d1YbN7zVupY89ZZPtlC6uM4F3buwHw3KnQSQQBkS7ijYt1GEjDI&usqp=CAU",
+        profile_picture_url: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
         is_available: 1,
       },
     ];
 
+    setId(DATA[0].id);
     setFirstName(DATA[0].first_name);
     setLastName(DATA[0].last_name);
     setImage(DATA[0].profile_picture_url);
     setValue(DATA[0].is_available ? false : true);
   }, []);
   
+  const [id, setId] = useState(null);
   const [firstName, setFirstName] = useState("Ahmad");
   const [lastName, setLastName] = useState("Abd");
   const [status, setStatus] = useState("Unvailable");
-  const [value, setValue] = useState(false);
+  const [value, setValue] = useState(true);
   const [image, setImage] = useState(null);
+
   const changeStatus = () => {
     setValue(!value);
     value ? setStatus("Unavailable") : setStatus("Available");
+    console.log(value)
+    // fetch("http://127.0.0.1:8000/api/get_request_data", {
+    //   method: "POST",
+    //   headers: new Headers({
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     Authorization: "bearer " + token,
+    //   }),
+    //   body: (JSON.stringify({ "request_id": id}))
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     setRequestData(responseJson);
+    //     console.log(responseJson);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   };
 
   const pickImage = async () => {
@@ -143,7 +167,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <ProfileButtonComponent
             header="Health record"
-            onPress={NavigateHealthRecord}
+            onPress={() => NavigateHealthRecord(id)}
           />
           <ProfileButtonComponent
             header="My donations"
@@ -156,12 +180,12 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={Logout}>
           <View style={styles.logoutContainer}>
-            <View style={styles.left}>
+            <View>
               <View>
                 <Text style={styles.logout}>Log out</Text>
               </View>
             </View>
-            <View style={styles.right}>
+            <View>
               <View style={styles.icon}>
                 <MaterialCommunityIcons
                   name={"logout"}

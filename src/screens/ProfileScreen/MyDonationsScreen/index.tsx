@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {FlatList, Text, View, StyleSheet} from "react-native";
+import EmptyState from "../../../components/EmptyState";
 import MyDonationsComponent from "../../../components/MyDonationsComponent";
 import {colors} from "../../../constants/palette";
 
 const MyDonationsScreen = () => {
-
   const [donations, setDonations] = useState();
+  const [number, setNumber] = useState(null);
   const token =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
 
@@ -28,12 +29,7 @@ const MyDonationsScreen = () => {
       });
   }, []);
 
-  useEffect(() => {
-    // setNumber(DATA.length)
-  }, [])
-  
-  const [number, setNumber] = useState(null);
-  return (
+  return donations ? (
     <View>
       <View style={styles.headContainer}>
         <View style={styles.left}>
@@ -42,28 +38,32 @@ const MyDonationsScreen = () => {
           </View>
         </View>
         <View style={styles.right}>
-          <Text style={styles.header}>{number}</Text>
+          <Text style={styles.header}>{donations.length}</Text>
         </View>
       </View>
       <View>
-        <FlatList 
-          data={DATA}
-          keyExtractor={item => String(item.donation_id)}
+        <FlatList
+          data={donations}
+          keyExtractor={(item) => String(item.donation_id)}
           renderItem={({item, index}) => {
             return (
-              <MyDonationsComponent 
-                // date={item.date}
+              <MyDonationsComponent
+                date={item.created_at.substr(0, 10)}
                 city={item.city}
                 hospital={item.hospital}
                 firstName={item.first_name}
                 lastName={item.last_name}
               />
-            )
+            );
           }}
         />
       </View>
-    </View>
-  );
+    </View> ) : (
+      <EmptyState 
+        loading={true}
+        icon={'coffee'}      
+      />
+    );
 };
 
 const styles = StyleSheet.create({
