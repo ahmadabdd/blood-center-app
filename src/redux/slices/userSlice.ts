@@ -11,6 +11,9 @@ export interface User {
         profileImage?: string;
         gender?: string;
         country?: string;
+        profile_picture_url?: string;
+        is_available?: number;
+        token?: string;
     }
 }
 

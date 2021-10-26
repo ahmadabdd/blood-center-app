@@ -10,20 +10,21 @@ import {Divider, Avatar} from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {FlatList} from "react-native-gesture-handler";
 
-const RequestsScreen = () => {
+const RequestsScreen = ({ navigation, route }) => {
+  const id = route.params.id
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTIzMDEzMiwiZXhwIjoxNjM1MjY2MTMyLCJuYmYiOjE2MzUyMzAxMzIsImp0aSI6ImlvR3h0eTdaSjdld28xZVYiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ag-FfBgX4PMy2BT6gbplew25n2CP1_R-h45nBtRMAJ0";
   const [requests, setRequests] = useState();
 
   useEffect(() => {
-    fetch("http://3.133.20.22/api/get_request_donations", {
+    fetch("http://127.0.0.1:8000/api/get_request_donations", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: "bearer " + token,
       }),
-      body: JSON.stringify({request_id: 2}),
+      body: JSON.stringify({request_id: id}),
     })
       .then((response) => response.json())
       .then((responseJson) => {
@@ -37,25 +38,28 @@ const RequestsScreen = () => {
 
   const RequestComponent = (props) => {
     const accept = (user_id) => {
-      fetch("http://3.133.20.22/api/accept_donation_request", {
+      fetch("http://127.0.0.1:8000/api/accept_donation_request", {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json",
           Accept: "application/json",
           Authorization: "bearer " + token,
         }),
-        body: JSON.stringify({blood_request_id: 2}),
+        body: JSON.stringify({blood_request_id: id})
       })
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
+          const newRequests = requests.filter((requests) => requests.user_id !== user_id);
+          setRequests(newRequests);
+          console.log(newRequests);
         })
         .catch((error) => {
           console.error(error);
         });
     };
 
-    const decline = (id) => {
+    const decline = (user_id) => {
       fetch("http://3.133.20.22/api/decline_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -63,12 +67,12 @@ const RequestsScreen = () => {
           Accept: "application/json",
           Authorization: "bearer " + token,
         }),
-        body: JSON.stringify({blood_request_id: 2}),
+        body: JSON.stringify({blood_request_id: id}),
       })
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
-          const newRequests = requests.filter((requests) => requests.id !== id);
+          const newRequests = requests.filter((requests) => requests.user_id !== user_id);
           setRequests(newRequests);
           console.log(newRequests);
         })
@@ -78,8 +82,9 @@ const RequestsScreen = () => {
     };
 
     const viewListItem = (user_id) => {
-      alert("go to user profile" + user_id);
+      navigation.navigate('HealthRecordScreen', { user_id: user_id })
     };
+
     return (
       <View style={styles.cardContainer}>
         <View>
@@ -117,14 +122,14 @@ const RequestsScreen = () => {
             <Button
               title="Decline"
               color={colors.red}
-              onPress={() => decline(props.id)}
+              onPress={() => decline(props.user_id)}
             />
           </View>
           <View style={styles.accept}>
             <Button
               title="Accept"
               color={colors.green}
-              onPress={() => accept(props.id)}
+              onPress={() => accept(props.user_id)}
             />
           </View>
         </View>
@@ -132,7 +137,27 @@ const RequestsScreen = () => {
     );
   };
 
-  return (
+  const closeRequest = (id) => {
+    fetch("http://127.0.0.1:8000/api/close_request", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + token,
+      }),
+      body: JSON.stringify({request_id: id}),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setRequests(responseJson);
+        navigation.goBack()
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  return requests ? (
     <View>
       <FlatList
         data={requests}
@@ -141,7 +166,7 @@ const RequestsScreen = () => {
           return (
             <RequestComponent
               bloodType={item.type}
-              date={item.date}
+              date={item.created_at.substr(0, 10)}
               firstName={item.first_name}
               lastName={item.last_name}
               user_id={item.user_id}
@@ -149,7 +174,17 @@ const RequestsScreen = () => {
           );
         }}
       />
+      <TouchableOpacity onPress={() => closeRequest(id)}>
+        <View style={styles.logoutContainer}>
+          <Text style={styles.logout}>Close</Text>
+        </View>
+      </TouchableOpacity> 
     </View>
+  ) : (
+    <EmptyState 
+      loading={true}
+      icon={'coffee'}
+    />
   );
 };
 
@@ -218,6 +253,16 @@ const styles = StyleSheet.create({
   divider: {
     width: "100%",
     color: colors.black,
+  },
+  logoutContainer: {
+    backgroundColor: colors.red,
+    marginTop: "53%",
+    padding: 20,
+    alignItems: "center",
+  },
+  logout: {
+    fontSize: 24,
+    color: colors.white,
   },
 });
 

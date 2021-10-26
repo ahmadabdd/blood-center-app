@@ -37,8 +37,7 @@ const DATA = [
   },
 ];
 
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+const ProfileScreen = ({ navigation }) => {
   const NavigateHealthRecord = () => {
     navigation.navigate("HealthRecordScreen");
   };

@@ -4,35 +4,25 @@ import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider} from "react-native-elements";
 
-const RequestViewComponent = () => {
-  const [unitsCount, setUnitsCount] = useState(2);
-  const [city, setCity] = useState("Beirut");
-  const [hospital, setHospital] = useState("AUBMC");
-  const [bloodType, setBloodType] = useState("AB+");
-  const [date, setDate] = useState("2021-10-20");
-  const [time, setTime] = useState("10:41");
-  const [expiryDate, setExpiryDate] = useState("2021-10-25");
-  const [firstName, setFirstName] = useState("Ahmad");
-  const [lastName, setLastName] = useState("Abd");
-
+const RequestViewComponent = (props) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.headerContainerLeft}>
-          <Text style={styles.header}>{bloodType}</Text>
+          <Text style={styles.header}>{props.bloodType}</Text>
         </View>
         <View style={styles.headerContainerRight}>
-          <Text style={styles.date}>{date}</Text>
-          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.date}>{props.date}</Text>
+          <Text style={styles.time}>{props.time}</Text>
         </View>
       </View>
       <View style={styles.bodyContainer}>
-        <View style={styles.bodyRight}>
+        <View>
           <Text style={styles.upperBody}>
-            {city}, {hospital}
+            {props.city}, {props.hospital}
           </Text>
           <Text style={styles.name}>
-            {firstName} {lastName}
+            {props.firstName} {props.lastName}
           </Text>
           <Divider
             style={{width: "100%", margin: 30}}
@@ -42,8 +32,8 @@ const RequestViewComponent = () => {
             width={1}
             orientation="horizontal"
           />
-          <Text style={styles.units}> Number of units: {unitsCount} </Text>
-          <Text style={styles.expiry}> Expiry date: {expiryDate} </Text>
+          <Text style={styles.units}> Number of units: {props.unitsCount} </Text>
+          <Text style={styles.expiry}> Expiry date: {props.expiryDate} </Text>
         </View>
       </View>
     </View>

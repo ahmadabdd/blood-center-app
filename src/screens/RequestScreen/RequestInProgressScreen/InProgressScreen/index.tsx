@@ -6,15 +6,17 @@ import {useNavigation} from "@react-navigation/core";
 import InProgressRequestComponent from "../../../../components/InProgressRequestComponent";
 import NewRequestComponent from "../../../../components/NewRequestComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
+import EmptyState from "../../../../components/EmptyState";
 
-const InProgressScreen = () => {
+const InProgressScreen = ({ navigation }) => {
   const [requests, setRequests] = useState();
+  
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTIzMDEzMiwiZXhwIjoxNjM1MjY2MTMyLCJuYmYiOjE2MzUyMzAxMzIsImp0aSI6ImlvR3h0eTdaSjdld28xZVYiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ag-FfBgX4PMy2BT6gbplew25n2CP1_R-h45nBtRMAJ0";
 
   useEffect(() => {
-    fetch("http://3.133.20.22/api/get_user_requests", {
+    fetch("http://127.0.0.1:8000/api/get_user_requests", {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -31,13 +33,12 @@ const InProgressScreen = () => {
         console.error(error);
       });
   }, []);
-  const navigation = useNavigation();
 
   const navigateFulfilled = () => {
     navigation.navigate("FulfilledScreen");
   };
-  const navigateRequests = () => {
-    navigation.navigate("RequestsScreen");
+  const navigateRequests = (id) => {
+    navigation.navigate("RequestsScreen", { id: id });
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
@@ -48,7 +49,8 @@ const InProgressScreen = () => {
   const [hospital, setHospital] = useState("AUBMC");
   const [bloodType, setBloodType] = useState("AB+");
   const [date, setDate] = useState("2021-10-20");
-  return (
+
+  return requests ?(
     <View>
       <Button title="Fulfilled" color="#666666" onPress={navigateFulfilled} />
       <View style={styles.listContainer}>
@@ -60,11 +62,11 @@ const InProgressScreen = () => {
               <InProgressRequestComponent
                 unitsCount={item.left_number_of_units}
                 requestCount={item.requestCount}
-                bloodType={item.bloodType}
                 city={item.city}
                 hospital={item.hospital}
-                date={item.date}
-                onPress={navigateRequests}
+                bloodType={item.type}
+                date={item.created_at.substr(0, 10)}
+                onPress={() => navigateRequests(item.id)}
               />
             );
           }}
@@ -72,6 +74,11 @@ const InProgressScreen = () => {
       </View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
     </View>
+  ) : (
+    <EmptyState 
+      loading={true}
+      icon={'coffee'}
+    />
   );
 };
 

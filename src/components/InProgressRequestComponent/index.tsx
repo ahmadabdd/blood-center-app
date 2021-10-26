@@ -41,9 +41,9 @@ const InProgressRequestComponent = (props) => {
         />
         <TouchableOpacity onPress={props.onPress}>
           <View style={styles.lowerBody}>
-            <View style={styles.avatar}>
+            {/* <View style={styles.avatar}>
               <Text style={styles.unitsCount}>{ props.requestCount }</Text>
-            </View>
+            </View> */}
             <Text style={styles.donation}> Donation requests </Text>
             <View style={styles.icon}>
               <MaterialCommunityIcons name={"arrow-right"} size={25} />
@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingTop: 10,
   },
-  avatar: {
-    paddingLeft: 27,
-    paddingBottom: 18,
-    marginLeft: 15,
-    marginRight: 7
-  },
+  // avatar: {
+  //   paddingLeft: 27,
+  //   paddingBottom: 18,
+  //   marginLeft: 15,
+  //   marginRight: 7
+  // },
   icon: {
     paddingTop: 13,
     paddingLeft: 16,

@@ -13,10 +13,10 @@ const FulfilledScreen = () => {
   const [requests, setRequests] = useState();
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTA4NzQ4OCwiZXhwIjoxNjM1MTIzNDg4LCJuYmYiOjE2MzUwODc0ODgsImp0aSI6InNtU1dXbTFONkZ4OUg0SVUiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.68uKvBCqfylNon96B_CjAC7X4B0HNG_tXBysxUMgViA";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTIzMDEzMiwiZXhwIjoxNjM1MjY2MTMyLCJuYmYiOjE2MzUyMzAxMzIsImp0aSI6ImlvR3h0eTdaSjdld28xZVYiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ag-FfBgX4PMy2BT6gbplew25n2CP1_R-h45nBtRMAJ0";
 
   useEffect(() => {
-    fetch("http://3.133.20.22/api/get_user_requests_fulfilled", {
+    fetch("http://127.0.0.1:8000/api/get_user_requests_fulfilled", {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const FulfilledScreen = () => {
     navigation.navigate("NewRequestScreen");
   };
 
-  return (
+  return requests ? (
     <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <Button
@@ -56,23 +56,24 @@ const FulfilledScreen = () => {
       />
       <View style={styles.listContainer}>
         <FlatList
-        data={requests}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({item, index}) => {
-          return (
-            <FulfilledComponent
-            bloodType={item.blood_type}
-            date={item.date}
-            city={item.city}
-            hospital={item.hospital}
-            onPress={navigateRequestsDonators}
-          />
-          )
-        }}
-      />
+          data={requests}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({item, index}) => {
+            return (
+              <FulfilledComponent
+                bloodType={item.type}
+                date={item.created_at.substr(0, 10)}
+                city={item.city}
+                hospital={item.hospital}
+                onPress={navigateRequestsDonators}
+              />
+            );
+          }}
+        />
       </View>
-      
     </View>
+  ) : (
+    <EmptyState loading={true} icon={"coffee"} />
   );
 };
 
