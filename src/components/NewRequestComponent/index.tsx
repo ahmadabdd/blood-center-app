@@ -12,178 +12,169 @@ import React, {useEffect, useState, useRef} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider} from "react-native-elements";
 import {Picker} from "@react-native-picker/picker";
+import DatePicker from "react-native-datepicker";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import EmptyState from "../EmptyState";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 
 const NewRequestComponent = () => {
 
-  useEffect(() => {
-    fetch("http://3.133.20.22/api/get_blood_types", {
-      method: 'GET',
+  const [city, setCity] = useState(null);
+  const [hospital, setHospital] = useState(null);
+  const [bloodType, setBloodType] = useState(null);
+  const [numberOfUnits, setNumberOfUnits] = useState(null);
+  const [expiryDate, setExpiryDate] = useState("2021-10-25");
+  const pickerRef = useRef(); 
+
+  function open() {
+    pickerRef.current.focus();
+  }
+  function close() {
+    pickerRef.current.blur();
+  }
+  
+  const Submit = () => {
+    fetch("http://127.0.0.1:8000/api/make_request", {
+      method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8zLjEzMy4yMC4yMlwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNDk5MDU3MSwiZXhwIjoxNjM1MDI2NTcxLCJuYmYiOjE2MzQ5OTA1NzEsImp0aSI6Inkya2NkbG1ld0tkRnB1azUiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.r58aI_qwgwGIpqjR7cAxBKHZvzAdYxEjg1Q7AbdCdAo'
+        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI'
       }),
+      body: (JSON.stringify({
+        blood_type: bloodType,
+        hospital_id: hospital,
+        city_id: city,
+        number_of_units: numberOfUnits,
+        expiry_date: expiryDate,
+      }))
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        setServerData(responseJson);
+        console.log(responseJson)
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
-  
-  const [serverData, setServerData] = useState(null);
-  const [city, setCity] = useState('');
-  const [hospital, setHospital] = useState('');
-  const [bloodType, setBloodType] = useState('');
-  const pickerRef = useRef();
-  const items = [
-    //name key is must.It is to show the text in front
-    { id: 1, name: 'A+' },
-    { id: 2, name: 'A-' },
-    { id: 3, name: 'B+' },
-    { id: 4, name: 'B-' },
-    { id: 5, name: 'AB+' },
-    { id: 6, name: 'Ab-' },
-    { id: 7, name: 'O+' },
-    { id: 8, name: 'B-' },
-  ];
- 
-  console.log(serverData)
-
-  const Submit = () => {
-    Alert.alert("Submitted!");
   };
 
-  return serverData ? (
-    <View style={styles.container}>
+  return (
+    <ScrollView>
+      <View style={styles.container}>
       <View>
         <View>
           <Text style={styles.question}>What blood type do you need?</Text>
         </View>
-        <View>
-        <SearchableDropdown
-        // onTextChange={(item) => console.log(JSON.stringify(item))}
-        onItemSelect={(item) => setBloodType(item.name)}
-        containerStyle={{
-          marginLeft: 25,
-          marginRight: 25,
-          backgroundColor: colors.white
-        }}
-        textInputStyle={{
-          padding: 12,
-          borderWidth: 1,
-          borderColor: colors.white,
-          backgroundColor: colors.background,
-        }}
-        itemStyle={{
-          padding: 10,
-          marginTop: 2,
-          backgroundColor: colors.background,
-          borderColor: "#bbb",
-          borderWidth: 1,
-        }}
-        itemTextStyle={{
-          color: colors.black,
-        }}
-        itemsContainerStyle={{
-          maxHeight: "60%",
-        }}
-        items={serverData}
-        defaultIndex={2}
-        placeholder={bloodType ? bloodType : "Select blood type"}
-        resetValue={false}
-        underlineColorAndroid="transparent"
-      />
+        <View style={styles.input}>
+          <Picker
+            ref={pickerRef}
+            selectedValue={bloodType}
+            onValueChange={(bloodType) => setBloodType(bloodType)}
+          >
+            <Picker.Item label="A+" value="1" />
+            <Picker.Item label="A-" value="2" />
+            <Picker.Item label="B+" value="3" />
+            <Picker.Item label="B-" value="4" />
+            <Picker.Item label="AB+" value="5" />
+            <Picker.Item label="AB-" value="6" />
+            <Picker.Item label="O+" value="7" />
+            <Picker.Item label="O-" value="8" />
+          </Picker>
         </View>
       </View>
       <View>
-      <View>
-        <Text style={styles.question}>Where are you?</Text>
-      </View>
-      <SearchableDropdown
-        ref={pickerRef}
-        // onTextChange={(item) => console.log(JSON.stringify(item))}
-        onItemSelect={(item) => setCity(item.name)}
-        containerStyle={{
-          marginLeft: 25,
-          marginRight: 25,
-          backgroundColor: colors.white
-        }}
-        textInputStyle={{
-          padding: 12,
-          borderWidth: 1,
-          borderColor: colors.white,
-          backgroundColor: colors.background,
-        }}
-        itemStyle={{
-          padding: 10,
-          marginTop: 2,
-          backgroundColor: colors.background,
-          borderColor: "#bbb",
-          borderWidth: 1,
-        }}
-        itemTextStyle={{
-          color: colors.black,
-        }}
-        itemsContainerStyle={{
-          maxHeight: "60%",
-        }}
-        items={serverData}
-        defaultIndex={2}
-        placeholder={city ? city : "Select City"}
-        resetValue={false}
-        underlineColorAndroid="transparent"
-      />
+        <View>
+          <Text style={styles.question}>Where are you?</Text>
+        </View>
+        <View style={styles.input}>
+          <Picker
+            ref={pickerRef}
+            selectedValue={city}
+            onValueChange={(city) => setCity(city)}
+            mode="dialog"
+          >
+            <Picker.Item label="Beirut" value="1" />
+            <Picker.Item label="Tripoli" value="2" />
+            <Picker.Item label="Saida" value="3" />
+            <Picker.Item label="Byblos" value="4" />
+            <Picker.Item label="Zahle" value="5" />
+            <Picker.Item label="Tyre" value="6" />
+            <Picker.Item label="Mount Lebanon" value="7" />
+            <Picker.Item label="Baalbak" value="8" />
+            <Picker.Item label="Baabda" value="9" />
+          </Picker>
+        </View>
       </View>
       <View>
         <Text style={styles.question}>Which hospital?</Text>
-        <SearchableDropdown
-        ref={pickerRef}
-        onTextChange={(item) => console.log(JSON.stringify(item))}
-        onItemSelect={(item) => setHospital(item)}
-        containerStyle={{
-          marginLeft: 25,
-          marginRight: 25,
-          backgroundColor: colors.white
-        }}
-        textInputStyle={{
-          padding: 12,
-          borderWidth: 1,
-          borderColor: colors.white,
-          backgroundColor: colors.background,
-        }}
-        itemStyle={{
-          padding: 10,
-          marginTop: 2,
-          backgroundColor: colors.background,
-          borderColor: "#bbb",
-          borderWidth: 1,
-        }}
-        itemTextStyle={{
-          color: colors.black,
-        }}
-        itemsContainerStyle={{
-          maxHeight: "60%",
-        }}
-        items={items}
-        // defaultIndex={2}
-        placeholder={hospital ? hospital : "Select hospital"}
-        resetValue={items}
-        underlineColorAndroid="transparent"
-      />
+        <View style={styles.input}>
+          <Picker
+            ref={pickerRef}
+            selectedValue={hospital}
+            onValueChange={(hospital) => setHospital(hospital)}
+          >
+            <Picker.Item label="AUBMC" value="1" />
+            <Picker.Item label="Cleamenceau" value="2" />
+            <Picker.Item label="Najjar" value="3" />
+            <Picker.Item label="Saida Hospital" value="4" />
+            <Picker.Item label="Tripoli Hospital" value="5" />
+            <Picker.Item label="Baalbak Hospital" value="6" />
+            <Picker.Item label="Tyre Hospital" value="7" />
+            <Picker.Item label="Mount Lebanon Hospital" value="8" />
+            <Picker.Item label="Baabda Hospital" value="9" />
+          </Picker>
+        </View>
       </View>
-      <TouchableOpacity onPress={Submit}>
+      <View>
+        <Text style={styles.question}>Request expiry date?</Text>
+        <View style={styles.inputContainer}>
+        <DatePicker
+            showIcon={false}
+            androidMode="spinner"
+            style={{
+              width: "100%",
+            }}
+            date={expiryDate}
+            mode="date"
+            placeholder="Select date"
+            format="YYYY-MM-DD"
+            confirmBtnText="Chọn"
+            cancelBtnText="Hủy"
+            customStyles={{
+              dateInput: {
+                paddingRight: "68%",
+                backgroundColor: colors.background,
+                borderWidth: 1,
+                borderColor: colors.white,
+              },
+            }}
+            onDateChange={(date) => {
+              setExpiryDate(date);  
+            }}
+          />
+        </View>
+      </View>
+      <View>
+        <Text style={styles.question}>How many units?</Text>
+        <View style={styles.input}>
+        <TextInput
+            // style={styles.input}
+            onChangeText={setNumberOfUnits}
+            value={numberOfUnits}
+            placeholder="Enter number of units"
+            keyboardType="numeric"
+          />
+        </View>
+      </View>
+      <TouchableOpacity onPress={() =>Submit()}>
         <View style={styles.logoutContainer}>
           <Text style={styles.logout}>Submit</Text>
         </View>
       </TouchableOpacity>
-    </View> ) : (
-      <EmptyState loading={true}/>
-    )
+    </View>
+    </ScrollView>
+    
+  );
 };
 
 const styles = StyleSheet.create({
@@ -199,7 +190,7 @@ const styles = StyleSheet.create({
   },
   logoutContainer: {
     backgroundColor: colors.green,
-    marginTop: "53%",
+    marginTop: "6%",
     padding: 20,
     alignItems: "center",
   },
@@ -209,6 +200,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingTop: "25%",
+  },
+  input: {
+    height: 40,
+    padding: 10,
+    backgroundColor: colors.background,
+    marginHorizontal: 15
+  },
+  inputContainer: {
+    marginHorizontal: "4%",
   },
 });
 

@@ -12,7 +12,7 @@ import NewRequestBottunComponent from "../../components/NewRequestBottunComponen
 const NotificationsScreen = ({ navigation }) => {
   const [notifications, setNotifications] = useState();
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTIzMDEzMiwiZXhwIjoxNjM1MjY2MTMyLCJuYmYiOjE2MzUyMzAxMzIsImp0aSI6ImlvR3h0eTdaSjdld28xZVYiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ag-FfBgX4PMy2BT6gbplew25n2CP1_R-h45nBtRMAJ0";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/get_notifications", {

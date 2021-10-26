@@ -1,26 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {
-  FlatList,
   Text,
   View,
-  Button,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
 } from "react-native";
 import {useSelector} from "react-redux";
 import ComponentTemplate from "../../../components/ComponentTemplate";
 import EmptyState from "../../../components/EmptyState";
-import FullWidthButton from "../../../components/FullWidthButton";
 import {colors} from "../../../constants/palette";
-import {useNavigation} from "@react-navigation/core";
-import {Divider, Avatar, Switch} from "react-native-elements";
+import {Avatar, Switch} from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileButtonComponent from "../../../components/ProfileButtonComponent";
-import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import * as ImagePicker from "expo-image-picker";
-import {Constants} from "expo-constants";
 import {store} from "../../../redux/store";
 import {deleteUser} from "../../../redux/slices/userSlice";
 

@@ -12,8 +12,9 @@ import {FlatList} from "react-native-gesture-handler";
 
 const RequestsScreen = ({ navigation, route }) => {
   const id = route.params.id
+  console.log(id)
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTIzMDEzMiwiZXhwIjoxNjM1MjY2MTMyLCJuYmYiOjE2MzUyMzAxMzIsImp0aSI6ImlvR3h0eTdaSjdld28xZVYiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Ag-FfBgX4PMy2BT6gbplew25n2CP1_R-h45nBtRMAJ0";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
   const [requests, setRequests] = useState();
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const RequestsScreen = ({ navigation, route }) => {
   }, []);
 
   const RequestComponent = (props) => {
-    const accept = (user_id) => {
+    const accept = () => {
       fetch("http://127.0.0.1:8000/api/accept_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -50,16 +51,16 @@ const RequestsScreen = ({ navigation, route }) => {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
-          const newRequests = requests.filter((requests) => requests.user_id !== user_id);
+          const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
           setRequests(newRequests);
-          console.log(newRequests);
+          console.log(newRequests); 
         })
         .catch((error) => {
           console.error(error);
         });
     };
 
-    const decline = (user_id) => {
+    const decline = () => {
       fetch("http://3.133.20.22/api/decline_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -72,7 +73,7 @@ const RequestsScreen = ({ navigation, route }) => {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
-          const newRequests = requests.filter((requests) => requests.user_id !== user_id);
+          const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
           setRequests(newRequests);
           console.log(newRequests);
         })
@@ -122,14 +123,14 @@ const RequestsScreen = ({ navigation, route }) => {
             <Button
               title="Decline"
               color={colors.red}
-              onPress={() => decline(props.user_id)}
+              onPress={() => decline()}
             />
           </View>
           <View style={styles.accept}>
             <Button
               title="Accept"
               color={colors.green}
-              onPress={() => accept(props.user_id)}
+              onPress={() => accept()}
             />
           </View>
         </View>
