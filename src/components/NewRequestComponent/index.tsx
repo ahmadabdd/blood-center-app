@@ -16,6 +16,7 @@ import DatePicker from "react-native-datepicker";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import EmptyState from "../EmptyState";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 const NewRequestComponent = () => {
 
@@ -24,6 +25,7 @@ const NewRequestComponent = () => {
   const [bloodType, setBloodType] = useState(null);
   const [numberOfUnits, setNumberOfUnits] = useState(null);
   const [expiryDate, setExpiryDate] = useState("2021-10-25");
+  const user = useSelector((state) => state?.user);
   const pickerRef = useRef(); 
 
   function open() {
@@ -34,12 +36,12 @@ const NewRequestComponent = () => {
   }
   
   const Submit = () => {
-    fetch("http://127.0.0.1:8000/api/make_request", {
+    fetch("https://blood-center.tk/api/make_request", {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI'
+        'Authorization': user.userProfile.token
       }),
       body: (JSON.stringify({
         blood_type: bloodType,

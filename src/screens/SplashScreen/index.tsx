@@ -25,7 +25,7 @@ const SplashScreen: () => JSX.Element = () => {
         <Text style={styles.subHeader}>Ready to save lives?</Text>
       </View>
       <View style={styles.bodyContainer}>
-        <View style={styles.loginBtn}>
+        <View>
           <Button title="Login" color={colors.black} onPress={navigateLogin} />
         </View>
         <View style={styles.registerBtn}>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   },
   registerBtn: {
     marginTop: '2%',
-    borderRadius: 8
   },
 });
 export default SplashScreen;

@@ -11,16 +11,15 @@ import NewRequestBottunComponent from "../../components/NewRequestBottunComponen
 
 const NotificationsScreen = ({ navigation }) => {
   const [notifications, setNotifications] = useState();
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
+  const user = useSelector((state) => state?.user);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_notifications", {
+    fetch("https://blood-center.tk/api/get_notifications", {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "bearer " + token,
+        Authorization: "bearer " + user.userProfile.token,
       }),
     })
       .then((response) => response.json())
@@ -33,8 +32,8 @@ const NotificationsScreen = ({ navigation }) => {
       });
   }, []);
 
-  const navigateRequestView = () => {
-    navigation.navigate("RequestViewScreen");
+  const navigateRequestView = (blood_request_id) => {
+    navigation.navigate("RequestViewScreen", { id: blood_request_id });
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
@@ -52,8 +51,8 @@ const NotificationsScreen = ({ navigation }) => {
               <NotificationComponent
                 header={item.header}
                 body={item.body}
-                time={item.time}
-                onPress={navigateRequestView}
+                time={item.created_at.substr(0, 10)}
+                onPress={() => navigateRequestView(item.blood_request_id)}
               />
             );
           }}

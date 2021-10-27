@@ -21,10 +21,10 @@ const InProgressRequestComponent = (props) => {
               <Text style={styles.city}>{props.city}</Text>
               <Text style={styles.city}>{props.hospital}</Text>
             </View>
-            <View>
+          </View>
+          <View>
               <Text style={styles.units}> units: {props.unitsCount} </Text>
             </View>
-          </View>
           <Divider
             style={{
               width: "80%",
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   },
   lowerBody: {
     flexDirection: "row",
-    paddingBottom: 20,
-    paddingLeft: 17,
+    paddingBottom: 25,
+    paddingLeft: 13,
   },
   city: {
     color: colors.text,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   units: {
     color: colors.text,
     fontSize: 22,
-    paddingRight: 27,
+    paddingLeft: 24,
     paddingTop: 13,
   },
   donation: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingTop: 13,
-    paddingLeft: 16,
+    paddingLeft: 70,
   },
   unitsCount: {
     fontSize: 30,

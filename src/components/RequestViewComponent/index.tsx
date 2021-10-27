@@ -18,9 +18,10 @@ const RequestViewComponent = (props) => {
       </View>
       <View style={styles.bodyContainer}>
         <View>
-          <Text style={styles.upperBody}>
-            {props.city}, {props.hospital}
-          </Text>
+          <View>
+            <Text style={styles.upperBody}>{props.city}</Text>
+            <Text style={styles.upperBodyHospital}>{props.hospital}</Text>
+          </View>
           <Text style={styles.name}>
             {props.firstName} {props.lastName}
           </Text>
@@ -32,7 +33,10 @@ const RequestViewComponent = (props) => {
             width={1}
             orientation="horizontal"
           />
-          <Text style={styles.units}> Number of units: {props.unitsCount} </Text>
+          <Text style={styles.units}>
+            {" "}
+            Number of units: {props.unitsCount}{" "}
+          </Text>
           <Text style={styles.expiry}> Expiry date: {props.expiryDate} </Text>
         </View>
       </View>
@@ -103,6 +107,12 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingBottom: 20,
   },
+  upperBodyHospital: {
+    color: colors.text,
+    fontSize: 27,
+    paddingLeft: 27,
+    paddingTop: 10,
+  }
 });
 
 export default RequestViewComponent;

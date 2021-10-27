@@ -6,13 +6,6 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { colors } from "../constants/palette";
 import SplashScreen from "../screens/SplashScreen";
-import RequestViewComponent from "../components/RequestViewComponent";
-import ListComponentMain from "../components/ListComponentMain";
-import FulfilledComponent from "../components/FulfilledComponent";
-import RequestsDonatorsComponent from "../components/RequestsDonatorsComponent";
-import NewRequestComponent from "../components/NewRequestComponent";
-import InProgressRequestComponent from "../components/InProgressRequestComponent";
-import RequestComponent from "../components/RequestComponent";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();

@@ -1,43 +1,233 @@
-import React from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import { Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/core';
-import { store } from '../../redux/store';
-import { updateUserProfile } from '../../redux/slices/userSlice';
-import EmptyState from '../../components/EmptyState';
+import React, {useRef, useState} from "react";
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
+import {Text, View, StyleSheet, Button} from "react-native";
+import EmptyState from "../../components/EmptyState";
+import {store} from "../../redux/store";
+import {updateUserProfile} from "../../redux/slices/userSlice";
+import {useNavigation} from "@react-navigation/core";
+import {colors} from "../../constants/palette";
+import {Picker} from "@react-native-picker/picker";
 
-const RegisterScreen = () => {
-    const navigation = useNavigation()
-    return (
-        <View
-            style={{
-                flex: 1,
-            }}
-        >
-            <EmptyState
-                // loading={true}
-                icon={"coffee"}
-                title={"Register Screen"}
-                description={"here you will have your login screen"}
-                actionButton={{
-                    title: "Register",
-                    callback: () => {
-                        store.dispatch(updateUserProfile({ userProfile: {
-                            uid: '123',
-                            timestamp: '',
-                            email: '123@123.com',
-                            firstName: '123',
-                            lastName: '123',
-                            dateOfBirt: '',
-                            profileImage: '',
-                            gender: '',
-                            country: '',
-                        }}));
-                    }
-                }}
-            />
+const LoginScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
+  const [city, setCity] = useState(null);
+
+  const login = () => {
+    if (!firstName) {
+      alert("Please enter your first name");
+    } else if (!lastName) {
+      alert("Please enter your last name");
+    } else if (!email) {
+      alert("Please enter your email");
+    } else if (!email.includes("@gmail.com")) {
+      alert("Please enter a valid email");
+    } else if (!password) {
+      alert("Please enter your password");
+    } else if (password.length < 5) {
+      alert("Please enter a valid password");
+    } else if (!confirmPassword) {
+      alert("Please confirm your password");
+    } else if (password !== confirmPassword) {
+      alert("Passwords do not match");
+    } else if (!city) {
+      alert("Please select your city");
+    } else {
+      fetch("https://blood-center.tk/api/register", {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        }),
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+          password_confirmation: confirmPassword,
+          city_id: city,
+          firebase_token: "token"
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status) {
+            navigation.navigate('LoginScreen')
+          } else {
+            alert("Invalid credentials");
+          }
+          console.log(responseJson);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+  const navigateLogin = () => {
+    navigation.navigate("LoginScreen");
+  };
+
+  const pickerRef = useRef();
+  function open() {
+    pickerRef.current.focus();
+  }
+  function close() {
+    pickerRef.current.blur();
+  }
+
+  return (
+    <ScrollView>
+      <View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Sign up</Text>
         </View>
-    );
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>First name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setFirstName}
+              placeholder={"First name"}
+            />
+          </View>
+        </View>
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Last name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setLastName}
+              placeholder={"Last name"}
+            />
+          </View>
+        </View>
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setEmail}
+              placeholder={"Email"}
+              keyboardType="email-address"
+            />
+          </View>
+        </View>
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Password</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              placeholder={"Password"}
+              secureTextEntry={true}
+            />
+          </View>
+        </View>
+        <View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.text}>Confirm password</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setConfirmPassword}
+              placeholder={"Confirm password"}
+              secureTextEntry={true}
+            />
+          </View>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>City</Text>
+        </View>
+        <View style={styles.picker}>
+          <Picker
+            ref={pickerRef}
+            selectedValue={city}
+            onValueChange={(city) => setCity(city)}
+            mode="dialog"
+          >
+            <Picker.Item label="Beirut" value="1" />
+            <Picker.Item label="Tripoli" value="2" />
+            <Picker.Item label="Saida" value="3" />
+            <Picker.Item label="Byblos" value="4" />
+            <Picker.Item label="Zahle" value="5" />
+            <Picker.Item label="Tyre" value="6" />
+            <Picker.Item label="Mount Lebanon" value="7" />
+            <Picker.Item label="Baalbak" value="8" />
+            <Picker.Item label="Baabda" value="9" />
+          </Picker>
+        </View>
+        <View>
+          <View style={styles.bodyContainer}>
+            <View>
+              <Button title="SignUp" color={colors.black} onPress={login} />
+            </View>
+            <View style={styles.registerBtnContainer}>
+              <Text>Already have an account?</Text>
+              <TouchableOpacity onPress={navigateLogin}>
+                <Text style={styles.signinrBtn}>Sign in</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
 };
 
-export default RegisterScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inputContainer: {
+    marginHorizontal: "4%",
+    marginVertical: "2%",
+  },
+  textContainer: {
+    marginHorizontal: "4%",
+    marginTop: "2%",
+  },
+  input: {
+    height: 40,
+    padding: 10,
+    backgroundColor: colors.background,
+  },
+  text: {
+    fontSize: 14,
+    marginLeft: "3%",
+  },
+  headerContainer: {
+    alignItems: "center",
+    marginTop: "10%",
+  },
+  header: {
+    fontSize: 40,
+  },
+  bodyContainer: {
+    margin: 20,
+    marginTop: "10%",
+  },
+  registerBtnContainer: {
+    marginTop: "6%",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 50,
+  },
+  signinrBtn: {
+    fontSize: 16,
+    paddingLeft: 5,
+  },
+  picker: {
+    height: 40,
+    padding: 10,
+    backgroundColor: colors.background,
+    marginHorizontal: "4%",
+  },
+});
+export default LoginScreen;

@@ -9,9 +9,7 @@ import {TouchableOpacity} from "react-native-gesture-handler";
 import {Picker} from "@react-native-picker/picker";
 
 const EditProfileScreen = ({ navigation }) => {
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
-
+  const user = useSelector((state) => state?.user);
   const [id, setId] = useState(1);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -24,6 +22,7 @@ const EditProfileScreen = ({ navigation }) => {
   const [smokerValue, setSmokerValue] = useState(false);
   const [haveTatooValue, setHaveTatooValue] = useState(false);
   const [image, setImage] = useState(null);
+  const [imageString, setImageString] = useState(null);
 
   const Smoker = () => {
     setSmokerValue(!smokerValue);
@@ -39,12 +38,30 @@ const EditProfileScreen = ({ navigation }) => {
       allowsEditing: true,
       aspect: [3, 3],
       quality: 1,
+      base64: true,
     });
-
-    console.log(result);
-
+    console.log(result);                    
     if (!result.cancelled) {
       setImage(result.uri);
+      setImageString(result.base64);
+
+      fetch("https://blood-center.tk/api/upload_image", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + user.userProfile.token,
+      }),
+      body: (JSON.stringify({profile_picture_url: imageString}))
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    
     }
   };
 
@@ -62,12 +79,12 @@ const EditProfileScreen = ({ navigation }) => {
     } else if (!city) {
       alert("Oops. you missed filing your city");
     } else {
-      fetch("http://127.0.0.1:8000/api/edit_user_info", {
+      fetch("https://blood-center.tk/api/edit_user_info", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "bearer " + token,
+        Authorization: user.userProfile.token,
       }),
       body: (JSON.stringify({
         first_name: firstName,

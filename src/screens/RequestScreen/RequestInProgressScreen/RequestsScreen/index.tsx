@@ -11,19 +11,17 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {FlatList} from "react-native-gesture-handler";
 
 const RequestsScreen = ({ navigation, route }) => {
-  const id = route.params.id
-  console.log(id)
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
+  const user = useSelector((state) => state?.user);
+  const id = route.params.id;
   const [requests, setRequests] = useState();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_request_donations", {
+    fetch("https://blood-center.tk/api/get_request_donations", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "bearer " + token,
+        Authorization: "bearer " + user.userProfile.token,
       }),
       body: JSON.stringify({request_id: id}),
     })
@@ -44,7 +42,7 @@ const RequestsScreen = ({ navigation, route }) => {
         headers: new Headers({
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "bearer " + token,
+          Authorization: "bearer " + user.userProfile.token,
         }),
         body: JSON.stringify({blood_request_id: id})
       })

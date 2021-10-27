@@ -21,7 +21,15 @@ const MapScreen = () => {
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+      <MapView 
+      style={styles.map}
+      initialRegion={{
+        latitude: 33.895094962662675,
+        longitude: 35.50316943278384,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }} 
+      />
       {/* <NewRequestBottunComponent  onPress={navigateNewRequest}/> */}
     </View>
   );

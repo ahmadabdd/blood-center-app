@@ -3,26 +3,23 @@ import {
   FlatList,
   Text,
   View,
-  Button,
   StyleSheet,
-  SafeAreaView,
 } from "react-native";
 import {useSelector} from "react-redux";
 import ComponentTemplate from "../../../components/ComponentTemplate";
 import EmptyState from "../../../components/EmptyState";
 import FullWidthButton from "../../../components/FullWidthButton";
 import {colors} from "../../../constants/palette";
-import {useNavigation} from "@react-navigation/core";
 import ListComponentMain from "../../../components/ListComponentMain";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import {Picker} from "@react-native-picker/picker";
-import {renderNode} from "react-native-elements/dist/helpers";
 import {compose} from "redux";
 
 const HomeScreen = ({ navigation }) => {
   const [city, setCity] = useState();
   const [bloodType, setBloodType] = useState();
   const [requests, setRequests] = useState();
+  const user = useSelector((state) => state?.user);
 
   const searchRequests = (city = undefined, bloodType = undefined) => {
     setCity(city)
@@ -31,19 +28,16 @@ const HomeScreen = ({ navigation }) => {
     console.log(bloodType)
   }
 
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTI2NjM2NywiZXhwIjoxNjM1MzAyMzY3LCJuYmYiOjE2MzUyNjYzNjcsImp0aSI6ImY1UVd4TnRpWGxiS1RaSWwiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6xttYADOeMKo2hM0jb3iri_2sFgYsM6TNW1NNELepFI";
-
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_all_requests", {
+    fetch("https://blood-center.tk/api/get_all_requests", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "bearer " + token,
+        Authorization: "bearer " + user.userProfile.token,
       }),
       body: (
-        city ? JSON.stringify({city: city}) : ''
+        city ? JSON.stringify({city: city}) : ''  
       )
     })
       .then((response) => response.json())
