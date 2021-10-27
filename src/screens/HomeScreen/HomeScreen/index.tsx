@@ -20,7 +20,6 @@ import {renderNode} from "react-native-elements/dist/helpers";
 import {compose} from "redux";
 
 const HomeScreen = ({ navigation }) => {
-  // const navigation = useNavigation();
   const [city, setCity] = useState();
   const [bloodType, setBloodType] = useState();
   const [requests, setRequests] = useState();

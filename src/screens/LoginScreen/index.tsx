@@ -15,8 +15,10 @@ const LoginScreen: React.FC = () => {
       }}
     >
       <EmptyState
-        // loading={true}
-        icon={"coffee"}
+        //cloud-off
+        //refresh-cw
+        //wind
+        icon={"log-in"}
         title={"Login Screen"}
         description={"here you will have your login screen"}
         actionButton={{

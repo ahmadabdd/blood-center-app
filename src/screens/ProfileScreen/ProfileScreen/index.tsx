@@ -126,8 +126,8 @@ const ProfileScreen = ({ navigation }) => {
               containerStyle={{backgroundColor: colors.text}}
               iconStyle={{}}
               imageProps={{}}
-              onLongPress={pickImage}
-              onPress={() => alert("Long press to edit!")}
+              // onLongPress={pickImage}
+              // onPress={() => alert("Long press to edit!")}
               overlayContainerStyle={{}}
               placeholderStyle={{}}
               rounded

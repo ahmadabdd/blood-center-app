@@ -9,8 +9,6 @@ import {colors} from "../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-
-
 const SplashScreen: () => JSX.Element = () => {
   const navigation = useNavigation();
   const navigateLogin = () => {
@@ -20,15 +18,45 @@ const SplashScreen: () => JSX.Element = () => {
     navigation.navigate("RegisterScreen");
   };
   return (
-    <View>
-      <Button title="Login" color="#666666" onPress={navigateLogin} />
-      <Button title="Register" color="#666666" onPress={navigateRegister} />
-      <View>
-
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Welcome to</Text>
+        <Text style={styles.header}>Blood Center</Text>
+        <Text style={styles.subHeader}>Ready to save lives?</Text>
+      </View>
+      <View style={styles.bodyContainer}>
+        <View style={styles.loginBtn}>
+          <Button title="Login" color={colors.black} onPress={navigateLogin} />
+        </View>
+        <View style={styles.registerBtn}>
+          <Button title="Register" color={colors.black} onPress={navigateRegister} />
+        </View>
       </View>
     </View>
   );
 };
 
-
+const styles = StyleSheet.create({
+  container: {},
+  headerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: '35%'
+  },
+  header: {
+    fontSize: 40,
+  },
+  subHeader: {
+    fontSize: 18,
+    marginVertical: '5%'
+  },
+  bodyContainer: {
+    margin: 20,
+    marginTop: '50%',
+  },
+  registerBtn: {
+    marginTop: '2%',
+    borderRadius: 8
+  },
+});
 export default SplashScreen;
