@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface User {
     userProfile?: {
-        uid?: string;
+        id?: string;
         timestamp?: string;
         email?: string;
         firstName?: string;
@@ -10,7 +10,7 @@ export interface User {
         dateOfBirth: string;
         profileImage?: string;
         gender?: string;
-        country?: string;
+        city_id?: string;
         profile_picture_url?: string;
         is_available?: number;
         token?: string;

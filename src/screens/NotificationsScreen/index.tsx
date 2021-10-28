@@ -7,9 +7,10 @@ import FullWidthButton from "../../components/FullWidthButton";
 import {colors} from "../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import NotificationComponent from "../../components/NotificationComponent";
+import NotificationRequestComponent from "../../components/NotificationRequestComponent";
 import NewRequestBottunComponent from "../../components/NewRequestBottunComponent";
 
-const NotificationsScreen = ({ navigation }) => {
+const NotificationsScreen = ({navigation}) => {
   const [notifications, setNotifications] = useState();
   const user = useSelector((state) => state?.user);
 
@@ -33,32 +34,40 @@ const NotificationsScreen = ({ navigation }) => {
   }, []);
 
   const navigateRequestView = (blood_request_id) => {
-    navigation.navigate("RequestViewScreen", { id: blood_request_id });
+    navigation.navigate("RequestViewScreen", {id: blood_request_id});
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
   };
 
-  return (
+  return notifications ? (
     <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <View>
         <FlatList
           data={notifications}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => {
-            return (
-              <NotificationComponent
+          renderItem={({item}) => {
+            return item.blood_request_id ? (
+              <NotificationRequestComponent
                 header={item.header}
                 body={item.body}
                 time={item.created_at.substr(0, 10)}
                 onPress={() => navigateRequestView(item.blood_request_id)}
+              />
+            ) : (
+              <NotificationComponent
+                header={item.header}
+                body={item.body}
+                time={item.created_at.substr(0, 10)}
               />
             );
           }}
         />
       </View>
     </View>
+  ) : (
+    <EmptyState loading={true} icon={"coffee"} />
   );
 };
 

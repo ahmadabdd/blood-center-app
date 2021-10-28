@@ -58,7 +58,7 @@ const HealthRecordScreen = ({ route }) => {
               {userData[0].first_name} {userData[0].last_name}
             </Text>
             <Text style={styles.status}>
-              {userData[0].is_available ? "Available" : "Unavailable"}
+              {user.userProfile.is_available ? "Available" : "Unavailable"}
             </Text>
           </View>
         </View>

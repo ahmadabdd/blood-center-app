@@ -38,16 +38,18 @@ const LoginScreen: React.FC = () => {
       .then((response) => response.json())
       .then((responseJson) => {
         if(responseJson.status) {
+          console.log(responseJson)
           store.dispatch(
             updateUserProfile({
               userProfile: {
-                first_name: "Ahmad",
-                last_name: "Abd",
-                email: "ahmad@gmail.com",
-                profile_picture_url:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfLGPNomfEy0pcUi86d1YbN7zVupY89ZZPtlC6uM4F3buwHw3KnQSQQBkS7ijYt1GEjDI&usqp=CAU",
-                is_available: 1,
-                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYzNTMzMjEwNiwiZXhwIjoxNjM1MzY4MTA2LCJuYmYiOjE2MzUzMzIxMDYsImp0aSI6IjVXWlE4VjdtSWNuSTJNYk4iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.PbzRloEcoHprwjeX5wk00tfsJPPVJDgWOtkY-tV7LoQ"
+                id: responseJson.user.id,
+                firstName: responseJson.user.first_name,
+                lastName: responseJson.user.last_name,
+                email: responseJson.user.email,
+                profile_picture_url: responseJson.user.profile_picture_url,
+                is_available: responseJson.user.is_available,
+                token: responseJson.user.token,
+                city_id: responseJson.user.city_id
               },
             })
           );
@@ -69,7 +71,7 @@ const LoginScreen: React.FC = () => {
   return (
     <View>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Log in</Text>
+        <Text style={styles.header}>Sign in</Text>
       </View>
       <View>
         <View style={styles.inputContainer}>
@@ -99,13 +101,11 @@ const LoginScreen: React.FC = () => {
             <Button title="Login" color={colors.black} onPress={login} />
           </View>
           <View style={styles.registerBtnContainer}>
-            <TouchableOpacity
-              onPress={navigateRegister}
-              style={styles.registerBtn}
-            >
-              <Text style={styles.registerBtn}>Sign up</Text>
-            </TouchableOpacity>
-          </View>
+              <Text>Don't have an account?</Text>
+              <TouchableOpacity onPress={navigateRegister}>
+                <Text style={styles.signinrBtn}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
         </View>
       </View>
     </View>
@@ -146,6 +146,16 @@ const styles = StyleSheet.create({
   },
   registerBtn: {
     fontSize: 18,
+  },
+  registerBtnContainer: {
+    marginTop: "6%",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 50,
+  },
+  signinrBtn: {
+    fontSize: 16,
+    paddingLeft: 5,
   },
 });
 export default LoginScreen;

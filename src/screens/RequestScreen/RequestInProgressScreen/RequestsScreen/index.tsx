@@ -37,7 +37,7 @@ const RequestsScreen = ({ navigation, route }) => {
 
   const RequestComponent = (props) => {
     const accept = () => {
-      fetch("http://127.0.0.1:8000/api/accept_donation_request", {
+      fetch("https://blood-center.tk/api/accept_donation_request", {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json",
@@ -59,12 +59,12 @@ const RequestsScreen = ({ navigation, route }) => {
     };
 
     const decline = () => {
-      fetch("http://3.133.20.22/api/decline_donation_request", {
+      fetch("https://blood-center.tk/api/decline_donation_request", {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: "bearer " + token,
+          Authorization: "bearer " + user.userProfile.token,
         }),
         body: JSON.stringify({blood_request_id: id}),
       })
@@ -137,12 +137,12 @@ const RequestsScreen = ({ navigation, route }) => {
   };
 
   const closeRequest = (id) => {
-    fetch("http://127.0.0.1:8000/api/close_request", {
+    fetch("https://blood-center.tk/api/close_request", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "bearer " + token,
+        Authorization: "bearer " + user.userProfile.token,
       }),
       body: JSON.stringify({request_id: id}),
     })
@@ -158,6 +158,7 @@ const RequestsScreen = ({ navigation, route }) => {
   };
   return requests ? (
     <View>
+      <View>
       <FlatList
         data={requests}
         keyExtractor={(item) => String(item.id)}
@@ -173,11 +174,15 @@ const RequestsScreen = ({ navigation, route }) => {
           );
         }}
       />
-      <TouchableOpacity onPress={() => closeRequest(id)}>
-        <View style={styles.logoutContainer}>
-          <Text style={styles.logout}>Close</Text>
+      </View>
+      <View>
+        <TouchableOpacity onPress={() => closeRequest(id)}>
+        <View style={styles.closeContainer}>
+          <Text style={styles.close}>Close</Text>
         </View>
-      </TouchableOpacity> 
+      </TouchableOpacity>
+      </View>
+       
     </View>
   ) : (
     <EmptyState 
@@ -253,13 +258,14 @@ const styles = StyleSheet.create({
     width: "100%",
     color: colors.black,
   },
-  logoutContainer: {
+  closeContainer: {
     backgroundColor: colors.red,
-    marginTop: "53%",
+    marginTop: "112%",
     padding: 20,
     alignItems: "center",
+    position: 'relative'
   },
-  logout: {
+  close: {
     fontSize: 24,
     color: colors.white,
   },

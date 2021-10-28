@@ -18,7 +18,7 @@ import EmptyState from "../EmptyState";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-const NewRequestComponent = () => {
+const NewRequestComponent = ({ navigation }) => {
 
   const [city, setCity] = useState(null);
   const [hospital, setHospital] = useState(null);
@@ -41,7 +41,7 @@ const NewRequestComponent = () => {
       headers: new Headers({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': user.userProfile.token
+        'Authorization': "bearer " +  user.userProfile.token
       }),
       body: (JSON.stringify({
         blood_type: bloodType,
@@ -53,7 +53,8 @@ const NewRequestComponent = () => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson)
+        console.log(responseJson);
+        navigation.goBack();
       })
       .catch((error) => {
         console.error(error);

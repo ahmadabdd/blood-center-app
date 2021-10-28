@@ -17,19 +17,6 @@ import * as ImagePicker from "expo-image-picker";
 import {store} from "../../../redux/store";
 import {deleteUser} from "../../../redux/slices/userSlice";
 
-const DATA = [
-  {
-    id: "1",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    status: "2021-5-19",
-    header: "2021-5-19",
-    value: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-];
-
 const ProfileScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user);
   const NavigateHealthRecord = (id) => {
@@ -46,67 +33,59 @@ const ProfileScreen = ({ navigation }) => {
   
 
   useEffect(() => {
-    //Change query. add is_available
-    const DATA = [
-      { 
-        id: 1,
-        first_name: "Ahmad",
-        last_name: "Abd",
-        email: "ahmad@gmail.com",
-        profile_picture_url: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-        is_available: 1,
-      },
-    ];
-
-    setId(DATA[0].id);
-    setFirstName(DATA[0].first_name);
-    setLastName(DATA[0].last_name);
-    setImage(DATA[0].profile_picture_url);
-    setValue(DATA[0].is_available ? false : true);
-  }, []);
+    setId(user.userProfile.id);
+    setFirstName(user.userProfile.firstName);
+    setLastName(user.userProfile.lastName);
+    setImage(user.userProfile.profile_picture_url);
+    setValue(user.userProfile.is_available ? true : false);
+    value ? setStatus('Avaliable') : setStatus('Unavaliable')
+    console.log(value)
+  }, [user.userProfile.firstName]);
   
   const [id, setId] = useState(null);
-  const [firstName, setFirstName] = useState("Ahmad");
-  const [lastName, setLastName] = useState("Abd");
-  const [status, setStatus] = useState("Unvailable");
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [status, setStatus] = useState(null);
   const [value, setValue] = useState(true);
   const [image, setImage] = useState(null);
 
   const changeStatus = () => {
     setValue(!value);
-    value ? setStatus("Unavailable") : setStatus("Available");
-    console.log(value)
-    // fetch("http://127.0.0.1:8000/api/get_request_data", {
-    //   method: "POST",
-    //   headers: new Headers({
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //     Authorization: "bearer " + token,
-    //   }),
-    //   body: (JSON.stringify({ "request_id": id}))
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     setRequestData(responseJson);
-    //     console.log(responseJson);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-  };
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [3, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if(!value) {
+      fetch("https://blood-center.tk/api/set_available", {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + user.userProfile.token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        setStatus('Available')
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    } 
+    if(value) {
+      fetch("https://blood-center.tk/api/set_unavailable", {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "bearer " + user.userProfile.token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        setStatus('Unavailable')
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   };
 

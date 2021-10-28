@@ -10,49 +10,6 @@ import {
 import React, {useEffect, useState} from "react";
 import {Avatar} from "react-native-elements";
 
-const DATA = [
-  {
-    id: "1",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    date: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "2",
-    firstName: "Test",
-    lastName: "Test",
-    date: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "3",
-    firstName: "Test",
-    lastName: "Test",
-    date: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "4",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    date: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-  {
-    id: "5",
-    firstName: "Ahmad",
-    lastName: "Abd",
-    date: "2021-5-19",
-    image:
-      "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-  },
-];
-
 const ViewProfile = (id) => {
   Alert.alert(id)
 }

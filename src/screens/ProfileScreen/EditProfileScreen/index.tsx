@@ -7,6 +7,8 @@ import * as ImagePicker from "expo-image-picker";
 import DatePicker from "react-native-datepicker";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {Picker} from "@react-native-picker/picker";
+import {store} from "../../../redux/store";
+import {updateUserProfile} from "../../../redux/slices/userSlice";
 
 const EditProfileScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user);
@@ -84,7 +86,7 @@ const EditProfileScreen = ({ navigation }) => {
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: user.userProfile.token,
+        Authorization: 'bearer' + user.userProfile.token,
       }),
       body: (JSON.stringify({
         first_name: firstName,
@@ -100,6 +102,15 @@ const EditProfileScreen = ({ navigation }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
+        store.dispatch(
+          updateUserProfile({
+            userProfile: {
+              firstName: firstName,
+              lastName: lastName,
+              city_id: city
+            },
+          })
+        );
         navigation.goBack();
       })
       .catch((error) => {

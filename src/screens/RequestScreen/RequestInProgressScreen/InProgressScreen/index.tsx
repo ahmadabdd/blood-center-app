@@ -40,12 +40,6 @@ const InProgressScreen = ({ navigation }) => {
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
   };
-  const [unitsCount, setUnitsCount] = useState(2);
-  const [requestCount, setRequestCount] = useState(1);
-  const [city, setCity] = useState("Beirut");
-  const [hospital, setHospital] = useState("AUBMC");
-  const [bloodType, setBloodType] = useState("AB+");
-  const [date, setDate] = useState("2021-10-20");
 
   return requests ?(
     <View>
@@ -54,7 +48,7 @@ const InProgressScreen = ({ navigation }) => {
         <FlatList
           data={requests}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({item, index}) => {
+          renderItem={({item}) => {
             return (
               <InProgressRequestComponent
                 unitsCount={item.left_number_of_units}

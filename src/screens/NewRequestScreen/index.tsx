@@ -8,11 +8,11 @@ import NewRequestComponent from "../../components/NewRequestComponent";
 import RequestViewComponent from "../../components/RequestViewComponent";
 import { colors } from "../../constants/palette";
 
-const NewRequestScreen = (navigation: any) => {
+const NewRequestScreen = ({ navigation }) => {
   
   return (
     <View>
-      <NewRequestComponent />
+      <NewRequestComponent navigation={navigation}/>
     </View>
   )
 };

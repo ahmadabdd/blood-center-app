@@ -3,7 +3,7 @@ import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
 import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const NotificationComponent = (props) => {
+const NotificationRequestComponent = (props) => {
   return (
     <TouchableOpacity onPress={props.onPress}>
     <View style={styles.container}>
@@ -17,6 +17,9 @@ const NotificationComponent = (props) => {
         </View>
         <View style={styles.right}>
           <Text style={styles.time}>{props.time}</Text>
+          <View style={styles.icon}>
+            <MaterialCommunityIcons name={"arrow-right"} size={20} />
+          </View>
         </View>
     </View>
     </TouchableOpacity>
@@ -51,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationComponent;
+export default NotificationRequestComponent;

@@ -12,6 +12,7 @@ import NewRequestBottunComponent from "../../../../components/NewRequestBottunCo
 const FulfilledScreen = () => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
+  const [test, setTest] = useState();
 
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
