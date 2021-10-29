@@ -49,7 +49,9 @@ const LoginScreen: React.FC = () => {
                 profile_picture_url: responseJson.user.profile_picture_url,
                 is_available: responseJson.user.is_available,
                 token: responseJson.user.token,
-                city_id: responseJson.user.city_id
+                city_id: responseJson.user.city_id,
+                long: responseJson.user.long,
+                lat: responseJson.user.lat
               },
             })
           );
@@ -127,7 +129,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginLeft: "3%",
   },
   headerContainer: {
     alignItems: "center",
@@ -139,10 +140,6 @@ const styles = StyleSheet.create({
   bodyContainer: {
     margin: 20,
     marginTop: "10%",
-  },
-  registerBtnContainer: {
-    marginTop: "6%",
-    alignSelf: "center",
   },
   registerBtn: {
     fontSize: 18,

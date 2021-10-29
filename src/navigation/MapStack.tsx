@@ -24,6 +24,7 @@ export function MapStack() {
         component={MapScreen}
         options={{
           title: "Map",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -46,6 +47,7 @@ export function MapStack() {
         component={NewRequestScreen}
         options={{
           title: "New request",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },

@@ -8,7 +8,7 @@ import RequestsDonatorsComponent from "../../../../components/RequestsDonatorsCo
 import {colors} from "../../../../constants/palette";
 import {Avatar} from "react-native-elements";
 
-const RequestDonatorsScreen = ({ navigation }) => {
+const RequestDonatorsScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
   const [hospital, setHospital] = useState('');
@@ -23,7 +23,7 @@ const RequestDonatorsScreen = ({ navigation }) => {
         Authorization: "bearer " + user.userProfile.token,
       }),
       body: JSON.stringify({
-        request_id: '2'
+        request_id: route.params.id
       })
     })
       .then((response) => response.json())
@@ -32,6 +32,8 @@ const RequestDonatorsScreen = ({ navigation }) => {
         setHospital(responseJson[0].hospital);
         setBloodType(responseJson[0].type);
         console.log(responseJson);
+        console.log(responseJson[0].profile_picture_url);
+        console.log(responseJson[0].hospital);
       })
       .catch((error) => {
         console.error(error);
@@ -54,13 +56,17 @@ const RequestDonatorsScreen = ({ navigation }) => {
               icon={{}}
               iconStyle={{}}
               imageProps={{}}
-              // onLongPress={() => alert("onLongPress")}
-              // onPress={() => alert("onPress")}
               overlayContainerStyle={{}}
               placeholderStyle={{}}
               rounded
               size="large"
-              source={{uri: props.image}}
+              source={
+                props.image
+                  ? {uri: props.image}
+                  : {
+                      uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
+                    }
+              }
               titleStyle={{}}
             />
             <Text style={styles.name}>

@@ -27,6 +27,7 @@ export function RequestsStack() {
         component={FulfilledScreen}
         options={{
           title: "Fulfilled requests",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: "#F47174",
           },
@@ -38,6 +39,7 @@ export function RequestsStack() {
         component={RequestDonatorsScreen}
         options={{
           title: "Donators",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: "#F47174",
           },
@@ -49,6 +51,7 @@ export function RequestsStack() {
         component={InProgressScreen}
         options={{
           title: "Requests in progress",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: "#F47174",
           },
@@ -60,6 +63,7 @@ export function RequestsStack() {
         component={RequestsScreen}
         options={{
           title: "Requests",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: "#F47174",
           },
@@ -71,6 +75,7 @@ export function RequestsStack() {
         component={NewRequestScreen}
         options={{
           title: "New request",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -82,6 +87,7 @@ export function RequestsStack() {
         component={HealthRecordScreen}
         options={{
           title: "Health record",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },

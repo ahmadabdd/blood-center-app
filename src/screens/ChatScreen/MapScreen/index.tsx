@@ -9,26 +9,29 @@ import {useNavigation} from "@react-navigation/core";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import MapView from "react-native-maps";
 import NewRequestScreen from "../../NewRequestScreen";
-import { Button } from "react-native-elements/dist/buttons/Button";
+import {store} from "../../../redux/store";
 
-const MapScreen = () => {
-  const navigation = useNavigation();
-
+const MapScreen = ({navigation}) => {
+  const user = useSelector((state) => state?.user);
 
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
   };
-
+  useEffect(() => {
+    console.log(user.userProfile.long)
+    console.log(user.userProfile.lat)
+  }, [])
   return (
     <View style={styles.container}>
-      <MapView 
-      style={styles.map}
-      initialRegion={{
-        latitude: 33.895094962662675,
-        longitude: 35.50316943278384,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }} 
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: Number(user.userProfile.long),
+          longitude: Number(user.userProfile.lat),
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        provider="google"
       />
       {/* <NewRequestBottunComponent  onPress={navigateNewRequest}/> */}
     </View>

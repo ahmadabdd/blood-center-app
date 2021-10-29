@@ -24,6 +24,7 @@ export function NotificationsStack() {
         component={NotificationsScreen}
         options={{
           title: "Notifications",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -35,6 +36,7 @@ export function NotificationsStack() {
         component={RequestViewScreen}
         options={{
           title: "Request",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -46,6 +48,7 @@ export function NotificationsStack() {
         component={NewRequestScreen}
         options={{
           title: "New request",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },

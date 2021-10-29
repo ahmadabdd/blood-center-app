@@ -4,13 +4,16 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native-gesture-handler";
-import {Text, View, StyleSheet, Button} from "react-native";
+import {Text, View, StyleSheet, Button, Platform } from "react-native";
 import EmptyState from "../../components/EmptyState";
 import {store} from "../../redux/store";
 import {updateUserProfile} from "../../redux/slices/userSlice";
 import {useNavigation} from "@react-navigation/core";
 import {colors} from "../../constants/palette";
 import {Picker} from "@react-native-picker/picker";
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import { cos } from "react-native-reanimated";
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -20,8 +23,42 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [city, setCity] = useState(null);
+  const [FirebaseToken, setFirebaseToken] = useState(null);
 
-  const login = () => {
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+    console.log(token);
+    setFirebaseToken(token);
+    return token;
+  }
+
+  const register = async () => {
+    // await registerForPushNotificationsAsync()
+
     if (!firstName) {
       alert("Please enter your first name");
     } else if (!lastName) {
@@ -54,7 +91,7 @@ const LoginScreen: React.FC = () => {
           password: password,
           password_confirmation: confirmPassword,
           city_id: city,
-          firebase_token: "token"
+          firebase_token: 'ExponentPushToken[fYU68EEodFaxjvgK6h1fy9]'
         }),
       })
         .then((response) => response.json())
@@ -87,7 +124,7 @@ const LoginScreen: React.FC = () => {
     <ScrollView>
       <View>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>Sign up</Text>
+          <Text style={styles.header}>Welcome aboard!</Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
@@ -166,7 +203,7 @@ const LoginScreen: React.FC = () => {
         <View>
           <View style={styles.bodyContainer}>
             <View>
-              <Button title="SignUp" color={colors.black} onPress={login} />
+              <Button title="SignUp" color={colors.black} onPress={register} />
             </View>
             <View style={styles.registerBtnContainer}>
               <Text>Already have an account?</Text>
@@ -200,14 +237,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    marginLeft: "3%",
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: "10%",
+    marginTop: "7%",
+    marginBottom: "5%",
   },
   header: {
-    fontSize: 40,
+    fontSize: 30,
   },
   bodyContainer: {
     margin: 20,

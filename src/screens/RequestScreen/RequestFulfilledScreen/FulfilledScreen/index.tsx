@@ -12,7 +12,6 @@ import NewRequestBottunComponent from "../../../../components/NewRequestBottunCo
 const FulfilledScreen = () => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
-  const [test, setTest] = useState();
 
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
@@ -38,8 +37,8 @@ const FulfilledScreen = () => {
   const navigateInProgress = () => {
     navigation.navigate("InProgressScreen");
   };
-  const navigateRequestsDonators = () => {
-    navigation.navigate("RequestDonatorsScreen");
+  const navigateRequestsDonators = (id) => {
+    navigation.navigate("RequestDonatorsScreen", { id: id });
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
@@ -57,14 +56,14 @@ const FulfilledScreen = () => {
         <FlatList
           data={requests}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({item, index}) => {
+          renderItem={({item}) => {
             return (
               <FulfilledComponent
                 bloodType={item.type}
                 date={item.created_at.substr(0, 10)}
                 city={item.city}
                 hospital={item.hospital}
-                onPress={navigateRequestsDonators}
+                onPress={() => navigateRequestsDonators(item.id)}
               />
             );
           }}

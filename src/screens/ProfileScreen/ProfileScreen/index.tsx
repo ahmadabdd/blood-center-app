@@ -38,8 +38,8 @@ const ProfileScreen = ({ navigation }) => {
     setLastName(user.userProfile.lastName);
     setImage(user.userProfile.profile_picture_url);
     setValue(user.userProfile.is_available ? true : false);
+    console.log(image)
     value ? setStatus('Avaliable') : setStatus('Unavaliable')
-    console.log(value)
   }, [user.userProfile.firstName]);
   
   const [id, setId] = useState(null);
@@ -100,14 +100,7 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.avatar}>
             <Avatar
               activeOpacity={0.2}
-              avatarStyle={{}}
               containerStyle={{backgroundColor: colors.text}}
-              iconStyle={{}}
-              imageProps={{}}
-              // onLongPress={pickImage}
-              // onPress={() => alert("Long press to edit!")}
-              overlayContainerStyle={{}}
-              placeholderStyle={{}}
               rounded
               size="large"
               source={
@@ -117,7 +110,6 @@ const ProfileScreen = ({ navigation }) => {
                       uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
                     }
               }
-              titleStyle={{}}
             />
           </View>
           <View style={styles.nameContainer}>

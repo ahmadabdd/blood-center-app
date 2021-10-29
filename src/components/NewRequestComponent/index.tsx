@@ -105,6 +105,7 @@ const NewRequestComponent = ({ navigation }) => {
             <Picker.Item label="Mount Lebanon" value="7" />
             <Picker.Item label="Baalbak" value="8" />
             <Picker.Item label="Baabda" value="9" />
+            <Picker.Item label="Nabatieh" value="10" />
           </Picker>
         </View>
       </View>
@@ -118,13 +119,19 @@ const NewRequestComponent = ({ navigation }) => {
           >
             <Picker.Item label="AUBMC" value="1" />
             <Picker.Item label="Cleamenceau" value="2" />
-            <Picker.Item label="Najjar" value="3" />
-            <Picker.Item label="Saida Hospital" value="4" />
-            <Picker.Item label="Tripoli Hospital" value="5" />
-            <Picker.Item label="Baalbak Hospital" value="6" />
-            <Picker.Item label="Tyre Hospital" value="7" />
-            <Picker.Item label="Mount Lebanon Hospital" value="8" />
-            <Picker.Item label="Baabda Hospital" value="9" />
+            <Picker.Item label="Najjar Hospital" value="3" />
+            <Picker.Item label="Trad Hospital" value="4" />
+            <Picker.Item label="St. Georges Hospital" value="5" />
+            <Picker.Item label="Rizk Hospital" value="6" />
+            <Picker.Item label="Rafic Hariri Hospital" value="7" />
+            <Picker.Item label="Saida Hospital" value="8" />
+            <Picker.Item label="Tripoli Hospital" value="9" />
+            <Picker.Item label="Haykal Hospital" value="10" />
+            <Picker.Item label="Al Salam Hospital" value="11" />
+            <Picker.Item label="Baalbak Hospital" value="12" />
+            <Picker.Item label="Hiram Hospital" value="13" />
+            <Picker.Item label="Mount Lebanon Hospital" value="14" />
+            <Picker.Item label="Bchamoun Hospital" value="15" />
           </Picker>
         </View>
       </View>

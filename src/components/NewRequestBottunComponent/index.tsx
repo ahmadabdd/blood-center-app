@@ -7,7 +7,7 @@ const NewRequestBottunComponent = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <View style={styles.button}>
-        <MaterialCommunityIcons name={"plus"} size={30} />
+        <MaterialCommunityIcons name={"plus"} size={30} color={colors.white}/>
       </View>
     </TouchableOpacity>
   );

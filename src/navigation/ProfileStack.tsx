@@ -26,6 +26,7 @@ export function ProfileStack() {
         component={ProfileScreen}
         options={{
           title: "Profile",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -37,6 +38,7 @@ export function ProfileStack() {
         component={MyDonationsScreen}
         options={{
           title: "My donations",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -48,6 +50,7 @@ export function ProfileStack() {
         component={HealthRecordScreen}
         options={{
           title: "Health record",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -59,6 +62,7 @@ export function ProfileStack() {
         component={EditProfileScreen}
         options={{
           title: "Edit profile",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -70,6 +74,7 @@ export function ProfileStack() {
         component={NewRequestScreen}
         options={{
           title: "New request",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
           },

@@ -8,7 +8,7 @@ import {colors} from "../../../constants/palette";
 import {Avatar} from "react-native-elements";
 import HealthRecordComponent from "../../../components/HealthRecordComponent";
 
-const HealthRecordScreen = ({ route }) => {
+const HealthRecordScreen = ({route}) => {
   const [userData, setUserData] = useState();
   const user_id = route.params.user_id;
   const user = useSelector((state) => state?.user);
@@ -21,21 +21,28 @@ const HealthRecordScreen = ({ route }) => {
         Accept: "application/json",
         Authorization: "bearer " + user.userProfile.token,
       }),
-      body: (JSON.stringify({user_id: user_id}))
+      body: JSON.stringify({user_id: user_id}),
     })
       .then((response) => response.json())
       .then((responseJson) => {
         setUserData(responseJson);
         console.log(responseJson);
+        console.log("responseJson");
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-
-  return userData ? (
-    <ScrollView>
+  if (userData == null) {
+    return (
+      <View>
+        <Text>Please edit your personal data and add your info</Text>
+      </View>
+    );
+  } else if(userData) {
+    return (
+      <ScrollView>
       <View>
         <View style={styles.headContainer}>
           <View style={styles.avatar}>
@@ -49,7 +56,12 @@ const HealthRecordScreen = ({ route }) => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={{uri: userData[0].profile_picture_url}}
+              source={
+                userData[0].profile_picture_url
+                ? {uri: "https://blood-center.tk/storage/"+userData[0].profile_picture_url }
+                : {
+                    uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
+                  }}
               titleStyle={{}}
             />
           </View>
@@ -79,12 +91,12 @@ const HealthRecordScreen = ({ route }) => {
         />
       </View>
     </ScrollView>
-  ) : (
-    <EmptyState 
-      loading={true}
-      icon={'coffee'}
-    />
-  )
+    )
+  } else {
+    return (
+      <EmptyState loading={true} icon={"coffee"} />
+    )
+  }
 };
 
 const styles = StyleSheet.create({

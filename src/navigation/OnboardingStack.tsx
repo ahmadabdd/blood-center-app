@@ -25,8 +25,9 @@ export function OnboardingStack() {
         component={SplashScreen}
         options={{
           title: "Blood Center",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: colors.primary
+            backgroundColor: colors.primary,
           }
         }} />
 
@@ -34,6 +35,7 @@ export function OnboardingStack() {
         component={LoginScreen}
         options={{
           title: "Log in",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary
           }
@@ -43,6 +45,7 @@ export function OnboardingStack() {
         component={RegisterScreen}
         options={{
           title: "Sign up",
+          headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary
           }

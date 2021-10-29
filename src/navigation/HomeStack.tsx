@@ -24,6 +24,7 @@ export function HomeStack() {
       component={HomeScreen}
       options={{
         title: "Donate",
+        headerTintColor: colors.white,
         headerStyle: {
           backgroundColor: colors.primary
         }
@@ -33,6 +34,7 @@ export function HomeStack() {
       component={RequestViewScreen}
       options={{
         title: "Request",
+        headerTintColor: colors.white,
         headerStyle: {
           backgroundColor: colors.primary
         }
@@ -42,6 +44,7 @@ export function HomeStack() {
       component={NewRequestScreen}
       options={{
         title: "New request",
+        headerTintColor: colors.white,
         headerStyle: {
           backgroundColor: colors.primary
         }

@@ -128,7 +128,7 @@ const EditProfileScreen = ({ navigation }) => {
   }
   return (
     <ScrollView>
-      <View style={styles.main}>
+      <View>
         <View style={styles.headContainer}>
           <View style={styles.avatar}>
             <Avatar
@@ -257,15 +257,16 @@ const EditProfileScreen = ({ navigation }) => {
               onValueChange={(city) => setCity(city)}
               mode="dialog"
             >
-              <Picker.Item label="Beirut" value="1" />
-              <Picker.Item label="Tripoli" value="2" />
-              <Picker.Item label="Saida" value="3" />
-              <Picker.Item label="Byblos" value="4" />
-              <Picker.Item label="Zahle" value="5" />
-              <Picker.Item label="Tyre" value="6" />
-              <Picker.Item label="Mount Lebanon" value="7" />
-              <Picker.Item label="Baalbak" value="8" />
-              <Picker.Item label="Baabda" value="9" />
+            <Picker.Item label="Beirut" value="1" />
+            <Picker.Item label="Tripoli" value="2" />
+            <Picker.Item label="Saida" value="3" />
+            <Picker.Item label="Byblos" value="4" />
+            <Picker.Item label="Zahle" value="5" />
+            <Picker.Item label="Tyre" value="6" />
+            <Picker.Item label="Mount Lebanon" value="7" />
+            <Picker.Item label="Baalbak" value="8" />
+            <Picker.Item label="Baabda" value="9" />
+            <Picker.Item label="Nabatieh" value="10" />
             </Picker>
           </View>
         </View>
@@ -308,9 +309,6 @@ const EditProfileScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  main: {
-    // marginBottom: 50,
-  },
   avatar: {
     marginLeft: "10%",
     marginTop: "15%",
