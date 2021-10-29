@@ -13,6 +13,7 @@ export const colors = {
     text_dark: '#323643',
     disabled_text: '#BCC1C5',
     border_lines: '#DFDFDF',
+    blue: '#1D71B5'
 }
 
 export const shadows = {

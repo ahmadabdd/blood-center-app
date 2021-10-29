@@ -53,60 +53,60 @@ const LoginScreen: React.FC = () => {
     }
     console.log(token);
     setFirebaseToken(token);
-    return token;
+    return await token;
   }
 
   const register = async () => {
-    // await registerForPushNotificationsAsync()
+    await registerForPushNotificationsAsync()
 
-    if (!firstName) {
-      alert("Please enter your first name");
-    } else if (!lastName) {
-      alert("Please enter your last name");
-    } else if (!email) {
-      alert("Please enter your email");
-    } else if (!email.includes("@gmail.com")) {
-      alert("Please enter a valid email");
-    } else if (!password) {
-      alert("Please enter your password");
-    } else if (password.length < 5) {
-      alert("Please enter a valid password");
-    } else if (!confirmPassword) {
-      alert("Please confirm your password");
-    } else if (password !== confirmPassword) {
-      alert("Passwords do not match");
-    } else if (!city) {
-      alert("Please select your city");
-    } else {
-      fetch("https://blood-center.tk/api/register", {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        }),
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          password: password,
-          password_confirmation: confirmPassword,
-          city_id: city,
-          firebase_token: 'ExponentPushToken[fYU68EEodFaxjvgK6h1fy9]'
-        }),
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.status) {
-            navigation.navigate('LoginScreen')
-          } else {
-            alert("Invalid credentials");
-          }
-          console.log(responseJson);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+    // if (!firstName) {
+    //   alert("Please enter your first name");
+    // } else if (!lastName) {
+    //   alert("Please enter your last name");
+    // } else if (!email) {
+    //   alert("Please enter your email");
+    // } else if (!email.includes("@gmail.com")) {
+    //   alert("Please enter a valid email");
+    // } else if (!password) {
+    //   alert("Please enter your password");
+    // } else if (password.length < 5) {
+    //   alert("Please enter a valid password");
+    // } else if (!confirmPassword) {
+    //   alert("Please confirm your password");
+    // } else if (password !== confirmPassword) {
+    //   alert("Passwords do not match");
+    // } else if (!city) {
+    //   alert("Please select your city");
+    // } else {
+    //   fetch("https://blood-center.tk/api/register", {
+    //     method: "POST",
+    //     headers: new Headers({
+    //       "Content-Type": "application/json",
+    //       Accept: "application/json",
+    //     }),
+    //     body: JSON.stringify({
+    //       first_name: firstName,
+    //       last_name: lastName,
+    //       email: email,
+    //       password: password,
+    //       password_confirmation: confirmPassword,
+    //       city_id: city,
+    //       firebase_token: 'ExponentPushToken[fYU68EEodFaxjvgK6h1fy9]'
+    //     }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       if (responseJson.status) {
+    //         navigation.navigate('LoginScreen')
+    //       } else {
+    //         alert("Invalid credentials");
+    //       }
+    //       console.log(responseJson);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // }
   };
   const navigateLogin = () => {
     navigation.navigate("LoginScreen");

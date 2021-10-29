@@ -4,28 +4,40 @@ import {
   Text,
   View,
   StyleSheet,
+  Button
 } from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../components/ComponentTemplate";
 import EmptyState from "../../../components/EmptyState";
 import FullWidthButton from "../../../components/FullWidthButton";
 import {colors} from "../../../constants/palette";
 import ListComponentMain from "../../../components/ListComponentMain";
 import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import {Picker} from "@react-native-picker/picker";
-import {compose} from "redux";
+import _ from 'lodash';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const HomeScreen = ({ navigation }) => {
   const [city, setCity] = useState();
   const [bloodType, setBloodType] = useState();
+  const [originalRequests, setOriginalRequests] = useState();
   const [requests, setRequests] = useState();
+  console.log(bloodType)
+  console.log(city)
+
   const user = useSelector((state) => state?.user);
 
-  const searchRequests = (city = undefined, bloodType = undefined) => {
+  const filterRrequestsByCity = (city) => {
     setCity(city)
+    setRequests(_.filter(originalRequests, request => request.city == city)) 
+  }
+
+  const filterRrequestsByBloodType= (bloodType) => {
     setBloodType(bloodType)
-    console.log(city)
-    console.log(bloodType)
+    setRequests(_.filter(originalRequests, request => request.type == bloodType)) 
+  }
+
+  const reset = () => {
+    setRequests(originalRequests)
   }
 
   useEffect(() => {
@@ -43,6 +55,7 @@ const HomeScreen = ({ navigation }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
+        setOriginalRequests(responseJson);
         console.log(responseJson);
       })
       .catch((error) => {
@@ -65,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
   }
 
   return requests ? (
-    <View>
+    <View style={styles.main}>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <View style={styles.container}>
         <View style={styles.filter}>
@@ -77,18 +90,17 @@ const HomeScreen = ({ navigation }) => {
             <Picker
               ref={pickerRef}
               selectedValue={bloodType}
-              // onValueChange={(bloodType, itemIndex) => setBloodType(bloodType)}
-              onValueChange={(bloodType, itemIndex) => searchRequests(bloodType)}
+              onValueChange={(bloodType) => filterRrequestsByBloodType(bloodType)}
               style={styles.picker}
             >
-              <Picker.Item label="A+" value="1" />
-              <Picker.Item label="A-" value="2" />
-              <Picker.Item label="B+" value="3" />
-              <Picker.Item label="B-" value="4" />
-              <Picker.Item label="AB+" value="5" />
-              <Picker.Item label="AB-" value="6" />
-              <Picker.Item label="O+" value="7" />
-              <Picker.Item label="O-" value="8" />
+              <Picker.Item label="A+" value="A+" />
+              <Picker.Item label="A-" value="A-" />
+              <Picker.Item label="B+" value="B+" />
+              <Picker.Item label="B-" value="B-" />
+              <Picker.Item label="AB+" value="AB+" />
+              <Picker.Item label="AB-" value="AB-" />
+              <Picker.Item label="O+" value="O+" />
+              <Picker.Item label="O-" value="O-" />
             </Picker>
           </View>
           <View style={styles.city}>
@@ -96,8 +108,7 @@ const HomeScreen = ({ navigation }) => {
             <Picker
               ref={pickerRef}
               selectedValue={city}
-              // onValueChange={(city, itemIndex) => setCity(city)}
-              onValueChange={(city, itemIndex) => searchRequests(city)}
+              onValueChange={(city) => filterRrequestsByCity(city)}
               style={styles.picker}
               mode="dialog"
             >
@@ -110,17 +121,23 @@ const HomeScreen = ({ navigation }) => {
         7- Mount Lebanon
         8- Baalbak
         9- Baabda */}
-              <Picker.Item label="Beirut" value="1" />
-              <Picker.Item label="Tripoli" value="2" />
-              <Picker.Item label="Saida" value="3" />
-              <Picker.Item label="Byblos" value="4" />
-              <Picker.Item label="Zahle" value="5" />
-              <Picker.Item label="Tyre" value="6" />
-              <Picker.Item label="Mount Lebanon" value="7" />
-              <Picker.Item label="Baalbak" value="8" />
-              <Picker.Item label="Baabda" value="9" />
+              <Picker.Item label="Beirut" value="Beirut" />
+              <Picker.Item label="Tripoli" value="Tripoli" />
+              <Picker.Item label="Saida" value="Saida" />
+              <Picker.Item label="Byblos" value="Byblos" />
+              <Picker.Item label="Zahle" value="Zahle" />
+              <Picker.Item label="Tyre" value="Tyre" />
+              <Picker.Item label="Mount Lebanon" value="Mount Lebanon" />
+              <Picker.Item label="Baalbak" value="Baalbak" />
+              <Picker.Item label="Baabda" value="Baabda" />
+              <Picker.Item label="Nabatieh" value="Nabatieh" />
             </Picker>
           </View>
+        </View>
+        <View style={styles.reset}>
+          <TouchableOpacity onPress={reset}>
+          <Text style={styles.resetText}>Reset</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.header}>
@@ -153,6 +170,9 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  main: {
+    paddingBottom: '61%'
+  },
   picker: {
     backgroundColor: colors.background,
   },
@@ -163,12 +183,12 @@ const styles = StyleSheet.create({
     marginRight: "15%",
   },
   listContainer: {
-    paddingBottom: "64%",
+    // paddingBottom: "61%",
   },
   city: {
     backgroundColor: colors.background,
     borderRadius: 8,
-    paddingTop: 15,
+    paddingTop: 18,
     paddingLeft: 15,
     paddingRight: 15,
     marginRight: 15,
@@ -177,7 +197,7 @@ const styles = StyleSheet.create({
   bloodType: {
     backgroundColor: colors.background,
     borderRadius: 8,
-    paddingTop: 15,
+    paddingTop: 18,
     paddingLeft: 15,
     paddingRight: 15,
     marginLeft: 15,
@@ -185,12 +205,24 @@ const styles = StyleSheet.create({
   right: {
     flexDirection: "row",
   },
+  reset: {
+    backgroundColor: colors.blue,
+    borderRadius: 8,
+    paddingTop: 18,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginLeft: 15,
+  },
   text: {
     fontSize: 16,
   },
+  resetText: {
+    fontSize: 16,
+    color: colors.white
+  },
   filter: {
     marginTop: 12,
-    marginLeft: 55,
+    marginLeft: 10,
   },
   filterText: {
     fontSize: 20,
