@@ -13,7 +13,9 @@ export const colors = {
     text_dark: '#323643',
     disabled_text: '#BCC1C5',
     border_lines: '#DFDFDF',
-    blue: '#1D71B5'
+    blue: '#1D71B5',
+    lightBlue: '#4992cc',
+    lightGrey: '#e8fcf6',
 }
 
 export const shadows = {

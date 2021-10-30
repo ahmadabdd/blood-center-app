@@ -2,16 +2,16 @@ import React, {useEffect, useState} from "react";
 import {FlatList, Text, View, Button, StyleSheet} from "react-native";
 import {useSelector} from "react-redux";
 import {colors} from "../../../../constants/palette";
-import {useNavigation} from "@react-navigation/core";
 import InProgressRequestComponent from "../../../../components/InProgressRequestComponent";
-import NewRequestComponent from "../../../../components/NewRequestComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
 import EmptyState from "../../../../components/EmptyState";
 
-const InProgressScreen = ({ navigation }) => {
+const InProgressScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
-  
+  // const { user_id } = route.params;
+  // console.log(user_id)  
+
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_user_requests", {
       method: "GET",

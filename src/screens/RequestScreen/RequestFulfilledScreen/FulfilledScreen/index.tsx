@@ -8,10 +8,18 @@ import {colors} from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import FulfilledComponent from "../../../../components/FulfilledComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
+import SegmentedControl from '@react-native-segmented-control/segmented-control';
+
 
 const FulfilledScreen = () => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
+  const [tabIndex, setTabIndex] = useState(1);
+  const [value, setVlue] = useState(true);
+  const handleTabsChange = (value) => {
+    setVlue(!value)
+    value ? setTabIndex(0) : setTabIndex(1)
+  };
 
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
@@ -37,6 +45,10 @@ const FulfilledScreen = () => {
   const navigateInProgress = () => {
     navigation.navigate("InProgressScreen");
   };
+
+  const navigateFulfilled = () => {
+    navigation.navigate("FulfilledScreen");
+  };
   const navigateRequestsDonators = (id) => {
     navigation.navigate("RequestDonatorsScreen", { id: id });
   };
@@ -46,6 +58,15 @@ const FulfilledScreen = () => {
 
   return requests ? (
     <View>
+      {/* <SegmentedControl
+        values={["Label", "Label"]}
+        // paddingVertical={6}
+        // containerStyle={{
+        //   marginVertical: 20,
+        // }}
+        selectedIndex={tabIndex} 
+        onChange={() => handleTabsChange(value)}
+      /> */}
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <Button
         title="In progress"

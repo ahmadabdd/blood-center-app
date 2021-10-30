@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button} from "react-native";
+import {FlatList, Text, View, Button, RefreshControl} from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../components/ComponentTemplate";
 import EmptyState from "../../components/EmptyState";
-import FullWidthButton from "../../components/FullWidthButton";
 import {colors} from "../../constants/palette";
-import {useNavigation} from "@react-navigation/core";
 import NotificationComponent from "../../components/NotificationComponent";
 import NotificationRequestComponent from "../../components/NotificationRequestComponent";
 import NewRequestBottunComponent from "../../components/NewRequestBottunComponent";
+import { ScrollView } from "react-native-gesture-handler";
 
 const NotificationsScreen = ({navigation}) => {
   const [notifications, setNotifications] = useState();
   const user = useSelector((state) => state?.user);
 
-  useEffect(() => {
+  const getNotifications = () => {
     fetch("https://blood-center.tk/api/get_notifications", {
       method: "GET",
       headers: new Headers({
@@ -31,6 +29,9 @@ const NotificationsScreen = ({navigation}) => {
       .catch((error) => {
         console.error(error);
       });
+  }
+  useEffect(() => {
+    getNotifications();
   }, []);
 
   const navigateRequestView = (blood_request_id) => {
@@ -40,9 +41,20 @@ const NotificationsScreen = ({navigation}) => {
     navigation.navigate("NewRequestScreen");
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    getNotifications();
+  };
+
+{/* <NewRequestBottunComponent onPress={navigateNewRequest} /> */}
   return notifications ? (
-    <View>
-      <NewRequestBottunComponent onPress={navigateNewRequest} />
+    <ScrollView
+      refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }
+    >
+      
       <View>
         <FlatList
           data={notifications}
@@ -65,7 +77,7 @@ const NotificationsScreen = ({navigation}) => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   ) : (
     <EmptyState loading={true} icon={"coffee"} />
   );

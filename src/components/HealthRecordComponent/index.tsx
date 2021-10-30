@@ -4,8 +4,6 @@ import React, {useEffect, useState} from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const HealthRecordComponent = (props) => {
-  const [header, setHeader] = useState("Availability");
-  const [value, setVlaue] = useState("Yes");
   return (
     <View>
       <View style={styles.container}>
@@ -15,7 +13,7 @@ const HealthRecordComponent = (props) => {
             </View>
           </View>
           <View style={styles.right}>
-            <Text style={styles.header}>{props.value}</Text>
+            <Text style={styles.value}>{props.value}</Text>
           </View>
         </View>
     </View>
@@ -36,6 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: "2%",
     paddingLeft: "8%",
+    fontWeight: 'bold'
+  },
+  value: {
+    fontSize: 16,
+    padding: "2%",
+    paddingLeft: "8%", 
   },
   right: {
     paddingRight: "10%",

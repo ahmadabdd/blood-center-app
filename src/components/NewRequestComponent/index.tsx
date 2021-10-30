@@ -20,11 +20,11 @@ import { useSelector } from "react-redux";
 
 const NewRequestComponent = ({ navigation }) => {
 
-  const [city, setCity] = useState(null);
-  const [hospital, setHospital] = useState(null);
-  const [bloodType, setBloodType] = useState(null);
-  const [numberOfUnits, setNumberOfUnits] = useState(null);
-  const [expiryDate, setExpiryDate] = useState("2021-10-25");
+  const [city, setCity] = useState('1');
+  const [hospital, setHospital] = useState('1');
+  const [bloodType, setBloodType] = useState('1');
+  const [numberOfUnits, setNumberOfUnits] = useState(1);
+  const [expiryDate, setExpiryDate] = useState(null);
   const user = useSelector((state) => state?.user);
   const pickerRef = useRef(); 
 
@@ -35,30 +35,66 @@ const NewRequestComponent = ({ navigation }) => {
     pickerRef.current.blur();
   }
   
+  const dateValidate = (date) => {
+    let isValid = true;
+    let expiryDate = new Date(Number(date[0]), Number(date[1]), Number(date[2]));
+    let vectorCurrentDate = getCurrentDate();
+    let currentDate = new Date(vectorCurrentDate[2], vectorCurrentDate[1], vectorCurrentDate[0]);
+    console.log(expiryDate)
+    console.log(currentDate)
+    if(currentDate > expiryDate){
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  const getCurrentDate = () => {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth();
+    let year = today.getFullYear();
+    day = day < 10 ? Number(`0${day}`) : day;
+    month = month < 10 ? Number(`0${month}`) : month;
+    return [day, month, year]
+  }
+
   const Submit = () => {
-    fetch("https://blood-center.tk/api/make_request", {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': "bearer " +  user.userProfile.token
-      }),
-      body: (JSON.stringify({
-        blood_type: bloodType,
-        hospital_id: hospital,
-        city_id: city,
-        number_of_units: numberOfUnits,
-        expiry_date: expiryDate,
-      }))
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        navigation.goBack();
+    if(bloodType && city && hospital && expiryDate) {
+      if(dateValidate(expiryDate.split('-'))){
+        if(numberOfUnits > 0) {
+          console.log(expiryDate)
+          fetch("https://blood-center.tk/api/make_request", {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': "bearer " +  user.userProfile.token
+        }),
+        body: (JSON.stringify({
+          blood_type: bloodType,
+          hospital_id: hospital,
+          city_id: city,
+          number_of_units: numberOfUnits,
+          expiry_date: expiryDate,
+        }))
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+        } else {
+          alert("Number of units can't be zero")
+        }
+      }else{
+        alert('Date should be in the future')
+      }
+    } else {
+      alert('Please fill all the needed data')
+    }
   };
 
   return (

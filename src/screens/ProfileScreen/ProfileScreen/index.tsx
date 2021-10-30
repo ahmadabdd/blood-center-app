@@ -7,18 +7,17 @@ import {
   ScrollView,
 } from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../components/ComponentTemplate";
-import EmptyState from "../../../components/EmptyState";
 import {colors} from "../../../constants/palette";
 import {Avatar, Switch} from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileButtonComponent from "../../../components/ProfileButtonComponent";
-import * as ImagePicker from "expo-image-picker";
 import {store} from "../../../redux/store";
 import {deleteUser} from "../../../redux/slices/userSlice";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state?.user);
+  const [updatedImage, setUpdatedImage] = useState();
+
   const NavigateHealthRecord = (id) => {
     navigation.navigate("HealthRecordScreen", { user_id: id});
   };
@@ -30,18 +29,6 @@ const ProfileScreen = ({ navigation }) => {
   const navigateEditProfile = () => {
     navigation.navigate("EditProfileScreen");
   };
-  
-
-  useEffect(() => {
-    setId(user.userProfile.id);
-    setFirstName(user.userProfile.firstName);
-    setLastName(user.userProfile.lastName);
-    setImage(user.userProfile.profile_picture_url);
-    setValue(user.userProfile.is_available ? true : false);
-    console.log(image)
-    value ? setStatus('Avaliable') : setStatus('Unavaliable')
-  }, [user.userProfile.firstName]);
-  
   const [id, setId] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -49,6 +36,19 @@ const ProfileScreen = ({ navigation }) => {
   const [value, setValue] = useState(true);
   const [image, setImage] = useState(null);
 
+  useEffect(() => {
+    setId(user.userProfile.id);
+    setFirstName(user.userProfile.firstName);
+    setLastName(user.userProfile.lastName);
+    setValue(user.userProfile.is_available ? true : false);
+    user.userProfile.is_available ? setStatus('Avaliable') : setStatus('Unavaliable')
+    setImage(user.userProfile.profile_picture_url);
+    // if (route.params.image !== undefined) {
+    //   setImage(updatedImage)
+    // }
+  }, [user.userProfile.firstName]);
+  
+  
   const changeStatus = () => {
     setValue(!value);
     if(!value) {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     marginTop: 2,
-    padding: 20,
+    padding: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     margin: "2%",
@@ -206,17 +206,17 @@ const styles = StyleSheet.create({
   },
   logoutContainer: {
     backgroundColor: colors.red,
-    marginTop: 2,
-    padding: 20,
-    flexDirection: "row",
+    marginTop: '21%',
+    padding: 15,
+    flexDirection: "row", 
     justifyContent: "space-between",
     margin: "2%",
     borderRadius: 10,
   },
   header: {
     fontSize: 18,
-    padding: "2%",
-    paddingLeft: "10%",
+    paddingTop: "4%",
+    paddingLeft: "11%",
   },
   logout: {
     fontSize: 18,

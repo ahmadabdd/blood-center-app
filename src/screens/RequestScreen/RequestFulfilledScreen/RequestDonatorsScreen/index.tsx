@@ -8,32 +8,34 @@ import RequestsDonatorsComponent from "../../../../components/RequestsDonatorsCo
 import {colors} from "../../../../constants/palette";
 import {Avatar} from "react-native-elements";
 
-const RequestDonatorsScreen = ({ navigation, route }) => {
-  const user = useSelector((state) => state?.user);
+const RequestDonatorsScreen = ({navigation, route}) => {
+  const user = useSelector((state) => state?.user);``
   const [requests, setRequests] = useState();
-  const [hospital, setHospital] = useState('');
-  const [bloodType, setBloodType] = useState('');
+  const [hospital, setHospital] = useState("");
+  const [bloodType, setBloodType] = useState("");
 
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_request_donations", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        Accept: "application/json",
+        Accept: "application/json", 
         Authorization: "bearer " + user.userProfile.token,
       }),
       body: JSON.stringify({
-        request_id: route.params.id
-      })
+        request_id: route.params.id,
+      }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        setHospital(responseJson[0].hospital);
-        setBloodType(responseJson[0].type);
-        console.log(responseJson);
-        console.log(responseJson[0].profile_picture_url);
-        console.log(responseJson[0].hospital);
+        if (responseJson.length) {
+          setHospital(responseJson[0].hospital);
+          setBloodType(responseJson[0].type);
+          console.log(responseJson);
+          console.log(responseJson[0].profile_picture_url);
+          console.log(responseJson[0].hospital);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -41,8 +43,8 @@ const RequestDonatorsScreen = ({ navigation, route }) => {
   }, []);
 
   const visitProfile = (user_id) => {
-    navigation.navigate('HealthRecordScreen', { user_id: user_id })
-  }
+    navigation.navigate("HealthRecordScreen", {user_id: user_id});
+  };
 
   const Item = (props) => (
     <View>
@@ -121,10 +123,7 @@ const RequestDonatorsScreen = ({ navigation, route }) => {
       </View>
     </View>
   ) : (
-    <EmptyState 
-      loading={true}
-      icon={'coffee'}
-    />
+    <EmptyState loading={true} icon={"coffee"} />
   );
 };
 
@@ -137,20 +136,21 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   header: {
     color: colors.white,
-    paddingLeft: 27,
+    paddingLeft: 22,
     paddingTop: 7,
     paddingBottom: 7,
-    fontSize: 25,
+    fontSize: 18,
   },
   hospital: {
     color: colors.white,
     paddingTop: 7,
     paddingBottom: 7,
     paddingRight: 27,
-    fontSize: 25,
+    fontSize: 18,
   },
   bodyContainer: {
     backgroundColor: colors.background,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.text,
-    fontSize: 25,
+    fontSize: 22,
     paddingLeft: 10,
     paddingTop: 18,
   },

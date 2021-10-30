@@ -42,20 +42,21 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: 'center'
   },
   header: {
     color: colors.white,
     paddingLeft: 27,
-    paddingTop: 7,
+    paddingTop: 5,
     paddingBottom: 5,
-    fontSize: 25,
+    fontSize: 18,
   },
   date: {
     color: colors.white,
     paddingRight: 27,
-    paddingTop: 12,
-    paddingBottom: 10,
-    fontSize: 17,
+    paddingTop: 10,
+    paddingBottom: 5,
+    fontSize: 14,
   },
   bodyContainer: {
     backgroundColor: colors.background,
@@ -66,13 +67,13 @@ const styles = StyleSheet.create({
   },
   upperBody: {
     color: colors.text,
-    fontSize: 27,
+    fontSize: 20,
     paddingLeft: 27,
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
-    fontSize: 22,
+    fontSize: 18,
     paddingLeft: 24,
     paddingBottom: 8,
   },

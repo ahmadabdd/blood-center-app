@@ -18,7 +18,7 @@ const NotificationRequestComponent = (props) => {
         <View style={styles.right}>
           <Text style={styles.time}>{props.time}</Text>
           <View style={styles.icon}>
-            <MaterialCommunityIcons name={"arrow-right"} size={20} />
+            <MaterialCommunityIcons name={"arrow-right"} size={20} color={colors.black}/>
           </View>
         </View>
     </View>
@@ -28,26 +28,27 @@ const NotificationRequestComponent = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.lightGrey,
     marginTop: 7,
-    // marginLeft: 5,
-    // marginRight: 5,
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   header: {
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: colors.black
   },
   body: {
     fontSize: 16,
-    paddingTop: 5
+    paddingTop: 5,
+    color: colors.black
   },
   left: {},
   right: {},
   time: {
     paddingRight: 20,
+    color: colors.black
   },
   icon: {
     paddingTop: 10

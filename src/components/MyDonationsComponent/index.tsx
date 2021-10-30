@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
   upperBody: {
     color: colors.text,
     fontSize: 27,
-    paddingLeft: 27,
+    paddingLeft: '8%',
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
     fontSize: 22,
-    paddingLeft: '16%',
+    paddingLeft: '14%', 
     paddingBottom: 8,
   },
   icon: {

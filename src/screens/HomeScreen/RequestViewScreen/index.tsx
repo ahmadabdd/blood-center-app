@@ -81,7 +81,7 @@ const RequestViewScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.green,
-    marginTop: "50%",
+    marginTop: "70%",
     padding: 20,
     alignItems: "center",
   },

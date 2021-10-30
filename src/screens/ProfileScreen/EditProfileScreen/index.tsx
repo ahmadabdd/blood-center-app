@@ -17,8 +17,8 @@ const EditProfileScreen = ({ navigation }) => {
   const [lastName, setLastName] = useState(null);
   const [dateOfBirth, setDdateOfBirth] = useState(null);
   const [lastDonationDate, setLastDonationDate] = useState(null);
-  const [bloodType, setBloodType] = useState();
-  const [city, setCity] = useState();
+  const [bloodType, setBloodType] = useState('1');
+  const [city, setCity] = useState('1');
   const [isSmoker, setIsSmoker] = useState(0);
   const [haveTattoo, setHavetattoo] = useState(0);
   const [smokerValue, setSmokerValue] = useState(false);
@@ -38,14 +38,14 @@ const EditProfileScreen = ({ navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [3, 3],
+      aspect: [4, 3],
       quality: 1,
       base64: true,
     });
     console.log(result);                    
     if (!result.cancelled) {
       setImage(result.uri);
-      setImageString(result.base64);
+      // setImageString(result.base64);
 
       fetch("https://blood-center.tk/api/upload_image", {
       method: "POST",
@@ -54,11 +54,13 @@ const EditProfileScreen = ({ navigation }) => {
         Accept: "application/json",
         Authorization: "bearer " + user.userProfile.token,
       }),
-      body: (JSON.stringify({profile_picture_url: imageString}))
+      body: (JSON.stringify({profile_picture_url: result.base64}))
     })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
+        console.log(imageString);
+        navigation.navigate('ProfileScreen', { image: image })
       })
       .catch((error) => {
         console.error(error);

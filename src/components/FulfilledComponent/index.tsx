@@ -31,8 +31,6 @@ const FulfilledComponent = (props) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    
-    
     marginTop: 15,
     marginRight: 15,
     marginLeft: 15,
@@ -43,20 +41,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
+    alignItems: 'center'
   },
   header: {
     color: colors.white,
     paddingLeft: 27,
-    paddingTop: 7,
-    paddingBottom: 5,
-    fontSize: 25,
+    paddingTop: 3,
+    paddingBottom: 4,
+    fontSize: 18,
   },
   date: {
     color: colors.white,
     paddingRight: 27,
-    paddingTop: 12,
+    paddingTop: 8,
     paddingBottom: 10,
-    fontSize: 17,
+    fontSize: 14,
   },
   bodyContainer: {
     backgroundColor: colors.background,
@@ -68,13 +67,13 @@ const styles = StyleSheet.create({
   upperBody: {
     color: colors.text,
     fontWeight: "bold",
-    fontSize: 27,
+    fontSize: 20,
     paddingLeft: 27,
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
-    fontSize: 22,
+    fontSize: 18,
     paddingLeft: 27,
     paddingBottom: 10,
   },

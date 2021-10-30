@@ -36,7 +36,7 @@ const RequestsScreen = ({ navigation, route }) => {
   }, []);
 
   const RequestComponent = (props) => {
-    const accept = () => {
+    const accept = (user_id) => {
       fetch("https://blood-center.tk/api/accept_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -44,7 +44,10 @@ const RequestsScreen = ({ navigation, route }) => {
           Accept: "application/json",
           Authorization: "bearer " + user.userProfile.token,
         }),
-        body: JSON.stringify({blood_request_id: id})
+        body: JSON.stringify({
+          blood_request_id: id,
+          user_id: user_id
+        })
       })
         .then((response) => response.json())
         .then((responseJson) => {
@@ -58,7 +61,7 @@ const RequestsScreen = ({ navigation, route }) => {
         });
     };
 
-    const decline = () => {
+    const decline = (user_id) => {
       fetch("https://blood-center.tk/api/decline_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -66,7 +69,10 @@ const RequestsScreen = ({ navigation, route }) => {
           Accept: "application/json",
           Authorization: "bearer " + user.userProfile.token,
         }),
-        body: JSON.stringify({blood_request_id: id}),
+        body: JSON.stringify({
+          blood_request_id: id,
+          user_id: user_id
+        }),
       })
         .then((response) => response.json())
         .then((responseJson) => {
@@ -121,14 +127,14 @@ const RequestsScreen = ({ navigation, route }) => {
             <Button
               title="Decline"
               color={colors.red}
-              onPress={() => decline()}
+              onPress={() => decline(props.user_id)}
             />
           </View>
           <View style={styles.accept}>
             <Button
               title="Accept"
               color={colors.green}
-              onPress={() => accept()}
+              onPress={() => accept(props.user_id)}
             />
           </View>
         </View>
@@ -149,7 +155,7 @@ const RequestsScreen = ({ navigation, route }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        navigation.goBack()
+        navigation.navigate('InProgressScreen', { request_id: id})
         console.log(responseJson);
       })
       .catch((error) => {
@@ -211,7 +217,7 @@ const styles = StyleSheet.create({
     paddingLeft: 27,
     paddingTop: 7,
     paddingBottom: 5,
-    fontSize: 25,
+    fontSize: 14,
   },
   date: {
     color: colors.white,

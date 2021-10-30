@@ -17,13 +17,13 @@ const InProgressRequestComponent = (props) => {
         </View>
         <View style={styles.bodyContainer}>
           <View style={styles.upperBody}>
-            <View style={styles.head}>
+            <View>
               <Text style={styles.city}>{props.city}</Text>
-              <Text style={styles.city}>{props.hospital}</Text>
+              <Text style={styles.hospital}>{props.hospital}</Text>
             </View>
           </View>
           <View>
-              <Text style={styles.units}> units: {props.unitsCount} </Text>
+              <Text style={styles.units}> Units: {props.unitsCount} </Text>
             </View>
           <Divider
             style={{
@@ -63,13 +63,14 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: 'center'
   },
   header: {
     color: colors.white,
     paddingLeft: 27,
-    paddingTop: 15,
-    paddingBottom: 10,
-    fontSize: 25,
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontSize: 18,
   },
   name: {
     color: colors.text,
@@ -79,9 +80,9 @@ const styles = StyleSheet.create({
   date: {
     color: colors.white,
     paddingRight: 27,
-    paddingTop: 20,
+    paddingTop: 5,
     paddingBottom: 3,
-    fontSize: 17,
+    fontSize: 14,
   },
   bodyContainer: {
     backgroundColor: colors.background,
@@ -95,29 +96,35 @@ const styles = StyleSheet.create({
   },
   lowerBody: {
     flexDirection: "row",
-    paddingBottom: 25,
+    paddingBottom: 15,
     paddingLeft: 13,
   },
   city: {
     color: colors.text,
-    fontSize: 27,
+    fontSize: 20,
     paddingLeft: 27,
     paddingTop: 10,
   },
+  hospital: {
+    color: colors.text,
+    fontSize: 20,
+    paddingLeft: 27,
+    paddingTop: 5,
+  },
   units: {
     color: colors.text,
-    fontSize: 22,
+    fontSize: 18,
     paddingLeft: 24,
-    paddingTop: 13,
+    paddingTop: 5,
   },
   donation: {
     color: colors.text,
-    fontSize: 20,
+    fontSize: 18,
     paddingLeft: 12,
-    paddingTop: 10,
+    // paddingTop: 5,
   },
   icon: {
-    paddingTop: 13,
+    // paddingTop: 13,
     paddingLeft: 70,
   },
   unitsCount: {
