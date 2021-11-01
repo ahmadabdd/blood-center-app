@@ -1,27 +1,23 @@
 import * as React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { colors } from "../constants/palette";
-import { NavigationContainer } from "@react-navigation/native";
+import {colors} from "../constants/palette";
+import {NavigationContainer} from "@react-navigation/native";
 
 import NotificationsScreen from "../screens/NotificationsScreen";
-import { HomeStack } from "./HomeStack";
-import { RequestsStack } from "./RequestsStack";
-import { MapStack } from "./MapStack";
-import { ProfileStack } from "./ProfileStack";
-import { NotificationsStack } from "./NotificationsStack";
+import {HomeStack} from "./HomeStack";
+import {RequestsStack} from "./RequestsStack";
+import {MapStack} from "./MapStack";
+import {ProfileStack} from "./ProfileStack";
+import {NotificationsStack} from "./NotificationsStack";
 
-
-
-export function BottomTabs({ navigation }) {
+export function BottomTabs({navigation}) {
   const BottomTabsNav = createBottomTabNavigator();
   const navigationRef = React.useRef(null);
   // const type = useSelector((state) => state?.user?.userType);
-  
+
   return (
-      <NavigationContainer
-        ref={navigationRef}
-      >
+    <NavigationContainer ref={navigationRef}>
       <BottomTabsNav.Navigator
         initialRouteName="HomeScreen"
         tabBarOptions={{
@@ -30,21 +26,20 @@ export function BottomTabs({ navigation }) {
           showLabel: true,
           allowFontScaling: false,
           keyboardHidesTabBar: true,
-          shadowColor: '#FFF',
+          shadowColor: "#FFF",
           labelStyle: {
             fontWeight: "bold",
             fontSize: 10,
           },
-
         }}
       >
         <BottomTabsNav.Screen
           name="HomeStack"
           component={HomeStack}
           options={{
-            title: 'Donate',
+            title: "Donate",
             headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => (
+            tabBarIcon: ({focused, color, size}) => (
               <MaterialCommunityIcons
                 name={"blood-bag"}
                 size={28}
@@ -60,9 +55,9 @@ export function BottomTabs({ navigation }) {
           name="RequestsStack"
           component={RequestsStack}
           options={{
-            title: 'Requests',
+            title: "Requests",
             headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => (
+            tabBarIcon: ({focused, color, size}) => (
               <MaterialCommunityIcons
                 name={"card-plus"}
                 size={28}
@@ -74,35 +69,27 @@ export function BottomTabs({ navigation }) {
           }}
         />
         <BottomTabsNav.Screen
-          name="NotificationsStack"
-          component={NotificationsStack}
+          name="MapStack"
+          component={MapStack}
           options={{
-            title: 'Notifications',
+            title: "Map",
             headerShown: false,
-            headerStyle: {
-              backgroundColor: colors.primary
-            },
-            tabBarIcon: ({ focused, color, size }) => (
-              <MaterialCommunityIcons
-                name={"bell"}
-                size={28}
-                color={color}
-              />
+            tabBarIcon: ({focused, color, size}) => (
+              <MaterialCommunityIcons name={"map"} size={28} color={color} />
             ),
           }}
         />
         <BottomTabsNav.Screen
-          name="MapStack"
-          component={MapStack}
+          name="NotificationsStack"
+          component={NotificationsStack}
           options={{
-            title: 'Map',
+            title: "Notifications",
             headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => (
-              <MaterialCommunityIcons
-                name={"map"}
-                size={28}
-                color={color}
-              />
+            headerStyle: {
+              backgroundColor: colors.primary,
+            },
+            tabBarIcon: ({focused, color, size}) => (
+              <MaterialCommunityIcons name={"bell"} size={28} color={color} />
             ),
           }}
         />
@@ -110,9 +97,9 @@ export function BottomTabs({ navigation }) {
           name="ProfileStack"
           component={ProfileStack}
           options={{
-            title: 'Profile',
+            title: "Profile",
             headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => (
+            tabBarIcon: ({focused, color, size}) => (
               <MaterialCommunityIcons
                 name={"account"}
                 size={28}

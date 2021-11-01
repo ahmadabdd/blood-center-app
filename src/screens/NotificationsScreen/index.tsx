@@ -45,38 +45,33 @@ const NotificationsScreen = ({navigation}) => {
     getNotifications();
     setRefreshing(false);
   };
-
-  {
-    /* <NewRequestBottunComponent onPress={navigateNewRequest} /> */
-  }
+  
   return notifications ? (
     <ScrollView
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <View>
-        <FlatList
-          data={notifications}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({item}) => {
-            return item.blood_request_id ? (
-              <NotificationRequestComponent
-                header={item.header}
-                body={item.body}
-                time={item.created_at.substr(0, 10)}
-                onPress={() => navigateRequestView(item.blood_request_id)}
-              />
-            ) : (
-              <NotificationComponent
-                header={item.header}
-                body={item.body}
-                time={item.created_at.substr(0, 10)}
-              />
-            );
-          }}
-        />
-      </View>
+      <FlatList
+        data={notifications}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({item}) => {
+          return item.blood_request_id ? (
+            <NotificationRequestComponent
+              header={item.header}
+              body={item.body}
+              time={item.created_at.substr(0, 10)}
+              onPress={() => navigateRequestView(item.blood_request_id)}
+            />
+          ) : (
+            <NotificationComponent
+              header={item.header}
+              body={item.body}
+              time={item.created_at.substr(0, 10)}
+            />
+          );
+        }}
+      />
     </ScrollView>
   ) : (
     <EmptyState loading={true} icon={"coffee"} />

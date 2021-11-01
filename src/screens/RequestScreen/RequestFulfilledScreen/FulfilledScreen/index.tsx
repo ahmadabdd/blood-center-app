@@ -1,26 +1,24 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button, StyleSheet, RefreshControl} from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  RefreshControl,
+} from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../../components/ComponentTemplate";
 import EmptyState from "../../../../components/EmptyState";
-import FullWidthButton from "../../../../components/FullWidthButton";
 import {colors} from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import FulfilledComponent from "../../../../components/FulfilledComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import { ScrollView } from "react-native-gesture-handler";
-
+import {ScrollView, TouchableOpacity} from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const FulfilledScreen = () => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
-  const [tabIndex, setTabIndex] = useState(1);
-  const [value, setVlue] = useState(true);
-  const handleTabsChange = (value) => {
-    setVlue(!value)
-    value ? setTabIndex(0) : setTabIndex(1)
-  };
 
   const getRequests = () => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
@@ -39,7 +37,7 @@ const FulfilledScreen = () => {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
 
   useEffect(() => {
     getRequests();
@@ -55,7 +53,7 @@ const FulfilledScreen = () => {
     navigation.navigate("FulfilledScreen");
   };
   const navigateRequestsDonators = (id) => {
-    navigation.navigate("RequestDonatorsScreen", { id: id });
+    navigation.navigate("RequestDonatorsScreen", {id: id});
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
@@ -72,47 +70,31 @@ const FulfilledScreen = () => {
     <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <ScrollView
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
-    > 
-       <View>
-      {/* <SegmentedControl
-        values={["Label", "Label"]}
-        // paddingVertical={6}
-        // containerStyle={{
-        //   marginVertical: 20,
-        // }}
-        selectedIndex={tabIndex} 
-        onChange={() => handleTabsChange(value)}
-      /> */}
-      <Button
-        title="In progress"
-        color="#666666"
-        onPress={navigateInProgress}
-      />
-      <View style={styles.listContainer}>
-        <FlatList
-          data={requests}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({item}) => {
-            return (
-              <FulfilledComponent
-                bloodType={item.type}
-                date={item.created_at.substr(0, 10)}
-                city={item.city}
-                hospital={item.hospital}
-                onPress={() => navigateRequestsDonators(item.id)}
-              />
-            );
-          }}
-        />
-      </View>
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={requests}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={({item}) => {
+                return (
+                  <FulfilledComponent
+                    bloodType={item.type}
+                    date={item.created_at.substr(0, 10)}
+                    city={item.city}
+                    hospital={item.hospital}
+                    onPress={() => navigateRequestsDonators(item.id)}
+                  />
+                );
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </View>
-    </ScrollView>
-    </View>
-    
-   
   ) : (
     <EmptyState loading={true} icon={"coffee"} />
   );
@@ -121,6 +103,22 @@ const FulfilledScreen = () => {
 const styles = StyleSheet.create({
   listContainer: {
     paddingBottom: "20%",
+  },
+  btnContainer: {
+    backgroundColor: colors.blue,
+    padding: 10,
+    alignItems: "center",
+    position: "relative",
+    flexDirection: "row",
+    alignContent: "center",
+  },
+  btn: {
+    fontSize: 20,
+    color: colors.white,
+    paddingLeft: "15%",
+  },
+  icon: {
+    paddingLeft: 25,
   },
 });
 

@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {StyleSheet, FlatList, Text, View, TouchableOpacity} from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../../components/ComponentTemplate";
 import EmptyState from "../../../../components/EmptyState";
-import FullWidthButton from "../../../../components/FullWidthButton";
-import RequestsDonatorsComponent from "../../../../components/RequestsDonatorsComponent";
 import {colors} from "../../../../constants/palette";
 import {Avatar} from "react-native-elements";
 

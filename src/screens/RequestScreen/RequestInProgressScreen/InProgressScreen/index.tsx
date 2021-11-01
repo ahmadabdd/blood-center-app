@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button, StyleSheet} from "react-native";
+import {FlatList, Text, View, ScrollView, StyleSheet, RefreshControl} from "react-native";
 import {useSelector} from "react-redux";
 import {colors} from "../../../../constants/palette";
 import InProgressRequestComponent from "../../../../components/InProgressRequestComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
 import EmptyState from "../../../../components/EmptyState";
+import {TouchableOpacity} from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const InProgressScreen = ({ navigation, route }) => {
+const InProgressScreen = ({navigation, route}) => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
-  // const { user_id } = route.params;
-  // console.log(user_id)  
 
-  useEffect(() => {
+  const getRequests = () => {
     fetch("https://blood-center.tk/api/get_user_requests", {
       method: "GET",
       headers: new Headers({
@@ -29,53 +29,102 @@ const InProgressScreen = ({ navigation, route }) => {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  useEffect(() => {
+    getRequests();
   }, []);
 
   const navigateFulfilled = () => {
     navigation.navigate("FulfilledScreen");
   };
   const navigateRequests = (id) => {
-    navigation.navigate("RequestsScreen", { id: id });
+    navigation.navigate("RequestsScreen", {id: id});
   };
   const navigateNewRequest = () => {
     navigation.navigate("NewRequestScreen");
   };
 
-  return requests ?(
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    getRequests();
+    setRefreshing(false);
+  };
+
+  return requests ? (
     <View>
-      <Button title="Fulfilled" color="#666666" onPress={navigateFulfilled} />
-      <View style={styles.listContainer}>
-        <FlatList
-          data={requests}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({item}) => {
-            return (
-              <InProgressRequestComponent
-                unitsCount={item.left_number_of_units}
-                requestCount={item.requestCount}
-                city={item.city}
-                hospital={item.hospital}
-                bloodType={item.type}
-                date={item.created_at.substr(0, 10)}
-                onPress={() => navigateRequests(item.id)}
-              />
-            );
-          }}
-        />
-      </View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+      <View>
+        <View>
+          <TouchableOpacity onPress={navigateFulfilled}>
+            <View style={styles.btnContainer}>
+              <Text style={styles.btn}>Fulfilled requests</Text>
+              <View>
+                <View style={styles.icon}>
+                  <MaterialCommunityIcons
+                    name={"arrow-right"}
+                    size={25}
+                    color={"white"}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.listContainer}>
+          <FlatList
+            data={requests}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({item}) => {
+              return (
+                <InProgressRequestComponent
+                  unitsCount={item.left_number_of_units}
+                  requestCount={item.requestCount}
+                  city={item.city}
+                  hospital={item.hospital}
+                  bloodType={item.type}
+                  date={item.created_at.substr(0, 10)}
+                  onPress={() => navigateRequests(item.id)}
+                />
+              );
+            }}
+          />
+        </View>
+      </View>
+    </ScrollView>
     </View>
+    
   ) : (
-    <EmptyState 
-      loading={true}
-      icon={'coffee'}
-    />
+    <EmptyState loading={true} icon={"coffee"} />
   );
 };
 
 const styles = StyleSheet.create({
   listContainer: {
-    paddingBottom: "20%",
+    paddingBottom: "5%",
+  },
+  btnContainer: {
+    backgroundColor: colors.blue,
+    padding: 10,
+    alignItems: "center",
+    position: "relative",
+    flexDirection: "row",
+    alignContent: "center",
+  },
+  btn: {
+    fontSize: 20,
+    color: colors.white,
+    paddingLeft: "20%",
+  },
+  icon: {
+    paddingLeft: 30,
   },
 });
 export default InProgressScreen;

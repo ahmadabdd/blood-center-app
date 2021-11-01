@@ -23,30 +23,6 @@ export function RequestsStack() {
       }}
     >
       <RootStackNav.Screen
-        name="FulfilledScreen"
-        component={FulfilledScreen}
-        options={{
-          title: "Fulfilled requests",
-          headerTintColor: colors.white,
-          headerStyle: {
-            backgroundColor: "#F47174",
-          },
-        }}
-      />
-
-      <RootStackNav.Screen
-        name="RequestDonatorsScreen"
-        component={RequestDonatorsScreen}
-        options={{
-          title: "Donators",
-          headerTintColor: colors.white,
-          headerStyle: {
-            backgroundColor: "#F47174",
-          },
-        }}
-      />
-
-      <RootStackNav.Screen
         name="InProgressScreen"
         component={InProgressScreen}
         options={{
@@ -71,6 +47,30 @@ export function RequestsStack() {
       />
 
       <RootStackNav.Screen
+        name="FulfilledScreen"
+        component={FulfilledScreen}
+        options={{
+          title: "Fulfilled requests",
+          headerTintColor: colors.white,
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
+
+      <RootStackNav.Screen
+        name="RequestDonatorsScreen"
+        component={RequestDonatorsScreen}
+        options={{
+          title: "Donators",
+          headerTintColor: colors.white,
+          headerStyle: {
+            backgroundColor: "#F47174",
+          },
+        }}
+      />
+
+      <RootStackNav.Screen
         name="NewRequestScreen"
         component={NewRequestScreen}
         options={{
@@ -81,7 +81,7 @@ export function RequestsStack() {
           },
         }}
       />
-      
+
       <RootStackNav.Screen
         name="HealthRecordScreen"
         component={HealthRecordScreen}

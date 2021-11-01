@@ -83,6 +83,7 @@ const HomeScreen = ({navigation}) => {
 
   return requests ? (
     <View>
+      <NewRequestBottunComponent onPress={navigateNewRequest} />
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
