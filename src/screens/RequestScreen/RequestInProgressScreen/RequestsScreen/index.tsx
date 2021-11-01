@@ -1,20 +1,18 @@
-import {useNavigation} from "@react-navigation/core";
 import React, {useEffect, useState} from "react";
-import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
+import {Text, View, Button, StyleSheet, TouchableOpacity, ScrollView, FlatList} from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../../components/ComponentTemplate";
 import EmptyState from "../../../../components/EmptyState";
-import FullWidthButton from "../../../../components/FullWidthButton";
 import {colors} from "../../../../constants/palette";
-import {Divider, Avatar} from "react-native-elements";
+import {Divider} from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {FlatList} from "react-native-gesture-handler";
 
 const RequestsScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state?.user);
   const id = route.params.id;
   const [requests, setRequests] = useState();
-
+  const acceptBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has accepted your donation request!`
+  const declinetBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has declined your donation request. The blood request seems to be fulfilled`
+  
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_request_donations", {
       method: "POST",
@@ -36,7 +34,8 @@ const RequestsScreen = ({ navigation, route }) => {
   }, []);
 
   const RequestComponent = (props) => {
-    const accept = (user_id) => {
+
+    const accept = (user_id, firebase_token) => {
       fetch("https://blood-center.tk/api/accept_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -54,6 +53,7 @@ const RequestsScreen = ({ navigation, route }) => {
           console.log(responseJson);
           const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
           setRequests(newRequests);
+          sendPushNotification(firebase_token, acceptBody)
           console.log(newRequests); 
         })
         .catch((error) => {
@@ -61,7 +61,7 @@ const RequestsScreen = ({ navigation, route }) => {
         });
     };
 
-    const decline = (user_id) => {
+    const decline = (user_id, firebase_token) => {
       fetch("https://blood-center.tk/api/decline_donation_request", {
         method: "POST",
         headers: new Headers({
@@ -79,6 +79,7 @@ const RequestsScreen = ({ navigation, route }) => {
           console.log(responseJson);
           const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
           setRequests(newRequests);
+          sendPushNotification(firebase_token, declinetBody)
           console.log(newRequests);
         })
         .catch((error) => {
@@ -89,6 +90,30 @@ const RequestsScreen = ({ navigation, route }) => {
     const viewListItem = (user_id) => {
       navigation.navigate('HealthRecordScreen', { user_id: user_id })
     };
+
+    async function sendPushNotification(token, body) {
+      try {
+        const message = {
+          to: token,
+          sound: "default", 
+          title: "Blood Center",
+          body: body,
+          data: { someData: "goes here" },
+        };
+        console.log(message)
+        await fetch("https://exp.host/--/api/v2/push/send", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Accept-encoding": "gzip, deflate",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message),
+        });
+      } catch(error) {
+        console.error(error)
+      }
+    }
 
     return (
       <View style={styles.cardContainer}>
@@ -127,14 +152,14 @@ const RequestsScreen = ({ navigation, route }) => {
             <Button
               title="Decline"
               color={colors.red}
-              onPress={() => decline(props.user_id)}
+              onPress={() => decline(props.user_id, props.firebase_token)}
             />
           </View>
           <View style={styles.accept}>
             <Button
               title="Accept"
               color={colors.green}
-              onPress={() => accept(props.user_id)}
+              onPress={() => accept(props.user_id, props.firebase_token)}
             />
           </View>
         </View>
@@ -162,8 +187,18 @@ const RequestsScreen = ({ navigation, route }) => {
         console.error(error);
       });
   };
+
+
   return requests ? (
-    <View>
+    <ScrollView>
+      <View> 
+      <View>
+        <TouchableOpacity onPress={() => closeRequest(id)}>
+        <View style={styles.closeContainer}>
+          <Text style={styles.close}>Close request</Text>
+        </View>
+      </TouchableOpacity>
+      </View>
       <View>
       <FlatList
         data={requests}
@@ -176,20 +211,15 @@ const RequestsScreen = ({ navigation, route }) => {
               firstName={item.first_name}
               lastName={item.last_name}
               user_id={item.user_id}
+              firebase_token={item.firebase_token}
             />
           );
         }}
       />
       </View>
-      <View>
-        <TouchableOpacity onPress={() => closeRequest(id)}>
-        <View style={styles.closeContainer}>
-          <Text style={styles.close}>Close</Text>
-        </View>
-      </TouchableOpacity>
-      </View>
-       
     </View>
+    </ScrollView>
+    
   ) : (
     <EmptyState 
       loading={true}
@@ -211,19 +241,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
+    alignItems: 'center'
   },
   header: {
     color: colors.white,
     paddingLeft: 27,
-    paddingTop: 7,
+    paddingTop: 5,
     paddingBottom: 5,
-    fontSize: 14,
+    fontSize: 18,
   },
   date: {
     color: colors.white,
     paddingRight: 27,
-    paddingTop: 12,
-    paddingBottom: 10,
     fontSize: 17,
   },
   bodyContainer: {
@@ -232,12 +261,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icon: {
-    paddingTop: 20,
+    paddingTop: 15,
     paddingRight: 25,
   },
   name: {
     color: colors.text,
-    fontSize: 27,
+    fontSize: 20,
     paddingLeft: 27,
     paddingTop: 12,
     paddingBottom: 10,
@@ -245,20 +274,20 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     backgroundColor: colors.background,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
   },
   decline: {
     fontSize: 20,
-    paddingLeft: "20%",
+    paddingLeft: "15%",
     borderRadius: 8,
   },
   accept: {
     fontSize: 20,
-    paddingRight: "20%",
+    paddingRight: "15%",
   },
   divider: {
     width: "100%",
@@ -266,13 +295,12 @@ const styles = StyleSheet.create({
   },
   closeContainer: {
     backgroundColor: colors.red,
-    marginTop: "112%",
-    padding: 20,
+    padding: 10,
     alignItems: "center",
     position: 'relative'
   },
   close: {
-    fontSize: 24,
+    fontSize: 20,
     color: colors.white,
   },
 });

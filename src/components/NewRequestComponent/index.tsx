@@ -35,32 +35,53 @@ const NewRequestComponent = ({ navigation }) => {
     pickerRef.current.blur();
   }
   
-  const dateValidate = (date) => {
-    let isValid = true;
-    let expiryDate = new Date(Number(date[0]), Number(date[1]), Number(date[2]));
-    let vectorCurrentDate = getCurrentDate();
-    let currentDate = new Date(vectorCurrentDate[2], vectorCurrentDate[1], vectorCurrentDate[0]);
-    console.log(expiryDate)
-    console.log(currentDate)
-    if(currentDate > expiryDate){
-      isValid = false;
-    }
-    return isValid;
-  }
+  // const dateValidate = (date) => {
+  //   let isValid = true;
+  //   let expiryDate = new Date(Number(date[0]), Number(date[1]), Number(date[2]));
+  //   let vectorCurrentDate = getCurrentDate();
+  //   let currentDate = new Date(vectorCurrentDate[2], vectorCurrentDate[1], vectorCurrentDate[0]);
+  //   console.log(expiryDate)
+  //   console.log(currentDate)
+  //   if(currentDate > expiryDate){
+  //     isValid = false;
+  //   }
+  //   return isValid;
+  // }
 
-  const getCurrentDate = () => {
-    let today = new Date();
-    let day = today.getDate();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    day = day < 10 ? Number(`0${day}`) : day;
-    month = month < 10 ? Number(`0${month}`) : month;
-    return [day, month, year]
+  // const getCurrentDate = () => {
+  //   let today = new Date();
+  //   let day = today.getDate();
+  //   let month = today.getMonth();
+  //   let year = today.getFullYear();
+  //   day = day < 10 ? Number(`0${day}`) : day;
+  //   month = month < 10 ? Number(`0${month}`) : month;
+  //   return [day, month, year]
+  // }
+  console.log(user.userProfile.firstName)
+  console.log(user.userProfile.bloodType)
+  async function sendPushNotification(token, blood_type) {
+    const message = {
+      to: token,
+      sound: "default", 
+      title: "Blood Center",
+      body: `New ${blood_type} request! Would you like to donate?`,
+      data: { someData: "goes here" },
+    };
+    console.log(message)
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
   }
 
   const Submit = () => {
     if(bloodType && city && hospital && expiryDate) {
-      if(dateValidate(expiryDate.split('-'))){
+      if(expiryDate){
         if(numberOfUnits > 0) {
           console.log(expiryDate)
           fetch("https://blood-center.tk/api/make_request", {
@@ -80,7 +101,14 @@ const NewRequestComponent = ({ navigation }) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
+          console.log('tokens');
           console.log(responseJson);
+          console.log(responseJson.tokens);
+          if (responseJson.tokens) {
+            responseJson.tokens.forEach(token => {
+              sendPushNotification(token, responseJson.blood_type)
+            });
+          }
           navigation.goBack();
         })
         .catch((error) => {
@@ -204,7 +232,6 @@ const NewRequestComponent = ({ navigation }) => {
         <Text style={styles.question}>How many units?</Text>
         <View style={styles.input}>
         <TextInput
-            // style={styles.input}
             onChangeText={setNumberOfUnits}
             value={numberOfUnits}
             placeholder="Enter number of units"

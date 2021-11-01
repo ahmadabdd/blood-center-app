@@ -1,11 +1,9 @@
 import React, {useState} from "react";
 import {
-  ScrollView,
   TextInput,
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import {Text, View, StyleSheet, Button} from "react-native";
-import EmptyState from "../../components/EmptyState";
 import {store} from "../../redux/store";
 import {updateUserProfile} from "../../redux/slices/userSlice";
 import {useNavigation} from "@react-navigation/core";
@@ -22,7 +20,7 @@ const LoginScreen: React.FC = () => {
     } else if (!email.includes("@gmail.com")) {
       alert("Please enter a valid email");
     } else if (!password) {
-      alert("Please enter your password");
+      alert("Please enter your password");    
     } else {
       fetch("https://blood-center.tk/api/login", {
       method: "POST",
@@ -51,7 +49,8 @@ const LoginScreen: React.FC = () => {
                 token: responseJson.user.token,
                 city_id: responseJson.user.city_id,
                 long: responseJson.user.long,
-                lat: responseJson.user.lat
+                lat: responseJson.user.lat,
+                bloodType: responseJson.user.blood_type,
               },
             })
           );

@@ -5,15 +5,11 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import {Text, View, StyleSheet, Button, Platform } from "react-native";
-import EmptyState from "../../components/EmptyState";
-import {store} from "../../redux/store";
-import {updateUserProfile} from "../../redux/slices/userSlice";
 import {useNavigation} from "@react-navigation/core";
 import {colors} from "../../constants/palette";
 import {Picker} from "@react-native-picker/picker";
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import { cos } from "react-native-reanimated";
 
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -22,7 +18,7 @@ const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-  const [city, setCity] = useState(null);
+  const [city, setCity] = useState('1');
   const [FirebaseToken, setFirebaseToken] = useState(null);
 
   async function registerForPushNotificationsAsync() {
@@ -53,11 +49,11 @@ const LoginScreen: React.FC = () => {
     }
     console.log(token);
     setFirebaseToken(token);
-    return await token;
+    return token;
   }
 
   const register = async () => {
-    // await registerForPushNotificationsAsync()
+    await registerForPushNotificationsAsync()
 
     if (!firstName) {
       alert("Please enter your first name");
@@ -91,7 +87,7 @@ const LoginScreen: React.FC = () => {
           password: password,
           password_confirmation: confirmPassword,
           city_id: city,
-          firebase_token: 'ExponentPushToken[fYU68EEodFaxjvgK6h1fy9]'
+          firebase_token: FirebaseToken
         }),
       })
         .then((response) => response.json())

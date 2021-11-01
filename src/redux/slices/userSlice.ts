@@ -16,6 +16,7 @@ export interface User {
         token?: string;
         long?: string;
         lat?: string;
+        bloodType?: string;
     }
 }
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button, StyleSheet} from "react-native";
+import {FlatList, Text, View, Button, StyleSheet, RefreshControl} from "react-native";
 import {useSelector} from "react-redux";
 import ComponentTemplate from "../../../../components/ComponentTemplate";
 import EmptyState from "../../../../components/EmptyState";
@@ -9,6 +9,7 @@ import {useNavigation} from "@react-navigation/core";
 import FulfilledComponent from "../../../../components/FulfilledComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const FulfilledScreen = () => {
@@ -21,7 +22,7 @@ const FulfilledScreen = () => {
     value ? setTabIndex(0) : setTabIndex(1)
   };
 
-  useEffect(() => {
+  const getRequests = () => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
       method: "GET",
       headers: new Headers({
@@ -38,6 +39,10 @@ const FulfilledScreen = () => {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  useEffect(() => {
+    getRequests();
   }, []);
 
   const navigation = useNavigation();
@@ -56,8 +61,22 @@ const FulfilledScreen = () => {
     navigation.navigate("NewRequestScreen");
   };
 
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    getRequests();
+    setRefreshing(false);
+  };
+
   return requests ? (
     <View>
+      <NewRequestBottunComponent onPress={navigateNewRequest} />
+      <ScrollView
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }
+    > 
+       <View>
       {/* <SegmentedControl
         values={["Label", "Label"]}
         // paddingVertical={6}
@@ -67,7 +86,6 @@ const FulfilledScreen = () => {
         selectedIndex={tabIndex} 
         onChange={() => handleTabsChange(value)}
       /> */}
-      <NewRequestBottunComponent onPress={navigateNewRequest} />
       <Button
         title="In progress"
         color="#666666"
@@ -91,6 +109,10 @@ const FulfilledScreen = () => {
         />
       </View>
     </View>
+    </ScrollView>
+    </View>
+    
+   
   ) : (
     <EmptyState loading={true} icon={"coffee"} />
   );

@@ -33,6 +33,7 @@ const HomeScreen = ({navigation}) => {
 
   const reset = () => {
     setRequests(originalRequests);
+    getRequests();
   };
 
   const getRequests = () => {
@@ -48,7 +49,6 @@ const HomeScreen = ({navigation}) => {
       .then((responseJson) => {
         setRequests(responseJson);
         setOriginalRequests(responseJson);
-        setRefreshing(false);
         console.log(responseJson);
       })
       .catch((error) => {
@@ -74,55 +74,56 @@ const HomeScreen = ({navigation}) => {
     pickerRef.current.blur();
   }
 
-  const [refreshing, setRefreshing] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
     getRequests();
+    setRefreshing(false);
   };
 
   return requests ? (
-    <View style={styles.main}>
-      <NewRequestBottunComponent onPress={navigateNewRequest} />
+    <View>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.container}>
-          <View style={styles.filter}>
-            <Text style={styles.filterText}>Filter</Text>
-          </View>
-          <View style={styles.right}>
-            <View style={styles.bloodType}>
-              <Text style={styles.text}>Blood type</Text>
-              <Picker
-                ref={pickerRef}
-                selectedValue={bloodType}
-                onValueChange={(bloodType) =>
-                  filterRrequestsByBloodType(bloodType)
-                }
-                style={styles.picker}
-              >
-                <Picker.Item label="A+" value="A+" />
-                <Picker.Item label="A-" value="A-" />
-                <Picker.Item label="B+" value="B+" />
-                <Picker.Item label="B-" value="B-" />
-                <Picker.Item label="AB+" value="AB+" />
-                <Picker.Item label="AB-" value="AB-" />
-                <Picker.Item label="O+" value="O+" />
-                <Picker.Item label="O-" value="O-" />
-              </Picker>
+        <View>
+          <View style={styles.container}>
+            <View style={styles.filter}>
+              <Text style={styles.filterText}>Filter</Text>
             </View>
-            <View style={styles.city}>
-              <Text style={styles.text}>City</Text>
-              <Picker
-                ref={pickerRef}
-                selectedValue={city}
-                onValueChange={(city) => filterRrequestsByCity(city)}
-                style={styles.picker}
-                mode="dialog"
-              >
-                {/* 1- Beirut
+            <View style={styles.right}>
+              <View style={styles.bloodType}>
+                <Text style={styles.text}>Blood type</Text>
+                <Picker
+                  ref={pickerRef}
+                  selectedValue={bloodType}
+                  onValueChange={(bloodType) =>
+                    filterRrequestsByBloodType(bloodType)
+                  }
+                  style={styles.picker}
+                >
+                  <Picker.Item label="A+" value="A+" />
+                  <Picker.Item label="A-" value="A-" />
+                  <Picker.Item label="B+" value="B+" />
+                  <Picker.Item label="B-" value="B-" />
+                  <Picker.Item label="AB+" value="AB+" />
+                  <Picker.Item label="AB-" value="AB-" />
+                  <Picker.Item label="O+" value="O+" />
+                  <Picker.Item label="O-" value="O-" />
+                </Picker>
+              </View>
+              <View style={styles.city}>
+                <Text style={styles.text}>City</Text>
+                <Picker
+                  ref={pickerRef}
+                  selectedValue={city}
+                  onValueChange={(city) => filterRrequestsByCity(city)}
+                  style={styles.picker}
+                  mode="dialog"
+                >
+                  {/* 1- Beirut
           2- Tripoli
           3- Saida
           4- Byblos
@@ -131,44 +132,45 @@ const HomeScreen = ({navigation}) => {
           7- Mount Lebanon
           8- Baalbak
           9- Baabda */}
-                <Picker.Item label="Beirut" value="Beirut" />
-                <Picker.Item label="Tripoli" value="Tripoli" />
-                <Picker.Item label="Saida" value="Saida" />
-                <Picker.Item label="Byblos" value="Byblos" />
-                <Picker.Item label="Zahle" value="Zahle" />
-                <Picker.Item label="Tyre" value="Tyre" />
-                <Picker.Item label="Mount Lebanon" value="Mount Lebanon" />
-                <Picker.Item label="Baalbak" value="Baalbak" />
-                <Picker.Item label="Baabda" value="Baabda" />
-                <Picker.Item label="Nabatieh" value="Nabatieh" />
-              </Picker>
+                  <Picker.Item label="Beirut" value="Beirut" />
+                  <Picker.Item label="Tripoli" value="Tripoli" />
+                  <Picker.Item label="Saida" value="Saida" />
+                  <Picker.Item label="Byblos" value="Byblos" />
+                  <Picker.Item label="Zahle" value="Zahle" />
+                  <Picker.Item label="Tyre" value="Tyre" />
+                  <Picker.Item label="Mount Lebanon" value="Mount Lebanon" />
+                  <Picker.Item label="Baalbak" value="Baalbak" />
+                  <Picker.Item label="Baabda" value="Baabda" />
+                  <Picker.Item label="Nabatieh" value="Nabatieh" />
+                </Picker>
+              </View>
+            </View>
+            <View style={styles.reset}>
+              <TouchableOpacity onPress={reset}>
+                <Text style={styles.resetText}>Reset</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.reset}>
-            <TouchableOpacity onPress={reset}>
-              <Text style={styles.resetText}>Reset</Text>
-            </TouchableOpacity>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Available Requests</Text>
           </View>
-        </View>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Available Requests</Text>
-        </View>
-        <View style={styles.listContainer}>
-          <FlatList
-            data={requests}
-            renderItem={({item}) => {
-              return (
-                <ListComponentMain
-                  onPress={() => navigateRequestView(item.id)}
-                  bloodType={item.type}
-                  date={item.created_at.substr(0, 10)}
-                  city={item.city}
-                  unitsCount={item.left_number_of_units}
-                />
-              );
-            }}
-            keyExtractor={(item) => String(item.id)}
-          />
+          <View style={styles.listContainer}>
+            <FlatList
+              data={requests}
+              renderItem={({item}) => {
+                return (
+                  <ListComponentMain
+                    onPress={() => navigateRequestView(item.id)}
+                    bloodType={item.type}
+                    date={item.created_at.substr(0, 10)}
+                    city={item.city}
+                    unitsCount={item.left_number_of_units}
+                  />
+                );
+              }}
+              keyExtractor={(item) => String(item.id)}
+            />
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -178,9 +180,6 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  main: {
-    // paddingBottom: "61%",
-  },
   picker: {
     backgroundColor: colors.background,
   },

@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button, RefreshControl} from "react-native";
+import {FlatList, View, RefreshControl} from "react-native";
 import {useSelector} from "react-redux";
 import EmptyState from "../../components/EmptyState";
-import {colors} from "../../constants/palette";
 import NotificationComponent from "../../components/NotificationComponent";
 import NotificationRequestComponent from "../../components/NotificationRequestComponent";
-import NewRequestBottunComponent from "../../components/NewRequestBottunComponent";
-import { ScrollView } from "react-native-gesture-handler";
+import {ScrollView} from "react-native-gesture-handler";
 
 const NotificationsScreen = ({navigation}) => {
   const [notifications, setNotifications] = useState();
@@ -29,7 +27,7 @@ const NotificationsScreen = ({navigation}) => {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
   useEffect(() => {
     getNotifications();
   }, []);
@@ -45,16 +43,18 @@ const NotificationsScreen = ({navigation}) => {
   const onRefresh = () => {
     setRefreshing(true);
     getNotifications();
+    setRefreshing(false);
   };
 
-{/* <NewRequestBottunComponent onPress={navigateNewRequest} /> */}
+  {
+    /* <NewRequestBottunComponent onPress={navigateNewRequest} /> */
+  }
   return notifications ? (
     <ScrollView
       refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
-      
       <View>
         <FlatList
           data={notifications}
