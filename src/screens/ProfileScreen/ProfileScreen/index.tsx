@@ -16,7 +16,6 @@ import {deleteUser} from "../../../redux/slices/userSlice";
 
 const ProfileScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state?.user);
-  const [updatedImage, setUpdatedImage] = useState();
 
   const NavigateHealthRecord = (id) => {
     navigation.navigate("HealthRecordScreen", { user_id: id});
@@ -43,9 +42,6 @@ const ProfileScreen = ({ navigation, route }) => {
     setValue(user.userProfile.is_available ? true : false);
     user.userProfile.is_available ? setStatus('Avaliable') : setStatus('Unavaliable')
     setImage(user.userProfile.profile_picture_url);
-    // if (route.params.image !== undefined) {
-    //   setImage(updatedImage)
-    // }
   }, [user.userProfile.firstName]);
   
   

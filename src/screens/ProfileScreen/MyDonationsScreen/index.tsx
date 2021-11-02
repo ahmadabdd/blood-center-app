@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingLeft: "10%",
   },
   right: {
-    paddingRight: "10%",
+    paddingRight: "10%", 
   },
   left: {},
 });

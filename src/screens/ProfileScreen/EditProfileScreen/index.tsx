@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Text, View, StyleSheet, TextInput, ScrollView} from "react-native";
 import {useSelector} from "react-redux";
 import {colors} from "../../../constants/palette";
-import { Avatar, Switch } from "react-native-elements";
+import {Avatar, Switch} from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 import DatePicker from "react-native-datepicker";
 import {TouchableOpacity} from "react-native-gesture-handler";
@@ -10,20 +10,20 @@ import {Picker} from "@react-native-picker/picker";
 import {store} from "../../../redux/store";
 import {updateUserProfile} from "../../../redux/slices/userSlice";
 
-const EditProfileScreen = ({ navigation }) => {
+const EditProfileScreen = ({navigation}) => {
   const user = useSelector((state) => state?.user);
   const [id, setId] = useState(1);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
+  const [firstName, setFirstName] = useState(user.userProfile.firstName);
+  const [lastName, setLastName] = useState(user.userProfile.lastName);
   const [dateOfBirth, setDdateOfBirth] = useState(null);
   const [lastDonationDate, setLastDonationDate] = useState(null);
-  const [bloodType, setBloodType] = useState('1');
-  const [city, setCity] = useState('1');
+  const [bloodType, setBloodType] = useState("1");
+  const [city, setCity] = useState("1");
   const [isSmoker, setIsSmoker] = useState(0);
   const [haveTattoo, setHavetattoo] = useState(0);
   const [smokerValue, setSmokerValue] = useState(false);
   const [haveTatooValue, setHaveTatooValue] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg');
   const [imageString, setImageString] = useState(null);
 
   const Smoker = () => {
@@ -42,39 +42,33 @@ const EditProfileScreen = ({ navigation }) => {
       quality: 1,
       base64: true,
     });
-    console.log(result);                    
+    console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
-      // setImageString(result.base64);
 
       fetch("https://blood-center.tk/api/upload_image", {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "bearer " + user.userProfile.token,
-      }),
-      body: (JSON.stringify({profile_picture_url: result.base64}))
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        console.log(imageString);
-        navigation.navigate('ProfileScreen', { image: image })
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer " + user.userProfile.token,
+        }),
+        body: JSON.stringify({profile_picture_url: result.base64}),
       })
-      .catch((error) => {
-        console.error(error);
-      });
-    
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          console.log(imageString);
+          navigation.navigate("ProfileScreen", {image: image});
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
   const Submit = () => {
-    if (!firstName) {
-      alert("Oops. you missed filing your first name");
-    } else if (!lastName) {
-      alert("Oops. you missed filing your last name");
-    } else if (!dateOfBirth) {
+    if (!dateOfBirth) {
       alert("Oops. you missed filing your date of birth");
     } else if (!lastDonationDate) {
       alert("Oops. you missed filing your last donation date");
@@ -84,40 +78,40 @@ const EditProfileScreen = ({ navigation }) => {
       alert("Oops. you missed filing your city");
     } else {
       fetch("https://blood-center.tk/api/edit_user_info", {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: 'bearer' + user.userProfile.token,
-      }),
-      body: (JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        date_of_birth: dateOfBirth,
-        city_id: city,
-        blood_type_id: bloodType,
-        last_donation: lastDonationDate,
-        is_smoker: isSmoker,
-        have_tattoo: haveTattoo
-      }))
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        store.dispatch(
-          updateUserProfile({
-            userProfile: {
-              firstName: firstName,
-              lastName: lastName,
-              city_id: city
-            },
-          })
-        );
-        navigation.goBack();
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer" + user.userProfile.token,
+        }),
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          date_of_birth: dateOfBirth,
+          city_id: city,
+          blood_type_id: bloodType,
+          last_donation: lastDonationDate,
+          is_smoker: isSmoker,
+          have_tattoo: haveTattoo,
+        }),
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          store.dispatch(
+            updateUserProfile({
+              userProfile: {
+                firstName: firstName,
+                lastName: lastName,
+                city_id: city,
+              },
+            })
+          );
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
@@ -145,13 +139,7 @@ const EditProfileScreen = ({ navigation }) => {
               placeholderStyle={{}}
               rounded
               size="large"
-              source={
-                image
-                  ? {uri: image}
-                  : {
-                      uri: "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg",
-                    }
-              }
+              source={{uri: "https://blood-center.tk/storage/822kdtuWl7Mz.jpg"}}
               titleStyle={{}}
             />
           </View>
@@ -165,7 +153,7 @@ const EditProfileScreen = ({ navigation }) => {
           <TextInput
             style={styles.input}
             onChangeText={setFirstName}
-            placeholder={"First name"}
+            placeholder={user.userProfile.firstName}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -173,7 +161,7 @@ const EditProfileScreen = ({ navigation }) => {
           <TextInput
             style={styles.input}
             onChangeText={setLastName}
-            placeholder={"Last name"}
+            placeholder={user.userProfile.lastName}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -223,7 +211,6 @@ const EditProfileScreen = ({ navigation }) => {
                 backgroundColor: colors.background,
                 borderWidth: 1,
                 borderColor: colors.white,
-                // height: '130%'
               },
             }}
             onDateChange={(date) => {
@@ -259,16 +246,16 @@ const EditProfileScreen = ({ navigation }) => {
               onValueChange={(city) => setCity(city)}
               mode="dialog"
             >
-            <Picker.Item label="Beirut" value="1" />
-            <Picker.Item label="Tripoli" value="2" />
-            <Picker.Item label="Saida" value="3" />
-            <Picker.Item label="Byblos" value="4" />
-            <Picker.Item label="Zahle" value="5" />
-            <Picker.Item label="Tyre" value="6" />
-            <Picker.Item label="Mount Lebanon" value="7" />
-            <Picker.Item label="Baalbak" value="8" />
-            <Picker.Item label="Baabda" value="9" />
-            <Picker.Item label="Nabatieh" value="10" />
+              <Picker.Item label="Beirut" value="1" />
+              <Picker.Item label="Tripoli" value="2" />
+              <Picker.Item label="Saida" value="3" />
+              <Picker.Item label="Byblos" value="4" />
+              <Picker.Item label="Zahle" value="5" />
+              <Picker.Item label="Tyre" value="6" />
+              <Picker.Item label="Mount Lebanon" value="7" />
+              <Picker.Item label="Baalbak" value="8" />
+              <Picker.Item label="Baabda" value="9" />
+              <Picker.Item label="Nabatieh" value="10" />
             </Picker>
           </View>
         </View>

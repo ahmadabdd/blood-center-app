@@ -19,8 +19,8 @@ const MyDonationsComponent = (props) => {
       </View>
       <View style={styles.bodyContainer}>
         <View>
-          <Text style={styles.upperBody}>{props.city}, {props.hospital}</Text>
-          <Text style={styles.lowerBody}>{props.firstName} {props.lastName}</Text>
+          <Text style={styles.upperBody}>{props.city}</Text>
+          <Text style={styles.lowerBody}>{props.hospital}</Text>
         </View>
       </View>
     </View>
@@ -51,17 +51,18 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
     justifyContent: "space-between",
+    paddingLeft: 25
   },
   upperBody: {
     color: colors.text,
-    fontSize: 27,
-    paddingLeft: '8%',
+    fontSize: 20,
+    // paddingLeft: '8%',
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
-    fontSize: 22,
-    paddingLeft: '14%', 
+    fontSize: 18,
+    // paddingLeft: '5%', 
     paddingBottom: 8,
   },
   icon: {

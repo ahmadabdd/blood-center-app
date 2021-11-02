@@ -12,7 +12,7 @@ const RequestDonatorsScreen = ({navigation, route}) => {
   const [bloodType, setBloodType] = useState("");
 
   useEffect(() => {
-    fetch("https://blood-center.tk/api/get_request_donations", {
+    fetch("https://blood-center.tk/api/get_request_donations_fulfilled", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
