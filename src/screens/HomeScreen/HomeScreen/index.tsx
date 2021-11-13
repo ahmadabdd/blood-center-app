@@ -14,8 +14,6 @@ const HomeScreen = ({navigation}) => {
   const [bloodType, setBloodType] = useState();
   const [originalRequests, setOriginalRequests] = useState();
   const [requests, setRequests] = useState();
-  console.log(bloodType);
-  console.log(city);
 
   const user = useSelector((state) => state?.user);
 
@@ -49,7 +47,6 @@ const HomeScreen = ({navigation}) => {
       .then((responseJson) => {
         setRequests(responseJson);
         setOriginalRequests(responseJson);
-        console.log(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -67,6 +64,7 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate("NewRequestScreen");
   };
   const pickerRef = useRef();
+
   function open() {
     pickerRef.current.focus();
   }
@@ -124,15 +122,6 @@ const HomeScreen = ({navigation}) => {
                   style={styles.picker}
                   mode="dialog"
                 >
-                  {/* 1- Beirut
-          2- Tripoli
-          3- Saida
-          4- Byblos
-          5- Zahle
-          6- Tyre
-          7- Mount Lebanon
-          8- Baalbak
-          9- Baabda */}
                   <Picker.Item label="Beirut" value="Beirut" />
                   <Picker.Item label="Tripoli" value="Tripoli" />
                   <Picker.Item label="Saida" value="Saida" />

@@ -1,22 +1,21 @@
 import {colors} from "../../constants/palette";
 import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import React from "react";
 
 const NotificationComponent = (props) => {
   return (
     <View style={styles.container}>
-        <View style={styles.left}>
-          <View>
-            <Text style={styles.header}>{props.header}</Text>
-          </View>
-          <View>
-            <Text style={styles.body}>{props.body}</Text>
-          </View>
+      <View style={styles.upper}>
+        <View>
+          <Text style={styles.header}>{props.header}</Text>
         </View>
         <View style={styles.right}>
           <Text style={styles.time}>{props.time}</Text>
         </View>
+      </View>
+      <View>
+        <Text style={styles.body}>{props.body}</Text>
+      </View>
     </View>
   );
 };
@@ -26,18 +25,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     marginTop: 7,
     padding: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
+  },
+  upper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   header: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: colors.black
+    fontWeight: "bold",
+    color: colors.black,
   },
   body: {
     fontSize: 16,
     paddingTop: 5,
-    color: colors.black
+    color: colors.black,
   },
   left: {},
   right: {},
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   icon: {
-    paddingTop: 10
+    paddingTop: 10,
   },
 });
 

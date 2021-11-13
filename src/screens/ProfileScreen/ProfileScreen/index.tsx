@@ -14,11 +14,11 @@ import ProfileButtonComponent from "../../../components/ProfileButtonComponent";
 import {store} from "../../../redux/store";
 import {deleteUser} from "../../../redux/slices/userSlice";
 
-const ProfileScreen = ({ navigation, route }) => {
+const ProfileScreen = ({navigation}) => {
   const user = useSelector((state) => state?.user);
 
   const NavigateHealthRecord = (id) => {
-    navigation.navigate("HealthRecordScreen", { user_id: id});
+    navigation.navigate("HealthRecordScreen", {user_id: id});
   };
 
   const navigateMyDonations = () => {
@@ -40,48 +40,47 @@ const ProfileScreen = ({ navigation, route }) => {
     setFirstName(user.userProfile.firstName);
     setLastName(user.userProfile.lastName);
     setValue(user.userProfile.is_available ? true : false);
-    user.userProfile.is_available ? setStatus('Avaliable') : setStatus('Unavaliable')
+    user.userProfile.is_available
+      ? setStatus("Avaliable")
+      : setStatus("Unavaliable");
     setImage(user.userProfile.profile_picture_url);
   }, [user.userProfile.firstName]);
-  
-  
+
   const changeStatus = () => {
     setValue(!value);
-    if(!value) {
+    if (!value) {
       fetch("https://blood-center.tk/api/set_available", {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "bearer " + user.userProfile.token,
-      }),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        setStatus('Available')
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer " + user.userProfile.token,
+        }),
       })
-      .catch((error) => {
-        console.error(error);
-      });
-    } 
-    if(value) {
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setStatus("Available");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    if (value) {
       fetch("https://blood-center.tk/api/set_unavailable", {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "bearer " + user.userProfile.token,
-      }),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        setStatus('Unavailable')
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "bearer " + user.userProfile.token,
+        }),
       })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setStatus("Unavailable");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
@@ -202,9 +201,9 @@ const styles = StyleSheet.create({
   },
   logoutContainer: {
     backgroundColor: colors.red,
-    marginTop: '21%',
+    marginTop: "21%",
     padding: 15,
-    flexDirection: "row", 
+    flexDirection: "row",
     justifyContent: "space-between",
     margin: "2%",
     borderRadius: 10,

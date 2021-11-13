@@ -1,16 +1,8 @@
 import {colors} from "../../constants/palette";
-import { Text, View, Button, StyleSheet, TouchableOpacity } from "react-native";
-import React, {useEffect, useState} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Text, View, StyleSheet } from "react-native";
+import React, { useState } from "react";
 
 const MyDonationsComponent = (props) => {
-  const [unitsCount, setUnitsCount] = useState(2);
-  const [firstName, setFirstName] = useState("Ahmad");
-  const [lastName, setLastName] = useState("Abd");
-  const [date, setDate] = useState('2021-02-15');
-  const [city, setCity] = useState("Tripoli");
-  const [hospital, setHospital] = useState("Razk");
-
   return (
     <View style={styles.cardContainer}>
       <View style={styles.headerContainer}>
@@ -56,13 +48,11 @@ const styles = StyleSheet.create({
   upperBody: {
     color: colors.text,
     fontSize: 20,
-    // paddingLeft: '8%',
     paddingTop: 5,
   },
   lowerBody: {
     color: colors.text,
     fontSize: 18,
-    // paddingLeft: '5%', 
     paddingBottom: 8,
   },
   icon: {

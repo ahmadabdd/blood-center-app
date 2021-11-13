@@ -1,18 +1,26 @@
 import React, {useEffect, useState} from "react";
-import {Text, View, Button, StyleSheet, TouchableOpacity, ScrollView, FlatList} from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import {useSelector} from "react-redux";
 import EmptyState from "../../../../components/EmptyState";
 import {colors} from "../../../../constants/palette";
 import {Divider} from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const RequestsScreen = ({ navigation, route }) => {
+const RequestsScreen = ({navigation, route}) => {
   const user = useSelector((state) => state?.user);
   const id = route.params.id;
   const [requests, setRequests] = useState();
-  const acceptBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has accepted your donation request!`
-  const declinetBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has declined your donation request. The blood request seems to be fulfilled`
-  
+  const acceptBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has accepted your donation request!`;
+  const declinetBody = `${user.userProfile.firstName} ${user.userProfile.lastName} has declined your donation request. The blood request seems to be fulfilled`;
+
   useEffect(() => {
     fetch("https://blood-center.tk/api/get_request_donations", {
       method: "POST",
@@ -26,7 +34,6 @@ const RequestsScreen = ({ navigation, route }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        console.log(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -34,7 +41,6 @@ const RequestsScreen = ({ navigation, route }) => {
   }, []);
 
   const RequestComponent = (props) => {
-
     const accept = (user_id, firebase_token) => {
       fetch("https://blood-center.tk/api/accept_donation_request", {
         method: "POST",
@@ -45,16 +51,16 @@ const RequestsScreen = ({ navigation, route }) => {
         }),
         body: JSON.stringify({
           blood_request_id: id,
-          user_id: user_id
-        })
+          user_id: user_id,
+        }),
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
-          const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
+          const newRequests = requests.filter(
+            (requests) => requests.user_id !== props.user_id
+          );
           setRequests(newRequests);
-          sendPushNotification(firebase_token, acceptBody)
-          console.log(newRequests); 
+          sendPushNotification(firebase_token, acceptBody);
         })
         .catch((error) => {
           console.error(error);
@@ -71,16 +77,16 @@ const RequestsScreen = ({ navigation, route }) => {
         }),
         body: JSON.stringify({
           blood_request_id: id,
-          user_id: user_id
+          user_id: user_id,
         }),
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
-          const newRequests = requests.filter((requests) => requests.user_id !== props.user_id);
+          const newRequests = requests.filter(
+            (requests) => requests.user_id !== props.user_id
+          );
           setRequests(newRequests);
-          sendPushNotification(firebase_token, declinetBody)
-          console.log(newRequests);
+          sendPushNotification(firebase_token, declinetBody);
         })
         .catch((error) => {
           console.error(error);
@@ -88,19 +94,18 @@ const RequestsScreen = ({ navigation, route }) => {
     };
 
     const viewListItem = (user_id) => {
-      navigation.navigate('HealthRecordScreen', { user_id: user_id })
+      navigation.navigate("HealthRecordScreen", {user_id: user_id});
     };
 
     async function sendPushNotification(token, body) {
       try {
         const message = {
           to: token,
-          sound: "default", 
+          sound: "default",
           title: "Blood Center",
           body: body,
-          data: { someData: "goes here" },
+          data: {someData: "goes here"},
         };
-        console.log(message)
         await fetch("https://exp.host/--/api/v2/push/send", {
           method: "POST",
           headers: {
@@ -110,8 +115,8 @@ const RequestsScreen = ({ navigation, route }) => {
           },
           body: JSON.stringify(message),
         });
-      } catch(error) {
-        console.error(error)
+      } catch (error) {
+        console.error(error);
       }
     }
 
@@ -180,51 +185,45 @@ const RequestsScreen = ({ navigation, route }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        navigation.navigate('InProgressScreen', { request_id: id})
-        console.log(responseJson);
+        navigation.navigate("InProgressScreen", {request_id: id});
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-
   return requests ? (
     <ScrollView>
-      <View> 
       <View>
-        <TouchableOpacity onPress={() => closeRequest(id)}>
-        <View style={styles.closeContainer}>
-          <Text style={styles.close}>Close request</Text>
+        <View>
+          <TouchableOpacity onPress={() => closeRequest(id)}>
+            <View style={styles.closeContainer}>
+              <Text style={styles.close}>Close request</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+        <View>
+          <FlatList
+            data={requests}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({item}) => {
+              return (
+                <RequestComponent
+                  bloodType={item.type}
+                  date={item.created_at.substr(0, 10)}
+                  firstName={item.first_name}
+                  lastName={item.last_name}
+                  user_id={item.user_id}
+                  firebase_token={item.firebase_token}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
-      <View>
-      <FlatList
-        data={requests}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({item}) => {
-          return (
-            <RequestComponent
-              bloodType={item.type}
-              date={item.created_at.substr(0, 10)}
-              firstName={item.first_name}
-              lastName={item.last_name}
-              user_id={item.user_id}
-              firebase_token={item.firebase_token}
-            />
-          );
-        }}
-      />
-      </View>
-    </View>
     </ScrollView>
-    
   ) : (
-    <EmptyState 
-      loading={true}
-      icon={'coffee'}
-    />
+    <EmptyState loading={true} icon={"coffee"} />
   );
 };
 
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
-    alignItems: 'center'
+    alignItems: "center",
   },
   header: {
     color: colors.white,
@@ -297,7 +296,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.red,
     padding: 10,
     alignItems: "center",
-    position: 'relative'
+    position: "relative",
   },
   close: {
     fontSize: 20,

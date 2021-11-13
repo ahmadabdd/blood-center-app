@@ -1,13 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Button, StyleSheet} from "react-native";
-import {useSelector} from "react-redux";
-import ComponentTemplate from "../../components/ComponentTemplate";
-import ListComponentMain from "../../components/ListComponentMain";
-import EmptyState from "../../components/EmptyState";
-import FullWidthButton from "../../components/FullWidthButton";
+import React from "react";
+import { Text, View, Button, StyleSheet } from "react-native";
 import {colors} from "../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const SplashScreen: () => JSX.Element = () => {
   const navigation = useNavigation();

@@ -1,11 +1,9 @@
 import {colors} from "../../constants/palette";
-import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import React, { useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ProfileButtonComponent = (props) => {
-  const [header, setHeader] = useState("This is a header");
-
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View style={styles.container}>

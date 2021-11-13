@@ -9,12 +9,8 @@ import {
   Alert,
 } from "react-native";
 import React, {useEffect, useState, useRef} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {Divider} from "react-native-elements";
 import {Picker} from "@react-native-picker/picker";
 import DatePicker from "react-native-datepicker";
-import SearchableDropdown from "react-native-searchable-dropdown";
-import EmptyState from "../EmptyState";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
@@ -35,30 +31,6 @@ const NewRequestComponent = ({ navigation }) => {
     pickerRef.current.blur();
   }
   
-  // const dateValidate = (date) => {
-  //   let isValid = true;
-  //   let expiryDate = new Date(Number(date[0]), Number(date[1]), Number(date[2]));
-  //   let vectorCurrentDate = getCurrentDate();
-  //   let currentDate = new Date(vectorCurrentDate[2], vectorCurrentDate[1], vectorCurrentDate[0]);
-  //   console.log(expiryDate)
-  //   console.log(currentDate)
-  //   if(currentDate > expiryDate){
-  //     isValid = false;
-  //   }
-  //   return isValid;
-  // }
-
-  // const getCurrentDate = () => {
-  //   let today = new Date();
-  //   let day = today.getDate();
-  //   let month = today.getMonth();
-  //   let year = today.getFullYear();
-  //   day = day < 10 ? Number(`0${day}`) : day;
-  //   month = month < 10 ? Number(`0${month}`) : month;
-  //   return [day, month, year]
-  // }
-  console.log(user.userProfile.firstName)
-  console.log(user.userProfile.bloodType)
   async function sendPushNotification(token, blood_type) {
     const message = {
       to: token,
@@ -67,7 +39,6 @@ const NewRequestComponent = ({ navigation }) => {
       body: `New ${blood_type} request! Would you like to donate?`,
       data: { someData: "goes here" },
     };
-    console.log(message)
     await fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {
@@ -83,7 +54,6 @@ const NewRequestComponent = ({ navigation }) => {
     if(bloodType && city && hospital && expiryDate) {
       if(expiryDate){
         if(numberOfUnits > 0) {
-          console.log(expiryDate)
           fetch("https://blood-center.tk/api/make_request", {
         method: 'POST',
         headers: new Headers({
@@ -101,9 +71,6 @@ const NewRequestComponent = ({ navigation }) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log('tokens');
-          console.log(responseJson);
-          console.log(responseJson.tokens);
           if (responseJson.tokens) {
             responseJson.tokens.forEach(token => {
               sendPushNotification(token, responseJson.blood_type)

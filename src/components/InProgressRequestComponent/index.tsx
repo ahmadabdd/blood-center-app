@@ -1,6 +1,6 @@
 import {colors} from "../../constants/palette";
-import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {Divider, Avatar} from "react-native-elements";
 import {useNavigation} from "@react-navigation/core";
@@ -121,10 +121,8 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 18,
     paddingLeft: 12,
-    // paddingTop: 5,
   },
   icon: {
-    // paddingTop: 13,
     paddingLeft: 70,
   },
   unitsCount: {

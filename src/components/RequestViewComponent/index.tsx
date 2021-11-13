@@ -1,7 +1,6 @@
 import {colors} from "../../constants/palette";
 import {Text, View, Button, StyleSheet} from "react-native";
-import React, {useEffect, useState} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import React from "react";
 import {Divider} from "react-native-elements";
 
 const RequestViewComponent = (props) => {

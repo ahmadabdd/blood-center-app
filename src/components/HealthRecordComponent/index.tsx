@@ -1,7 +1,6 @@
 import {colors} from "../../constants/palette";
 import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import React from "react";
 
 const HealthRecordComponent = (props) => {
   return (

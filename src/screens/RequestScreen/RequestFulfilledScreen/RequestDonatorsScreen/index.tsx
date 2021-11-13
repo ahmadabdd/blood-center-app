@@ -6,17 +6,19 @@ import {colors} from "../../../../constants/palette";
 import {Avatar} from "react-native-elements";
 
 const RequestDonatorsScreen = ({navigation, route}) => {
-  const user = useSelector((state) => state?.user);``
+  const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
   const [hospital, setHospital] = useState("");
   const [bloodType, setBloodType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetch("https://blood-center.tk/api/get_request_donations_fulfilled", {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        Accept: "application/json", 
+        Accept: "application/json",
         Authorization: "bearer " + user.userProfile.token,
       }),
       body: JSON.stringify({
@@ -29,10 +31,8 @@ const RequestDonatorsScreen = ({navigation, route}) => {
         if (responseJson.length) {
           setHospital(responseJson[0].hospital);
           setBloodType(responseJson[0].type);
-          console.log(responseJson);
-          console.log(responseJson[0].profile_picture_url);
-          console.log(responseJson[0].hospital);
         }
+        setTimeout(() => setLoading(false), 500);
       })
       .catch((error) => {
         console.error(error);
@@ -100,28 +100,44 @@ const RequestDonatorsScreen = ({navigation, route}) => {
     />
   );
 
-  return requests ? (
-    <View style={styles.cardContainer}>
-      <View style={styles.headerContainer}>
-        <View>
-          <Text style={styles.header}>{bloodType}</Text>
+  if (requests) {
+    if (requests.length > 1) {
+      return (
+        <View style={styles.cardContainer}>
+          <View style={styles.headerContainer}>
+            <View>
+              <Text style={styles.header}>{bloodType}</Text>
+            </View>
+            <View>
+              <Text style={styles.hospital}>{hospital}</Text>
+            </View>
+          </View>
+          <View style={styles.bodyContainer}>
+            <FlatList
+              data={requests}
+              renderItem={renderItem}
+              keyExtractor={(item) => String(item.id)}
+              ItemSeparatorComponent={renderSeparator}
+            />
+          </View>
         </View>
-        <View>
-          <Text style={styles.hospital}>{hospital}</Text>
-        </View>
-      </View>
-      <View style={styles.bodyContainer}>
-        <FlatList
-          data={requests}
-          renderItem={renderItem}
-          keyExtractor={(item) => String(item.id)}
-          ItemSeparatorComponent={renderSeparator}
+      );
+    } else {
+      return loading ? (
+        <EmptyState
+          loading={loading}
+          icon={"cloud"}
         />
-      </View>
-    </View>
-  ) : (
-    <EmptyState loading={true} icon={"coffee"} />
-  );
+      ) : (
+        <EmptyState
+          icon={"cloud"}
+          title={"No donators for this request"}
+        />
+      );
+    }
+  } else {
+    return <EmptyState loading={loading} />;
+  }
 };
 
 const styles = StyleSheet.create({

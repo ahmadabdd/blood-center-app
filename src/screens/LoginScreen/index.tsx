@@ -36,7 +36,6 @@ const LoginScreen: React.FC = () => {
       .then((response) => response.json())
       .then((responseJson) => {
         if(responseJson.status) {
-          console.log(responseJson)
           store.dispatch(
             updateUserProfile({
               userProfile: {
@@ -57,7 +56,6 @@ const LoginScreen: React.FC = () => {
         } else {
           alert('Invalid credentials')
         }
-        console.log(responseJson.status)
       })
       .catch((error) => {
         console.error(error);

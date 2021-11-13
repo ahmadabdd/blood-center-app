@@ -11,6 +11,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 const InProgressScreen = ({navigation, route}) => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getRequests = () => {
     fetch("https://blood-center.tk/api/get_user_requests", {
@@ -24,7 +26,7 @@ const InProgressScreen = ({navigation, route}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        console.log(responseJson);
+        setTimeout(() => setLoading(false), 500);
       })
       .catch((error) => {
         console.error(error);
@@ -32,6 +34,7 @@ const InProgressScreen = ({navigation, route}) => {
   }
 
   useEffect(() => {
+    setLoading(true)
     getRequests();
   }, []);
 
@@ -45,7 +48,6 @@ const InProgressScreen = ({navigation, route}) => {
     navigation.navigate("NewRequestScreen");
   };
 
-  const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
     getRequests();
@@ -53,7 +55,8 @@ const InProgressScreen = ({navigation, route}) => {
   };
 
   return requests ? (
-    <View>
+    requests.length > 0 ? (
+      <View>
       <NewRequestBottunComponent onPress={navigateNewRequest} />
       <ScrollView
         refreshControl={
@@ -100,7 +103,23 @@ const InProgressScreen = ({navigation, route}) => {
       </View>
     </ScrollView>
     </View>
-    
+    ) : (
+      loading ? (
+        <EmptyState loading={loading} icon={"cloud"} />
+      ) : (
+        <EmptyState 
+        loading={loading} 
+        icon={"cloud"} 
+        title={'No requests in progress yet'}
+        actionButton={{
+          title: "Fullfilled requests",
+          callback: () => {
+            navigateFulfilled();
+          },
+        }}
+        />
+      )
+    )
   ) : (
     <EmptyState loading={true} icon={"coffee"} />
   );

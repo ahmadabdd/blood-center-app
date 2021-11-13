@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import {Divider, Avatar} from "react-native-elements";
 
 // moved to screen. not in use
+// keep as a reference 
 const RequestComponent = (props) => {
   // const viewListItem = (user_id) => {
   //   alert("go to user profile" + user_id);

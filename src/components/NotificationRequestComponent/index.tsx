@@ -1,6 +1,6 @@
 import {colors} from "../../constants/palette";
-import {Text, View, Button, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const NotificationRequestComponent = (props) => {

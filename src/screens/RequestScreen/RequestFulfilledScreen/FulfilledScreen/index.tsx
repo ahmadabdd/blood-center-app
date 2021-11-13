@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
   FlatList,
-  Text,
   View,
-  Button,
   StyleSheet,
   RefreshControl,
 } from "react-native";
@@ -13,12 +11,12 @@ import {colors} from "../../../../constants/palette";
 import {useNavigation} from "@react-navigation/core";
 import FulfilledComponent from "../../../../components/FulfilledComponent";
 import NewRequestBottunComponent from "../../../../components/NewRequestBottunComponent";
-import {ScrollView, TouchableOpacity} from "react-native-gesture-handler";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { ScrollView } from "react-native-gesture-handler";
 
 const FulfilledScreen = () => {
   const user = useSelector((state) => state?.user);
   const [requests, setRequests] = useState();
+  const [loading, setLoading] = useState(false);
 
   const getRequests = () => {
     fetch("https://blood-center.tk/api/get_user_requests_fulfilled", {
@@ -32,7 +30,7 @@ const FulfilledScreen = () => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        console.log(responseJson);
+        setTimeout(() => setLoading(false), 500);
       })
       .catch((error) => {
         console.error(error);
@@ -40,18 +38,12 @@ const FulfilledScreen = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     getRequests();
   }, []);
 
   const navigation = useNavigation();
 
-  const navigateInProgress = () => {
-    navigation.navigate("InProgressScreen");
-  };
-
-  const navigateFulfilled = () => {
-    navigation.navigate("FulfilledScreen");
-  };
   const navigateRequestsDonators = (id) => {
     navigation.navigate("RequestDonatorsScreen", {id: id});
   };
@@ -67,34 +59,46 @@ const FulfilledScreen = () => {
   };
 
   return requests ? (
-    <View>
-      <NewRequestBottunComponent onPress={navigateNewRequest} />
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <View>
-          <View style={styles.listContainer}>
-            <FlatList
-              data={requests}
-              keyExtractor={(item) => String(item.id)}
-              renderItem={({item}) => {
-                return (
-                  <FulfilledComponent
-                    bloodType={item.type}
-                    date={item.created_at.substr(0, 10)}
-                    city={item.city}
-                    hospital={item.hospital}
-                    onPress={() => navigateRequestsDonators(item.id)}
-                  />
-                );
-              }}
-            />
+    requests.length > 0 ? (
+      <View>
+        <NewRequestBottunComponent onPress={navigateNewRequest} />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View>
+            <View style={styles.listContainer}>
+              <FlatList
+                data={requests}
+                keyExtractor={(item) => String(item.id)}
+                renderItem={({item}) => {
+                  return (
+                    <FulfilledComponent
+                      bloodType={item.type}
+                      date={item.created_at.substr(0, 10)}
+                      city={item.city}
+                      hospital={item.hospital}
+                      onPress={() => navigateRequestsDonators(item.id)}
+                    />
+                  );
+                }}
+              />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    ) : loading ? (
+      <EmptyState
+        loading={loading}
+        icon={"cloud"}
+      />
+    ) : (
+      <EmptyState
+        icon={"cloud"}
+        title={"No filfilled requests yet"}
+      />
+    )
   ) : (
     <EmptyState loading={true} icon={"coffee"} />
   );

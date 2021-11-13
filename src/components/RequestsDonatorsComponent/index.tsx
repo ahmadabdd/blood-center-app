@@ -3,16 +3,10 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
-  Alert
 } from "react-native";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Avatar} from "react-native-elements";
-
-const ViewProfile = (id) => {
-  Alert.alert(id)
-}
 
 const Item = (props) => (
   <View>
@@ -47,9 +41,9 @@ const Item = (props) => (
   </View>
 );
 
+// not in use
+// kept as a reference 
 const RequestsDonatorsComponent = () => {
-  const [hospital, setHospital] = useState("AUBMC");
-  const [bloodType, setBloodType] = useState("AB+");
 
   const renderItem = ({item}) => (
     <Item

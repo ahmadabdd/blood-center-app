@@ -1,15 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {FlatList, Text, View, Dimensions, StyleSheet} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, Dimensions, StyleSheet } from "react-native";
 import {useSelector} from "react-redux";
-import ComponentTemplate from "../../../components/ComponentTemplate";
-import EmptyState from "../../../components/EmptyState";
-import FullWidthButton from "../../../components/FullWidthButton";
-import {colors} from "../../../constants/palette";
-import {useNavigation} from "@react-navigation/core";
-import NewRequestBottunComponent from "../../../components/NewRequestBottunComponent";
 import MapView, {Callout, Marker} from "react-native-maps";
-import NewRequestScreen from "../../NewRequestScreen";
-import {store} from "../../../redux/store";
+
 
 const MapScreen = ({navigation}) => {
   const user = useSelector((state) => state?.user);
@@ -35,7 +28,6 @@ const MapScreen = ({navigation}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequests(responseJson);
-        console.log(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -44,8 +36,6 @@ const MapScreen = ({navigation}) => {
 
   useEffect(() => {
     getRequests();
-    console.log(user.userProfile.long);
-    console.log(user.userProfile.lat);
   }, []);
 
 

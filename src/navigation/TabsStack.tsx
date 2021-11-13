@@ -3,8 +3,6 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {colors} from "../constants/palette";
 import {NavigationContainer} from "@react-navigation/native";
-
-import NotificationsScreen from "../screens/NotificationsScreen";
 import {HomeStack} from "./HomeStack";
 import {RequestsStack} from "./RequestsStack";
 import {MapStack} from "./MapStack";
@@ -15,6 +13,7 @@ export function BottomTabs({navigation}) {
   const BottomTabsNav = createBottomTabNavigator();
   const navigationRef = React.useRef(null);
   // const type = useSelector((state) => state?.user?.userType);
+  console.disableYellowBox = true;
 
   return (
     <NavigationContainer ref={navigationRef}>

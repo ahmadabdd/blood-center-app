@@ -47,7 +47,6 @@ const LoginScreen: React.FC = () => {
         lightColor: "#FF231F7C",
       });
     }
-    console.log(token);
     setFirebaseToken(token);
     return token;
   }
@@ -97,7 +96,6 @@ const LoginScreen: React.FC = () => {
           } else {
             alert("Invalid credentials");
           }
-          console.log(responseJson);
         })
         .catch((error) => {
           console.error(error);

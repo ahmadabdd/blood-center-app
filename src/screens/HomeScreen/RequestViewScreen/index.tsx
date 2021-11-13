@@ -23,7 +23,6 @@ const RequestViewScreen = ({navigation, route}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setRequestData(responseJson);
-        console.log(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -39,7 +38,6 @@ const RequestViewScreen = ({navigation, route}) => {
         body: `${user.userProfile.firstName} ${user.userProfile.lastName} is ready to donate!`,
         data: {someData: "goes here"},
       };
-      console.log(message);
       await fetch("https://exp.host/--/api/v2/push/send", {
         method: "POST",
         headers: {
@@ -66,7 +64,6 @@ const RequestViewScreen = ({navigation, route}) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
         sendPushNotification(firebase_token);
         navigation.goBack();
       })

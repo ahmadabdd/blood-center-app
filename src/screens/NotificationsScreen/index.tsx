@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {FlatList, View, RefreshControl} from "react-native";
+import {FlatList, RefreshControl} from "react-native";
 import {useSelector} from "react-redux";
 import EmptyState from "../../components/EmptyState";
 import NotificationComponent from "../../components/NotificationComponent";
@@ -22,7 +22,6 @@ const NotificationsScreen = ({navigation}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setNotifications(responseJson);
-        console.log(responseJson);
       })
       .catch((error) => {
         console.error(error);
@@ -34,9 +33,6 @@ const NotificationsScreen = ({navigation}) => {
 
   const navigateRequestView = (blood_request_id) => {
     navigation.navigate("RequestViewScreen", {id: blood_request_id});
-  };
-  const navigateNewRequest = () => {
-    navigation.navigate("NewRequestScreen");
   };
 
   const [refreshing, setRefreshing] = useState(false);

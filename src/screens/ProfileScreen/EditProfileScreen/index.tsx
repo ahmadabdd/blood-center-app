@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Text, View, StyleSheet, TextInput, ScrollView} from "react-native";
 import {useSelector} from "react-redux";
 import {colors} from "../../../constants/palette";
@@ -12,7 +12,6 @@ import {updateUserProfile} from "../../../redux/slices/userSlice";
 
 const EditProfileScreen = ({navigation}) => {
   const user = useSelector((state) => state?.user);
-  const [id, setId] = useState(1);
   const [firstName, setFirstName] = useState(user.userProfile.firstName);
   const [lastName, setLastName] = useState(user.userProfile.lastName);
   const [dateOfBirth, setDdateOfBirth] = useState(null);
@@ -23,8 +22,9 @@ const EditProfileScreen = ({navigation}) => {
   const [haveTattoo, setHavetattoo] = useState(0);
   const [smokerValue, setSmokerValue] = useState(false);
   const [haveTatooValue, setHaveTatooValue] = useState(false);
-  const [image, setImage] = useState('https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg');
-  const [imageString, setImageString] = useState(null);
+  const [image, setImage] = useState(
+    "https://kittyinpink.co.uk/wp-content/uploads/2016/12/facebook-default-photo-male_1-1.jpg"
+  );
 
   const Smoker = () => {
     setSmokerValue(!smokerValue);
@@ -42,7 +42,6 @@ const EditProfileScreen = ({navigation}) => {
       quality: 1,
       base64: true,
     });
-    console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
 
@@ -57,8 +56,6 @@ const EditProfileScreen = ({navigation}) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
-          console.log(imageString);
           navigation.navigate("ProfileScreen", {image: image});
         })
         .catch((error) => {
@@ -97,7 +94,6 @@ const EditProfileScreen = ({navigation}) => {
       })
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
           store.dispatch(
             updateUserProfile({
               userProfile: {
